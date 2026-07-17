@@ -143,7 +143,7 @@ export default function Home() {
   return <main className="map-shell">
     <input ref={sourceInput} className="hidden" type="file" multiple accept=".md,.txt,.csv,.json" onChange={(event) => addSources(event.target.files)} />
     <input ref={packageInput} className="hidden" type="file" accept=".zip,.json" onChange={(event) => inspectPackage(event.target.files)} />
-    <header className="map-header"><div className="simple-brand"><img className="brand-mark" src="/deltadotta-mark.svg" alt="" /><span>DeltaDotta</span></div><span className="map-title">{organization.name}</span><div className="map-actions"><button onClick={() => useTemplate("software")}>Software template</button><button onClick={() => useTemplate("manufacturing")}>Manufacturing template</button><button onClick={() => packageInput.current?.click()}>Import package</button><button className="map-export" onClick={downloadPackage}><ArrowDownToLine size={15} /> Export</button></div></header>
+    <header className="map-header"><a className="simple-brand" href="/" aria-label="DeltaDotta home"><img className="brand-mark" src="/deltadotta-mark.svg" alt="" /><span>DeltaDotta</span></a><span className="map-title">{organization.name}</span><div className="map-actions"><button onClick={() => useTemplate("software")}>Software template</button><button onClick={() => useTemplate("manufacturing")}>Manufacturing template</button><button onClick={() => packageInput.current?.click()}>Import package</button><button className="map-export" onClick={downloadPackage}><ArrowDownToLine size={15} /> Export</button></div></header>
 
     <section className="map-layout">
       <aside className="source-rail">

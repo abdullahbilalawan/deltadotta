@@ -1,13 +1,21 @@
 <p align="center">
-  <img src="public/deltadotta-logo.svg" width="360" alt="DeltaDotta" />
+  <a href="https://github.com/abdullahbilalawan/deltadotta">
+    <img src="public/deltadotta-mark.svg" width="88" alt="DeltaDotta" />
+  </a>
 </p>
 
+<h1 align="center">DeltaDotta</h1>
+
 <p align="center">
-  Build a portable, evidence-backed team operating system in minutes.
+  <strong>Build a portable, evidence-backed team operating system in minutes.</strong>
 </p>
 
 <p align="center">
   <a href="LICENSE">Apache-2.0</a> · <a href="CONTRIBUTING.md">Contributing</a> · <a href="SECURITY.md">Security</a> · <a href="TRADEMARK.md">Trademark guidelines</a>
+</p>
+
+<p align="center">
+  <a href="#quick-start">Get started</a> · <a href="#deploy-with-docker">Deploy</a> · <a href="#contributing">Collaborate</a>
 </p>
 
 ## What is DeltaDotta?

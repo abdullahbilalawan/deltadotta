@@ -139,7 +139,8 @@ textarea:focus { border-color:#84904f; }
 /* The current product surface intentionally keeps only one decision in view. */
 .simple-shell { min-height:100svh; background:var(--paper); display:flex; flex-direction:column; }
 .simple-header { height:68px; padding:0 clamp(20px,4vw,54px); border-bottom:1px solid var(--line); display:flex; align-items:center; gap:18px; }
-.simple-brand { display:flex; align-items:center; gap:9px; font-weight:700; letter-spacing:-.04em; font-size:17px; }
+.simple-brand { display:flex; align-items:center; gap:9px; font-weight:700; letter-spacing:-.04em; font-size:17px; color:var(--ink); text-decoration:none; }
+.simple-brand:hover { color:#3d4738; }
 .simple-brand .brand-mark { background:var(--ink); border-color:var(--ink); color:var(--lime); }
 .simple-org { color:#6d7168; font-size:12px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
 .quiet-button { margin-left:auto; border:0; background:transparent; color:#767a70; font-size:12px; padding:7px 0; }
