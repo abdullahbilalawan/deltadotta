@@ -248,6 +248,17 @@ export function parseImportedPackage(value) {
 function unique(items) {
     return Array.from(new Set(items.filter(Boolean)));
 }
+/** Turns the Launchpad's plain-language authority owner answer into an enforceable boundary. */
+export function launchAuthority(template, authorityOwner) {
+    const owner = authorityOwner.trim();
+    if (/\b(may|can|approve|stop|roll back|authorize|require)\b/i.test(owner))
+        return owner;
+    const fallback = template === "software" ? "DevOps / Platform Engineer" : "Production Operations Lead";
+    const resolvedOwner = owner || fallback;
+    return template === "software"
+        ? `${resolvedOwner} may stop or roll back an unsafe deployment.`
+        : `${resolvedOwner} may stop an unsafe line and require a controlled restart.`;
+}
 export function mergeOrganization(current, incoming) {
     const importPrefix = `import-${Date.now()}`;
     const evidenceIdMap = new Map();
@@ -477,7 +488,7 @@ export function createTeamLaunchpad(answers) {
     };
     const roles = software ? [
         { id: managerId, title: "Engineering Lead", department: "Engineering", purpose: `${answers.owner.trim() || "Engineering Lead"} owns delivery direction, technical tradeoffs, and production-risk escalation.`, owns: ["Engineering delivery", "Technical risk"], inputs: ["Product priorities", "Production signals"], outputs: ["Technical direction", "Escalation decisions"], permissions: ["Resolve technical tradeoffs", "Pause unsafe delivery"], collaborators: ["DevOps / Platform Engineer", "Software Engineer", "Product Designer", "QA Engineer"], evidenceIds, status: "draft", launchStatus: "mapped" },
-        { id: primaryRoleId, title: "DevOps / Platform Engineer", department: "Engineering", reportsTo: managerId, purpose: primaryContract.mission, owns: ["Deployment pipeline", "Observability", "Incident response"], inputs: ["Release plan", "Production signals"], outputs: ["Deployment assessment", "Incident timeline", "Escalation recommendation"], permissions: [primaryContract.authority], collaborators: ["Engineering Lead", answers.handoffTarget.trim() || "Engineering Lead"], escalatesTo: managerId, evidenceIds, status: "ready", launchStatus: "mapped", contract: primaryContract },
+        { id: primaryRoleId, title: "DevOps / Platform Engineer", department: "Engineering", reportsTo: managerId, purpose: primaryContract.mission, owns: ["Deployment pipeline", "Observability", "Incident response"], inputs: ["Release plan", "Production signals"], outputs: ["Deployment assessment", "Incident timeline", "Escalation recommendation"], permissions: [primaryContract.authority], collaborators: unique(["Engineering Lead", answers.handoffTarget.trim() || "Engineering Lead"]), escalatesTo: managerId, evidenceIds, status: "ready", launchStatus: "mapped", contract: primaryContract },
         { id: "software-engineer", title: "Software Engineer", department: "Engineering", reportsTo: managerId, purpose: "Build and maintain product capabilities within the agreed technical approach.", owns: ["Application implementation", "Code quality"], inputs: ["Technical direction", "Product requirements"], outputs: ["Reviewed code", "Implementation notes"], permissions: ["Make implementation decisions within the agreed architecture"], collaborators: ["Engineering Lead", "DevOps / Platform Engineer", "QA Engineer"], escalatesTo: managerId, evidenceIds, status: "draft", launchStatus: "mapped" },
         { id: "product-designer", title: "Product Designer", department: "Product", reportsTo: managerId, purpose: "Turn product intent into coherent, usable experiences.", owns: ["Interaction design", "Design specifications"], inputs: ["Product requirements", "Customer feedback"], outputs: ["User flows", "Design decisions"], permissions: ["Approve interaction quality"], collaborators: ["Software Engineer", "QA Engineer"], escalatesTo: managerId, evidenceIds, status: "draft", launchStatus: "mapped" },
         { id: "qa-engineer", title: "QA Engineer", department: "Engineering", reportsTo: managerId, purpose: "Make release confidence and customer-impacting risk visible before delivery.", owns: ["Release validation", "Quality risk"], inputs: ["Release candidate", "Acceptance criteria"], outputs: ["Quality assessment", "Release risk"], permissions: ["Block a release that fails agreed quality criteria"], collaborators: ["Software Engineer", "DevOps / Platform Engineer"], escalatesTo: managerId, evidenceIds, status: "draft", launchStatus: "mapped" },

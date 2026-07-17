@@ -4,7 +4,7 @@ import { mkdir, readFile, readdir, stat, writeFile } from "node:fs/promises";
 import { basename, dirname, relative, resolve } from "node:path";
 import { createInterface } from "node:readline/promises";
 import { stdin as input, stdout as output } from "node:process";
-import { applyFirstShiftReport, compilePackage, createTeamLaunchpad, markPrimaryRoleInstalled, organizationFromInterview, repositoryEvidence, roleSkill, verifyFirstShift, } from "../lib/organization.js";
+import { applyFirstShiftReport, compilePackage, createTeamLaunchpad, launchAuthority, markPrimaryRoleInstalled, organizationFromInterview, repositoryEvidence, roleSkill, verifyFirstShift, } from "../lib/organization.js";
 import { renderOrganizationMap } from "../lib/cli-viewer.js";
 const help = `DeltaDotta CLI
 
@@ -246,7 +246,9 @@ async function runLaunch(args) {
         output.write(`Found ${evidence.length} useful source${evidence.length === 1 ? "" : "s"} in ${scanned.length} readable file${scanned.length === 1 ? "" : "s"}. They’ll stay linked to the map.\n\n`);
         output.write("Now, five quick confirmations. Press Enter to keep the suggested answer.\n");
         const owner = argumentValue(args, "--owner") ?? await answerWithDefault(`\n1/5 ${details.ownerPrompt}`, details.ownerDefault, rl);
-        const operatingAuthority = argumentValue(args, "--operating-authority") ?? argumentValue(args, "--deploy-authority") ?? await answerWithDefault(`2/5 ${details.authorityPrompt}`, details.authorityDefault, rl);
+        const explicitAuthority = argumentValue(args, "--operating-authority") ?? argumentValue(args, "--deploy-authority");
+        const authorityOwner = explicitAuthority ?? await answerWithDefault(`2/5 ${details.authorityPrompt}`, details.authorityDefault, rl);
+        const operatingAuthority = explicitAuthority ?? launchAuthority(template, authorityOwner);
         const escalationOwner = argumentValue(args, "--escalation-owner") ?? await answerWithDefault(`3/5 ${details.escalationPrompt}`, owner, rl);
         const handoffTarget = argumentValue(args, "--handoff-target") ?? await answerWithDefault(`4/5 ${details.handoffPrompt}`, owner, rl);
         const availability = await Promise.all([providerAvailable("codex"), providerAvailable("claude-code")]);
