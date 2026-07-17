@@ -78,6 +78,10 @@ wizard if you only want the portable package.
 
 ### Watch the guided flow
 
+These are fast-forwarded captures of the real CLI running against fresh local
+test repositories. Each records the evidence scan, five confirmations, provider
+context installation, and the final verification result.
+
 #### Software team
 
 <img src="docs/demos/software-launchpad.gif" width="600" alt="DeltaDotta terminal onboarding for a software team: scan a repository, confirm five operating decisions, install a DevOps Platform role, and verify the launch." />
