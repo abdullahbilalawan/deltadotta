@@ -10,3 +10,4 @@ node_modules
 .DS_Store
 .pnpm-debug.log*
 .gstack/
+docs/demos/frames/

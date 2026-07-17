@@ -76,6 +76,16 @@ provider context, and a first-shift report. DeltaDotta only changes its clearly
 marked block in `AGENTS.md` or `CLAUDE.md`. Choose the no-install option in the
 wizard if you only want the portable package.
 
+### Watch the guided flow
+
+#### Software team
+
+<img src="docs/demos/software-launchpad.gif" width="600" alt="DeltaDotta terminal onboarding for a software team: scan a repository, confirm five operating decisions, install a DevOps Platform role, and verify the launch." />
+
+#### Manufacturing team
+
+<img src="docs/demos/manufacturing-launchpad.gif" width="600" alt="DeltaDotta terminal onboarding for a manufacturing team: scan operating evidence, confirm five safety decisions, install a Production Operations role, and verify the launch." />
+
 ### Use the web workspace
 
 ```bash
