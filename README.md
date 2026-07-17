@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://github.com/abdullahbilalawan/deltadotta">
-    <img src="public/deltadotta-mark.svg" width="88" alt="DeltaDotta" />
+    <img src="public/deltadotta-logo.svg" width="480" alt="DeltaDotta — Team Launchpad" />
   </a>
 </p>
 

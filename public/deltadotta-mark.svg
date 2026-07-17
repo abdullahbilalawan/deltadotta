@@ -1,7 +1,13 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" role="img" aria-labelledby="title desc">
-  <title id="title">DeltaDotta mark</title>
-  <desc id="desc">A lime delta inside a dark circular field</desc>
-  <circle cx="48" cy="48" r="46" fill="#141714"/>
-  <path d="M48 19 75 71H21L48 19Zm0 15-13.2 25.5h26.4L48 34Z" fill="#c7ff3d"/>
-  <circle cx="48" cy="47" r="5" fill="#c7ff3d"/>
+  <title id="title">DeltaDotta mission mark</title>
+  <desc id="desc">A lime delta mission badge with progress nodes</desc>
+  <rect x="3" y="3" width="90" height="90" rx="27" fill="#141714" stroke="#c7ff3d" stroke-width="3"/>
+  <path d="M48 18 76 70H20L48 18Zm0 15-13 25h26L48 33Z" fill="#c7ff3d"/>
+  <circle cx="48" cy="47" r="5" fill="#141714" stroke="#c7ff3d" stroke-width="3"/>
+  <circle cx="20" cy="78" r="3" fill="#c7ff3d"/>
+  <circle cx="31" cy="78" r="3" fill="#c7ff3d"/>
+  <circle cx="42" cy="78" r="3" fill="#c7ff3d"/>
+  <circle cx="53" cy="78" r="3" fill="#596151"/>
+  <circle cx="64" cy="78" r="3" fill="#596151"/>
+  <path d="M19 12h12M65 12h12" stroke="#c7ff3d" stroke-width="3" stroke-linecap="round" opacity=".7"/>
 </svg>

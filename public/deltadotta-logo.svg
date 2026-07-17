@@ -1,8 +1,16 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 112" role="img" aria-labelledby="title desc">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 144" role="img" aria-labelledby="title desc">
   <title id="title">DeltaDotta</title>
-  <desc id="desc">DeltaDotta organization compiler logo</desc>
-  <circle cx="56" cy="56" r="52" fill="#141714"/>
-  <path d="M56 23 86 82H26l30-59Zm0 17L42 67h28L56 40Z" fill="#c7ff3d"/>
-  <circle cx="56" cy="55" r="5" fill="#c7ff3d"/>
-  <text x="128" y="72" fill="#141714" font-family="Arial, Helvetica, sans-serif" font-size="54" font-weight="700" letter-spacing="-3">DeltaDotta</text>
+  <desc id="desc">DeltaDotta team launchpad mission badge</desc>
+  <rect x="3" y="3" width="634" height="138" rx="34" fill="#141714" stroke="#c7ff3d" stroke-width="3"/>
+  <path d="M76 28 112 96H40L76 28Zm0 19L59 80h34L76 47Z" fill="#c7ff3d"/>
+  <circle cx="76" cy="64" r="6" fill="#141714" stroke="#c7ff3d" stroke-width="3"/>
+  <path d="M40 113h42" stroke="#596151" stroke-width="5" stroke-linecap="round"/>
+  <path d="M40 113h25" stroke="#c7ff3d" stroke-width="5" stroke-linecap="round"/>
+  <text x="142" y="73" fill="#ffffff" font-family="Arial, Helvetica, sans-serif" font-size="49" font-weight="800" letter-spacing="-2">DeltaDotta</text>
+  <text x="145" y="102" fill="#c7ff3d" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="700" letter-spacing="3">TEAM LAUNCHPAD</text>
+  <g fill="#c7ff3d">
+    <circle cx="546" cy="50" r="6"/><circle cx="568" cy="50" r="6"/><circle cx="590" cy="50" r="6"/>
+  </g>
+  <g fill="#596151"><circle cx="568" cy="72" r="6"/><circle cx="590" cy="72" r="6"/></g>
+  <path d="M546 72h-16M546 72l8-8M546 72l8 8" stroke="#c7ff3d" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>
