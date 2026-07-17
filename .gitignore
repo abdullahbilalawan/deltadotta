@@ -1,0 +1,12 @@
+node_modules
+.next
+.env
+.env.local
+.env.*
+!.env.example
+*.log
+*.tsbuildinfo
+.deltadotta/
+.DS_Store
+.pnpm-debug.log*
+.gstack/

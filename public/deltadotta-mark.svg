@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" role="img" aria-labelledby="title desc">
+  <title id="title">DeltaDotta mark</title>
+  <desc id="desc">A lime delta inside a dark circular field</desc>
+  <circle cx="48" cy="48" r="46" fill="#141714"/>
+  <path d="M48 19 75 71H21L48 19Zm0 15-13.2 25.5h26.4L48 34Z" fill="#c7ff3d"/>
+  <circle cx="48" cy="47" r="5" fill="#c7ff3d"/>
+</svg>

@@ -1,0 +1,35 @@
+{
+  "schemaVersion": "1.0",
+  "organization": {
+    "name": "Customer Operations Pack",
+    "mission": "Keep customer commitments visible from onboarding through renewal.",
+    "version": 1,
+    "updatedAt": "2026-07-14T00:00:00.000Z",
+    "evidence": [
+      {
+        "id": "customer-evidence",
+        "name": "Customer operating principle",
+        "kind": "note",
+        "excerpt": "The customer team owns renewal risk and escalates systemic product blockers.",
+        "importedAt": "2026-07-14T00:00:00.000Z"
+      }
+    ],
+    "roles": [
+      {
+        "id": "customer-success",
+        "title": "Customer Success Lead",
+        "department": "Customer",
+        "reportsTo": "ceo",
+        "purpose": "Make customer outcomes, renewals, and product feedback visible to the company.",
+        "owns": ["Customer health", "Renewal risk"],
+        "inputs": ["Customer feedback", "Product roadmap"],
+        "outputs": ["Customer health review", "Escalated product risks"],
+        "permissions": ["Escalate systemic customer risk"],
+        "collaborators": ["Chief Executive Officer"],
+        "escalatesTo": "ceo",
+        "evidenceIds": ["customer-evidence"],
+        "status": "ready"
+      }
+    ]
+  }
+}

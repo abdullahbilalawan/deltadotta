@@ -1,0 +1,52 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String      @id @default(cuid())
+  email        String      @unique
+  passwordHash String
+  memberships  Membership[]
+  createdAt    DateTime    @default(now())
+}
+
+model Workspace {
+  id            String         @id @default(cuid())
+  name          String
+  organization  Json
+  members       Membership[]
+  exports       ExportVersion[]
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+}
+
+model Membership {
+  userId      String
+  workspaceId String
+  role        AuthorRole
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  workspace   Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+
+  @@id([userId, workspaceId])
+}
+
+model ExportVersion {
+  id          String    @id @default(cuid())
+  workspaceId String
+  version     Int
+  manifest    Json
+  createdAt   DateTime  @default(now())
+  workspace   Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+
+  @@unique([workspaceId, version])
+}
+
+enum AuthorRole {
+  OWNER
+  EDITOR
+}

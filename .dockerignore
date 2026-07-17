@@ -1,0 +1,15 @@
+.git
+.github
+.gstack
+.next
+dist
+node_modules
+coverage
+.env
+.env.*
+*.log
+*.md
+!README.md
+!LICENSE
+!TRADEMARK.md
+**/.deltadotta
