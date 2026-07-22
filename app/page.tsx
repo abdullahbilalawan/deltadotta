@@ -2,7 +2,7 @@
 
 import JSZip from "jszip";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { ArrowDownToLine, Check, ClipboardList, FileText, FolderUp, GitBranch, Plus, Sparkles, X } from "lucide-react";
+import { ArrowDownToLine, ClipboardList, FileText, FolderUp, GitBranch, Plus, X } from "lucide-react";
 import { compilePackage, createTeamLaunchpad, Evidence, extractRoleSignals, LaunchTemplate, mergeOrganization, Organization, parseImportedPackage, Role, slugify, starterOrganization } from "@/lib/organization";
 
 const storageKey = "deltadotta-organization-v1";
@@ -147,13 +147,16 @@ export default function Home() {
 
     <section className="map-layout">
       <aside className="source-rail">
-        <div><p className="simple-kicker">01 / EVIDENCE</p><h2>Source inbox</h2><p>Bring JDs, operating notes, and repository files. Every extracted suggestion keeps its source.</p></div>
+        <div><p className="simple-kicker">01 / KNOWLEDGE INBOX</p><h2>Capture tribal knowledge</h2><p>Bring JDs, runbooks, notes, and repository files. DeltaDotta keeps the source attached to every role decision.</p></div>
         <button className="source-drop" onClick={() => sourceInput.current?.click()}><FolderUp size={19} /><span><strong>Add source material</strong><small>JD, Markdown, text, CSV, or JSON</small></span></button>
         <div className="source-list">{organization.evidence.map((source) => <div className="source-row" key={source.id}><FileText size={14} /><div><strong>{source.name}</strong><span>{source.kind}</span></div></div>)}</div>
       </aside>
 
       <section className="map-canvas">
-        <div className="canvas-top"><div><p className="simple-kicker">02 / ORGANIZATION MAP</p><h1>Hierarchy, not a form.</h1><p>Start with the template. Add only evidence-backed roles. Click a role to build its skill.</p></div><button className="add-role" onClick={addRole}><Plus size={15} /> Add role</button></div>
+        <div className="canvas-top"><div><p className="simple-kicker">02 / OPERATING PROCESS</p><h1>Knowledge becomes roles.</h1><p>Capture sources, link owners, set authority, verify a safe first-shift, then refresh when the source of truth changes.</p></div><button className="add-role" onClick={addRole}><Plus size={15} /> Add role</button></div>
+        <div className="knowledge-process" aria-label="DeltaDotta knowledge process">
+          {["Capture", "Link owner", "Set boundary", "Verify", "Refresh"].map((step, index) => <span key={step}><strong>{String(index + 1).padStart(2, "0")}</strong>{step}</span>)}
+        </div>
         <div className="template-note"><GitBranch size={15} /><span><strong>Template:</strong> {organization.launch ? (organization.launch.template === "manufacturing" ? "Manufacturing team" : "Software team") : "Choose a team template"}</span><button onClick={() => useTemplate(organization.launch?.template === "manufacturing" ? "manufacturing" : "software")}>{organization.launch ? "Reset template" : "Start software team"}</button></div>
         <div className="graph-area">
           <div className="graph-spine" />
@@ -167,7 +170,7 @@ export default function Home() {
           <label>Mission<textarea value={selectedRole.purpose} onChange={(event) => updateRole({ purpose: event.target.value })} /></label>
           <label>Owns <span>one per line</span><textarea value={selectedRole.owns.join("\n")} onChange={(event) => updateRole({ owns: event.target.value.split("\n").filter(Boolean) })} /></label>
           <label>Decision authority <span>one per line</span><textarea value={selectedRole.permissions.join("\n")} onChange={(event) => updateRole({ permissions: event.target.value.split("\n").filter(Boolean) })} /></label>
-          <div className="skill-source"><ClipboardList size={15} /><span>{selectedRole.evidenceIds.length ? `${selectedRole.evidenceIds.length} source link${selectedRole.evidenceIds.length > 1 ? "s" : ""}` : "Template role — add evidence to strengthen it"}</span></div>
+          <div className="skill-source"><ClipboardList size={15} /><span>{selectedRole.evidenceIds.length ? `${selectedRole.evidenceIds.length} source link${selectedRole.evidenceIds.length > 1 ? "s" : ""}. This role must cite source knowledge before acting.` : "Template role — add evidence to strengthen it"}</span></div>
         </>}
         <div className="suggestions"><p className="simple-kicker">EXTRACTED SUGGESTIONS</p>{candidates.length ? candidates.map((candidate) => <article key={candidate.id}><div><strong>{candidate.title}</strong><p>{candidate.sourceName}</p></div><button onClick={() => acceptCandidate(candidate)}>Add to map</button></article>) : <p className="empty-suggestions">Upload a JD or repository text file and new role candidates appear here for review.</p>}</div>
       </aside>

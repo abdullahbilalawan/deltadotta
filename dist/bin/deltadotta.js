@@ -219,7 +219,7 @@ async function runLaunch(args) {
         throw new Error("--provider must be claude-code or codex. ChatGPT uses the portable import guide in this release.");
     const rl = createInterface({ input, output });
     try {
-        output.write("\nΔ Welcome to DeltaDotta\n\nWe’ll build a practical team map, set up one safe AI role, and open it for you. This usually takes under 10 minutes.\n");
+        output.write("\nΔ Welcome to DeltaDotta\n\nWe’ll turn scattered team knowledge into a practical map, one safe AI role, and a reusable skills package. This usually takes under 10 minutes.\n");
         const repositoryInput = argumentValue(args, "--repo") ?? (hasFlag(args, "--yes") ? "." : await answerWithDefault("\nStep 1 — Where is the team workspace", resolve("."), rl));
         const repository = resolve(repositoryInput);
         let repositoryStats;
@@ -243,7 +243,7 @@ async function runLaunch(args) {
         output.write("\nI’m looking through local runbooks, workflow files, ownership files, and existing instructions…\n");
         const scanned = await scanRepository(repository);
         const evidence = repositoryEvidence(scanned);
-        output.write(`Found ${evidence.length} useful source${evidence.length === 1 ? "" : "s"} in ${scanned.length} readable file${scanned.length === 1 ? "" : "s"}. They’ll stay linked to the map.\n\n`);
+        output.write(`Found ${evidence.length} useful source${evidence.length === 1 ? "" : "s"} in ${scanned.length} readable file${scanned.length === 1 ? "" : "s"}. They’ll stay linked as tribal knowledge evidence.\n\n`);
         output.write("Now, five quick confirmations. Press Enter to keep the suggested answer.\n");
         const owner = argumentValue(args, "--owner") ?? await answerWithDefault(`\n1/5 ${details.ownerPrompt}`, details.ownerDefault, rl);
         const explicitAuthority = argumentValue(args, "--operating-authority") ?? argumentValue(args, "--deploy-authority");
@@ -295,6 +295,7 @@ async function runLaunch(args) {
         output.write(`\n✓ Launch complete: ${organization.launch?.status ?? "needs-refinement"}\n`);
         output.write(`  Team map: ${mapLocation}\n`);
         output.write(`  Package: ${destination}\n`);
+        output.write("  Knowledge process: capture → link owner → set boundary → verify → refresh\n");
         output.write("  Next: open the map and refine any role still marked mapped or needs refinement.\n");
         if (hasFlag(args, "--no-open"))
             output.write("  Map opening skipped.\n\n");

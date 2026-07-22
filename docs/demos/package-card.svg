@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1420" height="760" viewBox="0 0 1420 760">
+  <rect width="1420" height="760" fill="#f4f5ed"/>
+  <rect x="42" y="38" width="1336" height="684" rx="14" fill="#fbfbf6" stroke="#d3d7ca"/>
+  <text x="76" y="92" font-family="Arial, sans-serif" font-size="24" font-weight="700" fill="#161a16">DeltaDotta</text>
+  <text x="76" y="140" font-family="Georgia, serif" font-size="54" font-weight="600" fill="#161a16">Verified role package</text>
+  <text x="76" y="178" font-family="Arial, sans-serif" font-size="22" fill="#667064">Product context, authority, handoffs, and escalation rules are packaged with source evidence.</text>
+
+  <rect x="76" y="228" width="600" height="410" rx="8" fill="#161a16"/>
+  <text x="108" y="274" font-family="Menlo, monospace" font-size="20" fill="#c8ff3c">.deltadotta/launchpad</text>
+  <text x="108" y="316" font-family="Menlo, monospace" font-size="18" fill="#f4f5ed">├── KNOWLEDGE-PROCESS.md</text>
+  <text x="108" y="350" font-family="Menlo, monospace" font-size="18" fill="#f4f5ed">├── ORGANIZATION.md</text>
+  <text x="108" y="384" font-family="Menlo, monospace" font-size="18" fill="#f4f5ed">├── roles/</text>
+  <text x="138" y="418" font-family="Menlo, monospace" font-size="18" fill="#f4f5ed">├── devops-platform-engineer/SKILL.md</text>
+  <text x="138" y="452" font-family="Menlo, monospace" font-size="18" fill="#f4f5ed">├── engineering-lead/SKILL.md</text>
+  <text x="138" y="486" font-family="Menlo, monospace" font-size="18" fill="#f4f5ed">├── software-engineer/SKILL.md</text>
+  <text x="138" y="520" font-family="Menlo, monospace" font-size="18" fill="#f4f5ed">├── product-designer/SKILL.md</text>
+  <text x="138" y="554" font-family="Menlo, monospace" font-size="18" fill="#f4f5ed">└── qa-engineer/SKILL.md</text>
+  <text x="108" y="598" font-family="Menlo, monospace" font-size="18" fill="#f4f5ed">└── verification/first-shift-report.md</text>
+
+  <rect x="730" y="228" width="572" height="410" rx="8" fill="#eef0e6" stroke="#d3d7ca"/>
+  <text x="766" y="276" font-family="Arial, sans-serif" font-size="18" font-weight="700" fill="#161a16">What the role can safely carry into chat</text>
+  <circle cx="778" cy="326" r="5" fill="#7a9f29"/>
+  <text x="800" y="333" font-family="Arial, sans-serif" font-size="20" fill="#394137">Which source of truth to consult first</text>
+  <circle cx="778" cy="376" r="5" fill="#7a9f29"/>
+  <text x="800" y="383" font-family="Arial, sans-serif" font-size="20" fill="#394137">Who owns each operating decision</text>
+  <circle cx="778" cy="426" r="5" fill="#7a9f29"/>
+  <text x="800" y="433" font-family="Arial, sans-serif" font-size="20" fill="#394137">What the role may stop, do, or escalate</text>
+  <circle cx="778" cy="476" r="5" fill="#7a9f29"/>
+  <text x="800" y="483" font-family="Arial, sans-serif" font-size="20" fill="#394137">Where evidence goes after an incident</text>
+  <circle cx="778" cy="526" r="5" fill="#7a9f29"/>
+  <text x="800" y="533" font-family="Arial, sans-serif" font-size="20" fill="#394137">When stale knowledge must be refreshed</text>
+  <rect x="766" y="574" width="318" height="38" rx="4" fill="#161a16"/>
+  <text x="786" y="599" font-family="Menlo, monospace" font-size="15" fill="#c8ff3c">capture - link - verify - export</text>
+</svg>

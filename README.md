@@ -15,7 +15,7 @@
 </p>
 
 <p align="center">
-  <a href="#quick-start">Get started</a> · <a href="#deploy-with-docker">Deploy</a> · <a href="#contributing">Collaborate</a>
+  <a href="#quick-start">Get started</a> · <a href="#demo-gallery">Demos</a> · <a href="#deploy-with-docker">Deploy</a> · <a href="#contributing">Collaborate</a>
 </p>
 
 ## What is DeltaDotta?
@@ -76,19 +76,89 @@ provider context, and a first-shift report. DeltaDotta only changes its clearly
 marked block in `AGENTS.md` or `CLAUDE.md`. Choose the no-install option in the
 wizard if you only want the portable package.
 
-### Watch the guided flow
+## Demo gallery
 
-These are fast-forwarded captures of the real CLI running against fresh local
-test repositories. Each records the evidence scan, five confirmations, provider
-context installation, and the final verification result.
+These demos are built from local sample workspaces and generated DeltaDotta
+packages. They are safe to inspect, share, and use as a starting point for your
+own product walkthrough.
 
-#### Software team
+### Guided Launchpad flows
+
+Fast-forwarded captures of the real CLI running against fresh local test
+repositories. Each records the evidence scan, five confirmations, provider
+context installation, and final verification result.
+
+#### Software Launchpad
 
 <img src="docs/demos/software-launchpad.gif" width="600" alt="DeltaDotta terminal onboarding for a software team: scan a repository, confirm five operating decisions, install a DevOps Platform role, and verify the launch." />
 
-#### Manufacturing team
+#### Manufacturing Launchpad
 
 <img src="docs/demos/manufacturing-launchpad.gif" width="600" alt="DeltaDotta terminal onboarding for a manufacturing team: scan operating evidence, confirm five safety decisions, install a Production Operations role, and verify the launch." />
+
+### Human-speed onboarding
+
+A slower, presenter-friendly recording that creates repo evidence, runs the
+Software Launchpad, installs provider context, and ends on a verified package.
+
+<img src="docs/demos/deltadotta-human-onboarding.gif" width="720" alt="Human-speed DeltaDotta onboarding demo for Northstar Checkout, ending on a verified Software Launchpad package." />
+
+Video version: [deltadotta-human-onboarding.mp4](docs/demos/deltadotta-human-onboarding.mp4)
+
+### Product story cards
+
+These cards are useful in READMEs, launch posts, investor updates, and demo
+decks when you need to explain what the generated package contains.
+
+#### Verified role package
+
+<img src="docs/demos/package-card.png" width="720" alt="DeltaDotta verified role package card showing generated role skills, organization files, verification report, and what the role can safely carry into chat." />
+
+Source: [package-card.svg](docs/demos/package-card.svg)
+
+#### Operating map
+
+<img src="docs/demos/hierarchy-card.png" width="720" alt="DeltaDotta operating map card showing Engineering Lead, DevOps Platform, Software Engineer, Product Designer, QA Engineer, and incident-ready role boundaries." />
+
+Source: [hierarchy-card.svg](docs/demos/hierarchy-card.svg)
+
+### Claude skill import demo
+
+The Claude storyboard shows how to import the generated focused role skill and
+prove the value with a failed-deployment prompt.
+
+- Storyboard: [CLAUDE-DEMO-STORYBOARD.md](docs/demos/CLAUDE-DEMO-STORYBOARD.md)
+- Focused Claude skill ZIP: [northstar-devops-platform-engineer-claude-skill.zip](docs/demos/northstar-devops-platform-engineer-claude-skill.zip)
+- Full sample DeltaDotta package: [northstar-deltadotta-package.zip](docs/demos/northstar-deltadotta-package.zip)
+
+### Demo workspace
+
+The Northstar Checkout demo workspace contains the source evidence used by the
+Claude and package demos:
+
+- [README.md](docs/demo-workspace/README.md)
+- [PRODUCT-KNOWLEDGE.md](docs/demo-workspace/PRODUCT-KNOWLEDGE.md)
+- [RUNBOOK.md](docs/demo-workspace/RUNBOOK.md)
+- [AGENTS.md](docs/demo-workspace/AGENTS.md)
+- [CODEOWNERS](docs/demo-workspace/CODEOWNERS)
+
+Generated launchpad output is included under
+[`docs/demo-workspace/.deltadotta/launchpad/`](docs/demo-workspace/.deltadotta/launchpad/).
+
+### Loop assets
+
+Use these when you need a shorter animated loop instead of the full human-speed
+walkthrough:
+
+- [deltadotta-onboarding-loop.gif](docs/demos/deltadotta-onboarding-loop.gif)
+- [deltadotta-onboarding-loop.mp4](docs/demos/deltadotta-onboarding-loop.mp4)
+
+### Source assets
+
+The demo source files are included for remixing or re-recording:
+
+- Terminal recording script: [human-onboarding.tape](docs/demos/human-onboarding.tape)
+- Software and Manufacturing frame stills: [docs/demos/frames/](docs/demos/frames/)
 
 ### Use the web workspace
 

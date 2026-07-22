@@ -9,7 +9,10 @@ describe("DeltaDotta organization compiler", () => {
     expect(packageFiles["manifest.yaml"]).toContain("schema_version: \"1.0\"");
     expect(packageFiles["ORGANIZATION.md"]).toContain("Northstar Studio");
     expect(packageFiles["roles/product-lead/SKILL.md"]).toContain("## Authority");
+    expect(packageFiles["roles/product-lead/SKILL.md"]).toContain("name: product-lead");
+    expect(packageFiles["roles/product-lead/SKILL.md"]).toContain("description:");
     expect(packageFiles["policies/escalations.md"]).toContain("Product Lead");
+    expect(packageFiles["PROVIDER-IMPORT.md"]).toContain("Customize → Skills");
   });
 
   it("flags a role with no purpose, ownership, authority, or evidence", () => {
