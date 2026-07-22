@@ -26,6 +26,9 @@
 
 <p align="center">
   <a href="docs/demos/deltadotta-long-higgsfield-campaign.mp4">Watch 40-second campaign film</a> ·
+  <a href="docs/demos/deltadotta-social-launch.mp4">Social cut</a> ·
+  <a href="docs/demos/deltadotta-investor-story.mp4">Investor cut</a> ·
+  <a href="docs/demos/deltadotta-product-proof.mp4">Product proof cut</a> ·
   <a href="docs/demos/deltadotta-higgsfield-marketing-film.mp4">Watch 8-second Higgsfield cut</a> ·
   <a href="docs/demos/deltadotta-marketing-film.mp4">Watch motion-graphics cut</a> ·
   <a href="docs/demos/deltadotta-onboarding-loop.mp4">Watch short MP4</a> ·
@@ -152,6 +155,20 @@ Short Higgsfield version: [deltadotta-higgsfield-marketing-film.mp4](docs/demos/
 
 Motion-graphics version: [deltadotta-marketing-film.mp4](docs/demos/deltadotta-marketing-film.mp4)
 
+### Campaign cutdowns
+
+Three alternate marketing videos are included for different launch surfaces:
+
+- Social launch cut: [deltadotta-social-launch.mp4](docs/demos/deltadotta-social-launch.mp4)
+- Investor story cut: [deltadotta-investor-story.mp4](docs/demos/deltadotta-investor-story.mp4)
+- Product proof cut: [deltadotta-product-proof.mp4](docs/demos/deltadotta-product-proof.mp4)
+
+<img src="docs/demos/deltadotta-social-launch.gif" width="360" alt="Vertical DeltaDotta social launch cut showing repo evidence, role boundaries, preflight, and npx deltadotta." />
+
+<img src="docs/demos/deltadotta-investor-story.gif" width="720" alt="DeltaDotta investor story cut explaining the AI agent adoption gap and organization compiler positioning." />
+
+<img src="docs/demos/deltadotta-product-proof.gif" width="720" alt="DeltaDotta product proof cut showing the demo workspace, guided wizard, generated package, and first-shift role." />
+
 ### Guided Launchpad flows
 
 Fast-forwarded captures of the real CLI running against fresh local test
@@ -223,6 +240,15 @@ walkthrough:
 - [deltadotta-long-higgsfield-campaign.gif](docs/demos/deltadotta-long-higgsfield-campaign.gif)
 - [deltadotta-long-higgsfield-campaign.mp4](docs/demos/deltadotta-long-higgsfield-campaign.mp4)
 - [deltadotta-long-higgsfield-campaign-poster.png](docs/demos/deltadotta-long-higgsfield-campaign-poster.png)
+- [deltadotta-social-launch.gif](docs/demos/deltadotta-social-launch.gif)
+- [deltadotta-social-launch.mp4](docs/demos/deltadotta-social-launch.mp4)
+- [deltadotta-social-launch-poster.png](docs/demos/deltadotta-social-launch-poster.png)
+- [deltadotta-investor-story.gif](docs/demos/deltadotta-investor-story.gif)
+- [deltadotta-investor-story.mp4](docs/demos/deltadotta-investor-story.mp4)
+- [deltadotta-investor-story-poster.png](docs/demos/deltadotta-investor-story-poster.png)
+- [deltadotta-product-proof.gif](docs/demos/deltadotta-product-proof.gif)
+- [deltadotta-product-proof.mp4](docs/demos/deltadotta-product-proof.mp4)
+- [deltadotta-product-proof-poster.png](docs/demos/deltadotta-product-proof-poster.png)
 - [deltadotta-higgsfield-marketing-film.gif](docs/demos/deltadotta-higgsfield-marketing-film.gif)
 - [deltadotta-higgsfield-marketing-film.mp4](docs/demos/deltadotta-higgsfield-marketing-film.mp4)
 - [deltadotta-higgsfield-marketing-film-poster.png](docs/demos/deltadotta-higgsfield-marketing-film-poster.png)
