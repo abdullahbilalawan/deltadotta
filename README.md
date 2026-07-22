@@ -21,10 +21,11 @@
 </p>
 
 <p align="center">
-  <img src="docs/demos/deltadotta-onboarding-loop.gif" width="760" alt="DeltaDotta onboarding loop: run the guided Launchpad, map a Northstar Engineering team, install provider context, and finish with a preflighted portable package." />
+  <img src="docs/demos/deltadotta-marketing-film.gif" width="760" alt="DeltaDotta marketing film: messy team files flow into a command-line launchpad, form an operating map, and become a preflighted portable AI role package." />
 </p>
 
 <p align="center">
+  <a href="docs/demos/deltadotta-marketing-film.mp4">Watch marketing film</a> ·
   <a href="docs/demos/deltadotta-onboarding-loop.mp4">Watch short MP4</a> ·
   <a href="docs/demos/deltadotta-human-onboarding.mp4">Watch full walkthrough</a> ·
   <a href="docs/demos/northstar-deltadotta-package.zip">Download sample package</a> ·
@@ -134,6 +135,17 @@ These demos are built from local sample workspaces and generated DeltaDotta
 packages. They are safe to inspect, share, and use as a starting point for your
 own product walkthrough.
 
+### Marketing film
+
+A 24-second launch film for introducing DeltaDotta in a README, launch post, or
+demo opener. It shows the product story end to end: messy repo evidence becomes
+a clean operating map, a preflighted role package, and a provider-ready first
+shift.
+
+<img src="docs/demos/deltadotta-marketing-film.gif" width="720" alt="DeltaDotta marketing film preview showing evidence files, the operating map, a preflighted role package, and the final npx deltadotta call to action." />
+
+Video version: [deltadotta-marketing-film.mp4](docs/demos/deltadotta-marketing-film.mp4)
+
 ### Guided Launchpad flows
 
 Fast-forwarded captures of the real CLI running against fresh local test
@@ -202,6 +214,9 @@ Generated launchpad output is included under
 Use these when you need a shorter animated loop instead of the full human-speed
 walkthrough:
 
+- [deltadotta-marketing-film.gif](docs/demos/deltadotta-marketing-film.gif)
+- [deltadotta-marketing-film.mp4](docs/demos/deltadotta-marketing-film.mp4)
+- [deltadotta-marketing-film-poster.png](docs/demos/deltadotta-marketing-film-poster.png)
 - [deltadotta-onboarding-loop.gif](docs/demos/deltadotta-onboarding-loop.gif)
 - [deltadotta-onboarding-loop.mp4](docs/demos/deltadotta-onboarding-loop.mp4)
 
