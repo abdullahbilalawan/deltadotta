@@ -202,7 +202,7 @@ function importRole(value, index) {
         escalatesTo: typeof source.escalatesTo === "string" ? source.escalatesTo : undefined,
         evidenceIds: stringList(source.evidenceIds),
         status: source.status === "ready" ? "ready" : "draft",
-        launchStatus: source.launchStatus === "mapped" || source.launchStatus === "installed" || source.launchStatus === "verified" || source.launchStatus === "needs-refinement" ? source.launchStatus : undefined,
+        launchStatus: source.launchStatus === "verified" ? "preflighted" : source.launchStatus === "mapped" || source.launchStatus === "installed" || source.launchStatus === "preflighted" || source.launchStatus === "needs-refinement" ? source.launchStatus : undefined,
         contract,
     };
 }
@@ -230,6 +230,8 @@ export function parseImportedPackage(value) {
                 kind: evidenceSource.kind === "package" || evidenceSource.kind === "upload" || evidenceSource.kind === "repository" ? evidenceSource.kind : "note",
                 excerpt: typeof evidenceSource.excerpt === "string" ? evidenceSource.excerpt : "Imported package evidence.",
                 importedAt: "Just now",
+                sourcePath: typeof evidenceSource.sourcePath === "string" ? evidenceSource.sourcePath : undefined,
+                sourceHash: typeof evidenceSource.sourceHash === "string" ? evidenceSource.sourceHash : undefined,
             }];
     }) : [];
     return {
@@ -355,6 +357,14 @@ export function lintOrganization(org) {
 function bullets(items) {
     return items.length ? items.map((item) => `- ${item}`).join("\n") : "- Not yet defined";
 }
+export function evidenceHash(content) {
+    let hash = 2166136261;
+    for (let index = 0; index < content.length; index += 1) {
+        hash ^= content.charCodeAt(index);
+        hash = Math.imul(hash, 16777619);
+    }
+    return `fnv1a-${(hash >>> 0).toString(16).padStart(8, "0")}`;
+}
 export function roleSkill(role, org) {
     const manager = org.roles.find((candidate) => candidate.id === role.reportsTo)?.title ?? "No direct manager";
     const escalation = org.roles.find((candidate) => candidate.id === role.escalatesTo)?.title ?? manager;
@@ -368,12 +378,31 @@ export function roleSkill(role, org) {
 function roleContract(role) {
     if (!role.contract)
         return "";
-    return `# ${role.title} — first-shift contract\n\n## Mission\n${role.contract.mission}\n\n## Authority boundary\n${role.contract.authority}\n\n## Knowledge to consult\n${bullets(role.contract.knowledge)}\n\n## Handoff\n${role.contract.handoff}\n\n## Escalation\n${role.contract.escalation}\n\n## Safe verification scenario\n${role.contract.scenario}\n\n## Safety\nThis verification is read-only. Do not deploy, modify infrastructure, access production credentials, or change repository files.\n`;
+    return `# ${role.title} — first-shift contract\n\n## Mission\n${role.contract.mission}\n\n## Authority boundary\n${role.contract.authority}\n\n## Knowledge to consult\n${bullets(role.contract.knowledge)}\n\n## Handoff\n${role.contract.handoff}\n\n## Escalation\n${role.contract.escalation}\n\n## Safe preflight scenario\n${role.contract.scenario}\n\n## Safety\nThis preflight is read-only. Do not deploy, modify infrastructure, access production credentials, or change repository files.\n`;
 }
 function knowledgeProcess(org) {
     const evidence = org.evidence.map((source) => `- ${source.name} (${source.kind}) — ${source.excerpt}`).join("\n") || "- No evidence linked yet.";
     const owners = org.roles.map((role) => `- ${role.title}: owns ${role.owns.join(", ") || "not yet defined"}; escalates to ${org.roles.find((candidate) => candidate.id === role.escalatesTo)?.title ?? "no escalation target"}.`).join("\n");
-    return `# Tribal knowledge operating process\n\nDeltaDotta is not only a hierarchy generator. It turns scattered team memory into a reusable operating process for AI-assisted work.\n\n## 1. Capture the sources\nBring in runbooks, README files, workflow files, CODEOWNERS, meeting notes, support notes, and role descriptions. Keep the original source names visible.\n\n## 2. Link knowledge to owners\nEvery important fact should answer three questions: who owns it, what decision it affects, and when it must be escalated.\n\n## 3. Convert memory into role skills\nRole skills carry mission, authority, inputs, outputs, handoffs, escalation, and required knowledge. They are designed to be used inside Claude, Codex, ChatGPT, or another model workflow as operating context.\n\n## 4. Verify before trusting\nRun a safe first-shift scenario. The first verification is read-only by default: no deployments, restarts, credentials, production changes, or record edits.\n\n## 5. Keep it fresh\nUse \`deltadotta check\` after source files move or change. Refresh the package when ownership, authority, or the source of truth changes.\n\n## Current evidence\n${evidence}\n\n## Current owner map\n${owners}\n`;
+    return `# Tribal knowledge operating process\n\nDeltaDotta is not only a hierarchy generator. It turns scattered team memory into a reusable operating process for AI-assisted work.\n\n## 1. Capture the sources\nBring in runbooks, README files, workflow files, CODEOWNERS, meeting notes, support notes, and role descriptions. Keep the original source names visible.\n\n## 2. Link knowledge to owners\nEvery important fact should answer three questions: who owns it, what decision it affects, and when it must be escalated.\n\n## 3. Convert memory into role skills\nRole skills carry mission, authority, inputs, outputs, handoffs, escalation, and required knowledge. They are designed to be used inside Claude, Codex, or another model workflow as operating context.\n\n## 4. Preflight before trusting\nRun a safe first-shift scenario. The first preflight is read-only by default: no deployments, restarts, credentials, production changes, or record edits.\n\n## 5. Keep it fresh\nUse \`deltadotta check\` after source files move or change. Refresh the package when ownership, authority, or the source of truth changes.\n\n## Current evidence\n${evidence}\n\n## Current owner map\n${owners}\n`;
+}
+export function packageGaps(org) {
+    const repositoryEvidence = org.evidence.filter((source) => source.kind === "repository");
+    const templateEvidence = org.evidence.filter((source) => source.id === "launch-template");
+    const issues = lintOrganization(org);
+    const primaryRole = org.roles.find((role) => role.id === org.launch?.primaryRoleId);
+    const sourceLines = repositoryEvidence.length
+        ? repositoryEvidence.map((source) => `- ${source.name}${source.sourceHash ? ` — ${source.sourceHash}` : ""}`).join("\n")
+        : "- No repository evidence was captured. This package is mostly template and interview context.";
+    const issueLines = issues.length
+        ? issues.map((issue) => `- ${issue.severity.toUpperCase()}: ${issue.title} — ${issue.detail}`).join("\n")
+        : "- No structural lint issues found in the role map.";
+    const assumptions = [
+        templateEvidence.length ? "Template defaults are present. Review any role that has not been refined from local evidence." : "",
+        primaryRole?.launchStatus === "preflighted" ? "First-shift status is preflighted, not runtime-enforced. It means the generated contract passed deterministic package checks." : "",
+        "DeltaDotta does not enforce provider tool permissions. Connected AI tools must enforce real access, credentials, approvals, and audit logs.",
+        "Repository source hashes detect changed source content after launch, but they do not prove the new content is correct.",
+    ].filter(Boolean);
+    return `# Confidence and gaps report\n\nDeltaDotta packages operating context. This report lists what is backed by source evidence, what still depends on template assumptions, and what the target AI provider must enforce.\n\n## Package confidence\n- Organization: ${org.name}\n- Launch status: ${org.launch?.status ?? "map-ready"}\n- Repository evidence sources: ${repositoryEvidence.length}\n- Role count: ${org.roles.length}\n\n## Source fingerprints\n${sourceLines}\n\n## Open issues\n${issueLines}\n\n## Assumptions and limits\n${bullets(assumptions)}\n\n## Recommended next review\n1. Confirm each role's owner and authority with a human accountable owner.\n2. Run \`deltadotta check\` after source files change or move.\n3. Test the first-shift prompt in the target provider before giving the role tool access.\n4. Configure provider-side permissions, logs, approvals, and revocation outside DeltaDotta.\n`;
 }
 export function compilePackage(org) {
     const lines = org.roles.map((role) => `- **${role.title}** (${role.department}) — ${role.purpose}`).join("\n");
@@ -388,9 +417,10 @@ export function compilePackage(org) {
     const providerGuide = `# Provider import guide\n\nThis is a provider-neutral DeltaDotta organization package. Keep the folder intact when possible. Start with \`ORGANIZATION.md\`, then add role files from \`roles/\` as reusable context or skills in your selected model workflow.\n\n## Claude.ai custom skills\n\nEach folder under \`roles/\` is a Claude-compatible custom skill. To import one role:\n\n1. Create a ZIP whose root contains the role folder (for example, \`devops-platform-engineer/SKILL.md\`).\n2. In Claude, open **Customize → Skills**.\n3. Choose **+ → Create skill → Upload a skill** and select the ZIP.\n4. Enable the imported skill, then start a new chat and ask Claude to perform the role's first-shift scenario.\n\nClaude imports focused skills one at a time; the complete DeltaDotta ZIP remains the portable organization package. Code execution and file creation must be enabled in Claude for Skills to appear.\n\nDo not treat the package as an access-control system. It describes roles, authority, and delegation; your target provider or connected tools must enforce real permissions.\n`;
     return {
         "manifest.yaml": manifest,
-        "ORGANIZATION.md": `# ${org.name}\n\n${org.mission}\n\n## Roles\n${lines}\n\n## How to use this package\nUse the role skills as constrained operating context. Preserve the reporting and escalation relationships before delegating work across roles.\n\n## Managing tribal knowledge\nStart with \`KNOWLEDGE-PROCESS.md\`. DeltaDotta captures source material, links it to owners and decision boundaries, packages it into role skills, verifies a safe first-shift scenario, and gives you a refresh loop when the source of truth changes.\n`,
+        "ORGANIZATION.md": `# ${org.name}\n\n${org.mission}\n\n## Roles\n${lines}\n\n## How to use this package\nUse the role skills as constrained operating context. Preserve the reporting and escalation relationships before delegating work across roles.\n\n## Managing tribal knowledge\nStart with \`KNOWLEDGE-PROCESS.md\` and \`GAPS.md\`. DeltaDotta captures source material, links it to owners and decision boundaries, packages it into role skills, preflights a safe first-shift scenario, and gives you a refresh loop when the source of truth changes.\n`,
         "graph.json": graph,
         "KNOWLEDGE-PROCESS.md": knowledgeProcess(org),
+        "GAPS.md": packageGaps(org),
         "policies/authority.md": `# Authority boundaries\n\n${authority}\n`,
         "policies/handoffs.md": `# Collaboration and handoffs\n\n${relationships}\n`,
         "policies/escalations.md": `# Escalation paths\n\n${escalations}\n`,
@@ -460,6 +490,8 @@ export function repositoryEvidence(sources) {
         kind: "repository",
         excerpt: source.content.replace(/\s+/g, " ").trim().slice(0, 280),
         importedAt: "Just now",
+        sourcePath: source.path,
+        sourceHash: evidenceHash(source.content),
     }));
 }
 /** Opinionated team templates: credible maps before deeper refinement. */
@@ -540,7 +572,7 @@ export function verifyFirstShift(org) {
     const scenario = primaryRole?.contract?.scenario ?? "No first-shift scenario has been defined.";
     const managerExists = Boolean(primaryRole?.escalatesTo && org.roles.some((role) => role.id === primaryRole.escalatesTo));
     const checks = [
-        { name: "Installed role contract", passed: primaryRole?.launchStatus === "installed" || primaryRole?.launchStatus === "verified", detail: "The provider adapter is generated before verification." },
+        { name: "Installed role contract", passed: primaryRole?.launchStatus === "installed" || primaryRole?.launchStatus === "preflighted", detail: "The provider adapter is generated before preflight." },
         { name: "Evidence linked", passed: Boolean(primaryRole?.evidenceIds.length), detail: "The role references repository or template evidence." },
         { name: "Operating authority", passed: Boolean(primaryRole?.contract?.authority.trim() && primaryRole.permissions.length), detail: "The role can state what it may approve, stop, or escalate." },
         { name: "Handoff and escalation", passed: Boolean(primaryRole?.contract?.handoff.trim() && primaryRole?.contract?.escalation.trim() && managerExists), detail: "The scenario path reaches a named owner." },
@@ -551,7 +583,7 @@ export function verifyFirstShift(org) {
 /** Backward-compatible software helper. */
 export const verifyPlatformFirstShift = verifyFirstShift;
 export function applyFirstShiftReport(org, report) {
-    const launchStatus = report.passed ? "verified" : "needs-refinement";
+    const launchStatus = report.passed ? "preflighted" : "needs-refinement";
     return {
         ...org,
         updatedAt: "Just now",

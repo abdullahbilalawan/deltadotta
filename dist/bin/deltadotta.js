@@ -4,7 +4,7 @@ import { mkdir, readFile, readdir, stat, writeFile } from "node:fs/promises";
 import { basename, dirname, relative, resolve } from "node:path";
 import { createInterface } from "node:readline/promises";
 import { stdin as input, stdout as output } from "node:process";
-import { applyFirstShiftReport, compilePackage, createTeamLaunchpad, launchAuthority, markPrimaryRoleInstalled, organizationFromInterview, repositoryEvidence, roleSkill, verifyFirstShift, } from "../lib/organization.js";
+import { applyFirstShiftReport, compilePackage, createTeamLaunchpad, evidenceHash, launchAuthority, markPrimaryRoleInstalled, organizationFromInterview, repositoryEvidence, roleSkill, verifyFirstShift, } from "../lib/organization.js";
 import { renderOrganizationMap } from "../lib/cli-viewer.js";
 const help = `DeltaDotta CLI
 
@@ -163,7 +163,7 @@ function providerLabel(provider) {
     return provider === "claude-code" ? "Claude Code" : "Codex";
 }
 function managedBlock(provider, roleTitle, relativeSkillPath) {
-    return `\n<!-- deltadotta:start -->\n## DeltaDotta ${roleTitle}\n\nUse the verified ${providerLabel(provider)} role context at \`${relativeSkillPath}\`. It is read-only by default: do not deploy, restart equipment, alter infrastructure or operational systems, access production credentials, or modify repository files or production records unless an explicit human instruction changes that boundary.\n<!-- deltadotta:end -->\n`;
+    return `\n<!-- deltadotta:start -->\n## DeltaDotta ${roleTitle}\n\nUse the preflighted ${providerLabel(provider)} role context at \`${relativeSkillPath}\`. It is read-only by default: do not deploy, restart equipment, alter infrastructure or operational systems, access production credentials, or modify repository files or production records unless an explicit human instruction changes that boundary.\n<!-- deltadotta:end -->\n`;
 }
 async function upsertManagedBlock(location, block) {
     let existing = "";
@@ -185,7 +185,7 @@ async function installProviderAdapter(repository, destination, organization, pro
     const adapterDirectory = resolve(destination, "providers", provider);
     const adapterLocation = resolve(adapterDirectory, providerFile(provider));
     const relativeRoleSkill = relative(repository, adapterLocation).replace(/\\/g, "/") || providerFile(provider);
-    const adapter = `# DeltaDotta ${primaryRole.title} for ${providerLabel(provider)}\n\n${roleSkill(primaryRole, organization)}\n\n## Safety boundary\nThis role is installed for read-only first-shift verification. Do not deploy, restart equipment, mutate infrastructure or operational systems, access production credentials, edit repository files, or change production records.\n`;
+    const adapter = `# DeltaDotta ${primaryRole.title} for ${providerLabel(provider)}\n\n${roleSkill(primaryRole, organization)}\n\n## Safety boundary\nThis role is installed for read-only first-shift preflight. Do not deploy, restart equipment, mutate infrastructure or operational systems, access production credentials, edit repository files, or change production records.\n`;
     await mkdir(adapterDirectory, { recursive: true });
     await writeFile(adapterLocation, adapter, "utf8");
     await writeFile(resolve(adapterDirectory, "INSTALL.md"), `# Installed ${providerLabel(provider)} context\n\nDeltaDotta maintains the provider entrypoint in \`${providerFile(provider)}\` at the repository root. The full role context lives at \`${relative(repository, adapterLocation).replace(/\\/g, "/")}\`.\n`, "utf8");
@@ -195,7 +195,7 @@ async function installProviderAdapter(repository, destination, organization, pro
 }
 function reportMarkdown(report) {
     const checks = report.checks.map((check) => `- ${check.passed ? "PASS" : "NEEDS REFINEMENT"} — **${check.name}**: ${check.detail}`).join("\n");
-    return `# First-shift verification\n\n- Provider: ${report.provider}\n- Role: ${report.roleId}\n- Result: ${report.passed ? "VERIFIED" : "NEEDS REFINEMENT"}\n- Safety: read-only; no deployment, infrastructure mutation, production credentials, or repository changes are permitted.\n\n## Scenario\n${report.scenario}\n\n## Checks\n${checks}\n`;
+    return `# First-shift preflight\n\n- Provider: ${report.provider}\n- Role: ${report.roleId}\n- Result: ${report.passed ? "PREFLIGHTED" : "NEEDS REFINEMENT"}\n- Safety: read-only; no deployment, infrastructure mutation, production credentials, or repository changes are permitted.\n\n## Scenario\n${report.scenario}\n\n## Checks\n${checks}\n`;
 }
 function unavailableProviderReport(organization, provider, reason) {
     const report = verifyFirstShift(organization);
@@ -203,7 +203,7 @@ function unavailableProviderReport(organization, provider, reason) {
         ...report,
         provider,
         passed: false,
-        checks: [...report.checks, { name: "Provider availability", passed: false, detail: reason ?? `${providerLabel(provider)} was not found on PATH. The map and context were generated, but DeltaDotta did not mark the first shift verified.` }],
+        checks: [...report.checks, { name: "Provider availability", passed: false, detail: reason ?? `${providerLabel(provider)} was not found on PATH. The map and context were generated, but DeltaDotta did not mark the first shift preflighted.` }],
     };
 }
 function launchSummary(organization, evidenceCount) {
@@ -269,7 +269,7 @@ async function runLaunch(args) {
         }
         await writeFiles(destination, compilePackage(organization));
         if (hasFlag(args, "--no-install")) {
-            const report = unavailableProviderReport(markPrimaryRoleInstalled(organization), provider, "Provider installation was skipped with --no-install. The map was generated, but DeltaDotta did not mark the first shift verified.");
+            const report = unavailableProviderReport(markPrimaryRoleInstalled(organization), provider, "Provider installation was skipped with --no-install. The map was generated, but DeltaDotta did not mark the first shift preflighted.");
             organization = applyFirstShiftReport(organization, report);
             await writeFiles(destination, {
                 "verification/first-shift-report.md": reportMarkdown(report),
@@ -286,7 +286,7 @@ async function runLaunch(args) {
                 "verification/first-shift-report.md": reportMarkdown(report),
                 "verification/first-shift-report.json": JSON.stringify(report, null, 2),
             });
-            output.write(`  ${providerLabel(provider)} context ${installation.available ? "installed and preflight-verified" : "installed; provider executable was not found"}.\n`);
+            output.write(`  ${providerLabel(provider)} context ${installation.available ? "installed and package-preflighted" : "installed; provider executable was not found"}.\n`);
             output.write(`  Managed entrypoint: ${installation.entrypoint}\n`);
         }
         await writeFiles(destination, compilePackage(organization));
@@ -295,7 +295,7 @@ async function runLaunch(args) {
         output.write(`\n✓ Launch complete: ${organization.launch?.status ?? "needs-refinement"}\n`);
         output.write(`  Team map: ${mapLocation}\n`);
         output.write(`  Package: ${destination}\n`);
-        output.write("  Knowledge process: capture → link owner → set boundary → verify → refresh\n");
+        output.write("  Knowledge process: capture → link owner → set boundary → preflight → refresh\n");
         output.write("  Next: open the map and refine any role still marked mapped or needs refinement.\n");
         if (hasFlag(args, "--no-open"))
             output.write("  Map opening skipped.\n\n");
@@ -352,10 +352,17 @@ async function runCheck(args) {
     }
     const repositoryEvidence = organization.evidence.filter((item) => item.kind === "repository");
     const missing = [];
+    const changed = [];
     for (const evidence of repositoryEvidence) {
-        const path = evidence.name.replace(/^Repository:\s*/, "");
+        const path = evidence.sourcePath ?? evidence.name.replace(/^Repository:\s*/, "");
         try {
-            await stat(resolve(repository, path));
+            const location = resolve(repository, path);
+            await stat(location);
+            if (evidence.sourceHash) {
+                const content = (await readFile(location, "utf8")).slice(0, maxSourceBytes);
+                if (evidenceHash(content) !== evidence.sourceHash)
+                    changed.push(path);
+            }
         }
         catch {
             missing.push(path);
@@ -363,11 +370,12 @@ async function runCheck(args) {
     }
     if (!repositoryEvidence.length)
         output.write("No repository evidence is linked yet. Add runbooks, workflows, or CODEOWNERS during refinement.\n");
-    else if (!missing.length)
-        output.write(`✓ Evidence is fresh: ${repositoryEvidence.length} linked repository source${repositoryEvidence.length === 1 ? "" : "s"} still exist.\n`);
+    else if (!missing.length && !changed.length)
+        output.write(`✓ Evidence is fresh: ${repositoryEvidence.length} linked repository source${repositoryEvidence.length === 1 ? "" : "s"} still exist and match their launch fingerprints.\n`);
     else {
-        output.write(`Needs refinement: ${missing.length} linked repository source${missing.length === 1 ? "" : "s"} moved or disappeared.\n`);
-        missing.forEach((path) => output.write(`  - ${path}\n`));
+        output.write(`Needs refinement: ${missing.length + changed.length} linked repository source${missing.length + changed.length === 1 ? "" : "s"} moved, disappeared, or changed.\n`);
+        missing.forEach((path) => output.write(`  - missing: ${path}\n`));
+        changed.forEach((path) => output.write(`  - changed: ${path}\n`));
         process.exitCode = 2;
     }
 }

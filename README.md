@@ -8,7 +8,7 @@
 
 <p align="center">
   <strong>Turn messy team knowledge into portable AI operating roles.</strong><br />
-  DeltaDotta scans local repo evidence, maps owners and escalation paths, and exports verified role skills for Codex or Claude Code.<br />
+  DeltaDotta scans local repo evidence, maps owners and escalation paths, and exports preflighted role skills for Codex or Claude Code.<br />
   One guided command gives your AI agents the context, boundaries, and handoffs they need before touching real work.
 </p>
 
@@ -21,7 +21,7 @@
 </p>
 
 <p align="center">
-  <img src="docs/demos/deltadotta-onboarding-loop.gif" width="760" alt="DeltaDotta onboarding loop: run the guided Launchpad, map a Northstar Engineering team, install provider context, and finish with a verified portable package." />
+  <img src="docs/demos/deltadotta-onboarding-loop.gif" width="760" alt="DeltaDotta onboarding loop: run the guided Launchpad, map a Northstar Engineering team, install provider context, and finish with a preflighted portable package." />
 </p>
 
 <p align="center">
@@ -44,13 +44,13 @@ needed for normal use.
 
 ### Included team templates
 
-| Template | Team map | First verified role |
+| Template | Team map | First preflighted role |
 | --- | --- | --- |
 | Software | Engineering Lead, DevOps / Platform, Software Engineer, Product Designer, QA Engineer | DevOps / Platform Engineer |
 | Manufacturing | Manufacturing Director, Production Operations, Process Engineering, Quality, Maintenance | Production Operations Lead |
 
 Both templates begin with visible assumptions, preserve evidence provenance, and
-keep verification read-only.
+keep preflight checks read-only.
 
 ### What you get
 
@@ -59,7 +59,8 @@ keep verification read-only.
 | Hierarchy map | Shows who owns decisions, where handoffs go, and when escalation is required. |
 | Role skills | Gives Codex or Claude Code focused operating instructions backed by source evidence. |
 | Provider context | Installs a marked `AGENTS.md` or `CLAUDE.md` block without taking over the repo. |
-| Verification report | Records what was scanned, what was generated, and which first-shift role is ready. |
+| Preflight report | Records what was scanned, what was generated, and which first-shift role passed package checks. |
+| Confidence report | Lists source fingerprints, template assumptions, open gaps, and provider-side enforcement limits. |
 | Portable ZIP | Lets teams review, share, import, or archive the generated operating package. |
 
 ## Quick start
@@ -69,7 +70,7 @@ keep verification read-only.
 - Node.js 20 or later
 - pnpm (Corepack is included with supported Node releases)
 - Optional: an authenticated Codex or Claude Code installation for first-shift
-  provider verification
+  provider preflight
 
 ### Setup in three steps
 
@@ -92,7 +93,7 @@ Team type -> owner -> authority -> escalation -> handoff
 ```
 
 The wizard scans local evidence, creates the map, installs provider context when
-you approve it, and verifies the first role in a read-only first shift.
+you approve it, and preflights the first role in a read-only first shift.
 
 From a local checkout:
 
@@ -137,22 +138,22 @@ own product walkthrough.
 
 Fast-forwarded captures of the real CLI running against fresh local test
 repositories. Each records the evidence scan, five confirmations, provider
-context installation, and final verification result.
+context installation, and final preflight result.
 
 #### Software Launchpad
 
-<img src="docs/demos/software-launchpad.gif" width="600" alt="DeltaDotta terminal onboarding for a software team: scan a repository, confirm five operating decisions, install a DevOps Platform role, and verify the launch." />
+<img src="docs/demos/software-launchpad.gif" width="600" alt="DeltaDotta terminal onboarding for a software team: scan a repository, confirm five operating decisions, install a DevOps Platform role, and preflight the launch." />
 
 #### Manufacturing Launchpad
 
-<img src="docs/demos/manufacturing-launchpad.gif" width="600" alt="DeltaDotta terminal onboarding for a manufacturing team: scan operating evidence, confirm five safety decisions, install a Production Operations role, and verify the launch." />
+<img src="docs/demos/manufacturing-launchpad.gif" width="600" alt="DeltaDotta terminal onboarding for a manufacturing team: scan operating evidence, confirm five safety decisions, install a Production Operations role, and preflight the launch." />
 
 ### Human-speed onboarding
 
 A slower, presenter-friendly recording that creates repo evidence, runs the
-Software Launchpad, installs provider context, and ends on a verified package.
+Software Launchpad, installs provider context, and ends on a preflighted package.
 
-<img src="docs/demos/deltadotta-human-onboarding.gif" width="720" alt="Human-speed DeltaDotta onboarding demo for Northstar Checkout, ending on a verified Software Launchpad package." />
+<img src="docs/demos/deltadotta-human-onboarding.gif" width="720" alt="Human-speed DeltaDotta onboarding demo for Northstar Checkout, ending on a preflighted Software Launchpad package." />
 
 Video version: [deltadotta-human-onboarding.mp4](docs/demos/deltadotta-human-onboarding.mp4)
 
@@ -163,7 +164,7 @@ decks when you need to explain what the generated package contains.
 
 #### Verified role package
 
-<img src="docs/demos/package-card.png" width="720" alt="DeltaDotta verified role package card showing generated role skills, organization files, verification report, and what the role can safely carry into chat." />
+<img src="docs/demos/package-card.png" width="720" alt="DeltaDotta preflighted role package card showing generated role skills, organization files, preflight report, and what the role can safely carry into chat." />
 
 Source: [package-card.svg](docs/demos/package-card.svg)
 
@@ -247,6 +248,7 @@ deltadotta-package/
   manifest.yaml
   graph.json
   ORGANIZATION.md
+  GAPS.md
   roles/<role>/SKILL.md
   contracts/<primary-role>.md
   policies/
@@ -257,6 +259,10 @@ deltadotta-package/
 Markdown files are designed to be readable by people and model providers.
 DeltaDotta describes authority and escalation; it does not enforce permissions
 inside third-party providers.
+
+`GAPS.md` is the honesty layer: it records source fingerprints, template
+assumptions, lint issues, and the provider-side controls still required before a
+role receives real tool access.
 
 ## Useful commands
 
@@ -275,7 +281,7 @@ workflow is simply `deltadotta`.
 
 - Repository scanning is local and bounded.
 - Generated evidence is visible in the package.
-- First-shift verification is read-only: it must not deploy, restart equipment,
+- First-shift preflight is read-only: it must not deploy, restart equipment,
   modify infrastructure, access production credentials, or change records.
 - Do not commit real organization exports, credentials, or provider tokens.
 

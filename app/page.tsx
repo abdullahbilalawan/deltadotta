@@ -119,7 +119,7 @@ export default function Home() {
     }));
     setSelectedRoleId(primaryRoleId);
     setCandidates([]);
-    setToast(`${manufacturing ? "Manufacturing" : "Software"} template loaded. Use the CLI Launchpad to scan evidence, install provider context, and verify the first shift.`);
+    setToast(`${manufacturing ? "Manufacturing" : "Software"} template loaded. Use the CLI Launchpad to scan evidence, install provider context, and preflight the first shift.`);
   }
 
   function mergePreview() {
@@ -153,9 +153,9 @@ export default function Home() {
       </aside>
 
       <section className="map-canvas">
-        <div className="canvas-top"><div><p className="simple-kicker">02 / OPERATING PROCESS</p><h1>Knowledge becomes roles.</h1><p>Capture sources, link owners, set authority, verify a safe first-shift, then refresh when the source of truth changes.</p></div><button className="add-role" onClick={addRole}><Plus size={15} /> Add role</button></div>
+        <div className="canvas-top"><div><p className="simple-kicker">02 / OPERATING PROCESS</p><h1>Knowledge becomes roles.</h1><p>Capture sources, link owners, set authority, preflight a safe first-shift, then refresh when the source of truth changes.</p></div><button className="add-role" onClick={addRole}><Plus size={15} /> Add role</button></div>
         <div className="knowledge-process" aria-label="DeltaDotta knowledge process">
-          {["Capture", "Link owner", "Set boundary", "Verify", "Refresh"].map((step, index) => <span key={step}><strong>{String(index + 1).padStart(2, "0")}</strong>{step}</span>)}
+          {["Capture", "Link owner", "Set boundary", "Preflight", "Refresh"].map((step, index) => <span key={step}><strong>{String(index + 1).padStart(2, "0")}</strong>{step}</span>)}
         </div>
         <div className="template-note"><GitBranch size={15} /><span><strong>Template:</strong> {organization.launch ? (organization.launch.template === "manufacturing" ? "Manufacturing team" : "Software team") : "Choose a team template"}</span><button onClick={() => useTemplate(organization.launch?.template === "manufacturing" ? "manufacturing" : "software")}>{organization.launch ? "Reset template" : "Start software team"}</button></div>
         <div className="graph-area">

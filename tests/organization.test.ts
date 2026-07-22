@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { renderOrganizationMap } from "../lib/cli-viewer";
-import { applyFirstShiftReport, compilePackage, createEngineeringLaunchpad, createOrganization, createTeamLaunchpad, extractRoleSignals, lintOrganization, markPlatformInstalled, mergeOrganization, organizationFromInterview, parseImportedPackage, repositoryEvidence, starterOrganization, verifyPlatformFirstShift } from "../lib/organization";
+import { applyFirstShiftReport, compilePackage, createEngineeringLaunchpad, createOrganization, createTeamLaunchpad, evidenceHash, extractRoleSignals, lintOrganization, markPlatformInstalled, mergeOrganization, organizationFromInterview, parseImportedPackage, repositoryEvidence, starterOrganization, verifyPlatformFirstShift } from "../lib/organization";
 
 describe("DeltaDotta organization compiler", () => {
   it("exports a complete portable package for the starter organization", () => {
@@ -8,6 +8,8 @@ describe("DeltaDotta organization compiler", () => {
 
     expect(packageFiles["manifest.yaml"]).toContain("schema_version: \"1.0\"");
     expect(packageFiles["ORGANIZATION.md"]).toContain("Northstar Studio");
+    expect(packageFiles["GAPS.md"]).toContain("Confidence and gaps report");
+    expect(packageFiles["GAPS.md"]).toContain("provider-side permissions");
     expect(packageFiles["roles/product-lead/SKILL.md"]).toContain("## Authority");
     expect(packageFiles["roles/product-lead/SKILL.md"]).toContain("name: product-lead");
     expect(packageFiles["roles/product-lead/SKILL.md"]).toContain("description:");
@@ -84,13 +86,17 @@ describe("DeltaDotta organization compiler", () => {
     });
 
     expect(evidence).toHaveLength(2);
+    expect(evidence[0].sourcePath).toBe("CODEOWNERS");
+    expect(evidence[0].sourceHash).toBe(evidenceHash("* @platform-team"));
     expect(organization.roles).toHaveLength(5);
     expect(organization.roles.map((role) => role.title)).toEqual([
       "Engineering Lead", "DevOps / Platform Engineer", "Software Engineer", "Product Designer", "QA Engineer",
     ]);
     expect(organization.roles.filter((role) => role.id !== "platform-engineer").every((role) => role.status === "draft")).toBe(true);
     expect(organization.roles.find((role) => role.id === "platform-engineer")?.contract?.readOnly).toBe(true);
-    expect(compilePackage(organization)["contracts/devops-platform-engineer.md"]).toContain("Safe verification scenario");
+    const packageFiles = compilePackage(organization);
+    expect(packageFiles["contracts/devops-platform-engineer.md"]).toContain("Safe preflight scenario");
+    expect(packageFiles["GAPS.md"]).toContain("Repository: CODEOWNERS");
   });
 
   it("only verifies the Platform first shift after installation and all safe contract checks pass", () => {
@@ -111,8 +117,8 @@ describe("DeltaDotta organization compiler", () => {
 
     expect(report.readOnly).toBe(true);
     expect(report.passed).toBe(true);
-    expect(verified.launch?.status).toBe("verified");
-    expect(renderOrganizationMap(verified)).toContain("Launch: verified");
+    expect(verified.launch?.status).toBe("preflighted");
+    expect(renderOrganizationMap(verified)).toContain("Launch: preflighted");
   });
 
   it("creates a manufacturing map with a safety-bounded production first shift", () => {

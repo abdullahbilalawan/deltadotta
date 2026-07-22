@@ -3,7 +3,7 @@
   <rect x="38" y="34" width="1344" height="692" rx="14" fill="#fbfbf6" stroke="#d3d7ca"/>
   <text x="72" y="88" font-family="Arial, sans-serif" font-size="24" font-weight="700" fill="#161a16">DeltaDotta</text>
   <text x="72" y="134" font-family="Georgia, serif" font-size="52" font-weight="600" fill="#161a16">Operating map</text>
-  <text x="72" y="170" font-family="Arial, sans-serif" font-size="21" fill="#667064">Owners, boundaries, handoffs, and source-linked role skills in one verified view.</text>
+  <text x="72" y="170" font-family="Arial, sans-serif" font-size="21" fill="#667064">Owners, boundaries, handoffs, and source-linked role skills in one preflighted view.</text>
 
   <line x1="710" y1="258" x2="710" y2="328" stroke="#b8bdae" stroke-width="2"/>
   <line x1="310" y1="328" x2="1110" y2="328" stroke="#b8bdae" stroke-width="2"/>
@@ -19,7 +19,7 @@
 
   <g font-family="Arial, sans-serif">
     <rect x="190" y="374" width="240" height="128" rx="7" fill="#ffffff" stroke="#8ea457" stroke-width="3"/>
-    <text x="212" y="410" font-family="Menlo, monospace" font-size="12" fill="#7a9f29">verified · safe authority</text>
+    <text x="212" y="410" font-family="Menlo, monospace" font-size="12" fill="#7a9f29">preflighted · safe authority</text>
     <text x="212" y="444" font-size="23" font-weight="700" fill="#161a16">DevOps / Platform</text>
     <text x="212" y="474" font-size="16" fill="#667064">May stop or roll back</text>
 

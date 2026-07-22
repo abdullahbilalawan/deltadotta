@@ -2,7 +2,7 @@
 
 ## Short loop, 10 seconds
 
-Show a real DeltaDotta CLI session in a neutral sample workspace. Type each answer separately at human speed, then end on `Launch complete: verified` and the generated package path.
+Show a real DeltaDotta CLI session in a neutral sample workspace. Type each answer separately at human speed, then end on `Launch complete: preflighted` and the generated package path.
 
 On-screen takeaway: `Scattered repo knowledge becomes a reusable AI operating role.`
 
@@ -13,11 +13,11 @@ On-screen takeaway: `Scattered repo knowledge becomes a reusable AI operating ro
 - Run `deltadotta`.
 - Choose Software team.
 - Enter team name, owner, deployment authority, escalation owner, and handoff target.
-- End on `Launch complete: verified` and the package path.
+- End on `Launch complete: preflighted` and the package path.
 
 Voiceover/plain-language beat:
 
-> DeltaDotta reads the same files the team already trusts, then packages one verified role with clear operating boundaries.
+> DeltaDotta reads the same files the team already trusts, then packages one preflighted role with clear operating boundaries.
 
 ### 10-17s: Import the generated skill into Claude
 
