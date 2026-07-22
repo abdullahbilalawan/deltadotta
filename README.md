@@ -21,11 +21,12 @@
 </p>
 
 <p align="center">
-  <img src="docs/demos/deltadotta-marketing-film.gif" width="760" alt="DeltaDotta marketing film: messy team files flow into a command-line launchpad, form an operating map, and become a preflighted portable AI role package." />
+  <img src="docs/demos/deltadotta-higgsfield-marketing-film.gif" width="760" alt="Higgsfield-generated DeltaDotta marketing film: repo evidence becomes a cinematic AI operating map and preflighted role package." />
 </p>
 
 <p align="center">
-  <a href="docs/demos/deltadotta-marketing-film.mp4">Watch marketing film</a> ·
+  <a href="docs/demos/deltadotta-higgsfield-marketing-film.mp4">Watch Higgsfield marketing film</a> ·
+  <a href="docs/demos/deltadotta-marketing-film.mp4">Watch motion-graphics cut</a> ·
   <a href="docs/demos/deltadotta-onboarding-loop.mp4">Watch short MP4</a> ·
   <a href="docs/demos/deltadotta-human-onboarding.mp4">Watch full walkthrough</a> ·
   <a href="docs/demos/northstar-deltadotta-package.zip">Download sample package</a> ·
@@ -137,14 +138,16 @@ own product walkthrough.
 
 ### Marketing film
 
-A 24-second launch film for introducing DeltaDotta in a README, launch post, or
-demo opener. It shows the product story end to end: messy repo evidence becomes
-a clean operating map, a preflighted role package, and a provider-ready first
-shift.
+A Higgsfield-generated launch film for introducing DeltaDotta in a README,
+launch post, or demo opener. It shows the product story end to end: messy repo
+evidence becomes a cinematic operating map, a preflighted role package, and a
+provider-ready first shift.
 
-<img src="docs/demos/deltadotta-marketing-film.gif" width="720" alt="DeltaDotta marketing film preview showing evidence files, the operating map, a preflighted role package, and the final npx deltadotta call to action." />
+<img src="docs/demos/deltadotta-higgsfield-marketing-film.gif" width="720" alt="Higgsfield-generated DeltaDotta marketing film preview showing evidence files, an operating map, a highlighted DevOps Platform role, and preflighted AI role packaging." />
 
-Video version: [deltadotta-marketing-film.mp4](docs/demos/deltadotta-marketing-film.mp4)
+Video version: [deltadotta-higgsfield-marketing-film.mp4](docs/demos/deltadotta-higgsfield-marketing-film.mp4)
+
+Motion-graphics version: [deltadotta-marketing-film.mp4](docs/demos/deltadotta-marketing-film.mp4)
 
 ### Guided Launchpad flows
 
@@ -214,6 +217,9 @@ Generated launchpad output is included under
 Use these when you need a shorter animated loop instead of the full human-speed
 walkthrough:
 
+- [deltadotta-higgsfield-marketing-film.gif](docs/demos/deltadotta-higgsfield-marketing-film.gif)
+- [deltadotta-higgsfield-marketing-film.mp4](docs/demos/deltadotta-higgsfield-marketing-film.mp4)
+- [deltadotta-higgsfield-marketing-film-poster.png](docs/demos/deltadotta-higgsfield-marketing-film-poster.png)
 - [deltadotta-marketing-film.gif](docs/demos/deltadotta-marketing-film.gif)
 - [deltadotta-marketing-film.mp4](docs/demos/deltadotta-marketing-film.mp4)
 - [deltadotta-marketing-film-poster.png](docs/demos/deltadotta-marketing-film-poster.png)
