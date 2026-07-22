@@ -7,7 +7,9 @@
 <h1 align="center">DeltaDotta</h1>
 
 <p align="center">
-  <strong>Build a portable, evidence-backed team operating system in minutes.</strong>
+  <strong>Turn messy team knowledge into portable AI operating roles.</strong><br />
+  DeltaDotta scans local repo evidence, maps owners and escalation paths, and exports verified role skills for Codex or Claude Code.<br />
+  One guided command gives your AI agents the context, boundaries, and handoffs they need before touching real work.
 </p>
 
 <p align="center">
@@ -16,6 +18,17 @@
 
 <p align="center">
   <a href="#quick-start">Get started</a> · <a href="#demo-gallery">Demos</a> · <a href="#deploy-with-docker">Deploy</a> · <a href="#contributing">Collaborate</a>
+</p>
+
+<p align="center">
+  <img src="docs/demos/deltadotta-onboarding-loop.gif" width="760" alt="DeltaDotta onboarding loop: run the guided Launchpad, map a Northstar Engineering team, install provider context, and finish with a verified portable package." />
+</p>
+
+<p align="center">
+  <a href="docs/demos/deltadotta-onboarding-loop.mp4">Watch short MP4</a> ·
+  <a href="docs/demos/deltadotta-human-onboarding.mp4">Watch full walkthrough</a> ·
+  <a href="docs/demos/northstar-deltadotta-package.zip">Download sample package</a> ·
+  <a href="docs/demos/CLAUDE-DEMO-STORYBOARD.md">Claude import storyboard</a>
 </p>
 
 ## What is DeltaDotta?
@@ -39,6 +52,16 @@ needed for normal use.
 Both templates begin with visible assumptions, preserve evidence provenance, and
 keep verification read-only.
 
+### What you get
+
+| Output | Why it matters |
+| --- | --- |
+| Hierarchy map | Shows who owns decisions, where handoffs go, and when escalation is required. |
+| Role skills | Gives Codex or Claude Code focused operating instructions backed by source evidence. |
+| Provider context | Installs a marked `AGENTS.md` or `CLAUDE.md` block without taking over the repo. |
+| Verification report | Records what was scanned, what was generated, and which first-shift role is ready. |
+| Portable ZIP | Lets teams review, share, import, or archive the generated operating package. |
+
 ## Quick start
 
 ### Prerequisites
@@ -48,13 +71,30 @@ keep verification read-only.
 - Optional: an authenticated Codex or Claude Code installation for first-shift
   provider verification
 
-### Run the guided Launchpad
+### Setup in three steps
+
+1. Run the guided Launchpad:
 
 ```bash
 npx deltadotta
 ```
 
-Or from a checkout:
+2. Answer five plain-language questions:
+
+```text
+Team type -> owner -> authority -> escalation -> handoff
+```
+
+3. Open the generated package:
+
+```text
+<workspace>/.deltadotta/launchpad/
+```
+
+The wizard scans local evidence, creates the map, installs provider context when
+you approve it, and verifies the first role in a read-only first shift.
+
+From a local checkout:
 
 ```bash
 corepack enable
@@ -63,18 +103,29 @@ pnpm cli:build
 node dist/bin/deltadotta.js
 ```
 
-The wizard will ask for a workspace folder, let you choose Software or
-Manufacturing from a numbered menu, scan local evidence, and ask five short
-operating questions. It writes the result to:
-
-```text
-<workspace>/.deltadotta/launchpad/
-```
-
 That folder contains the hierarchy map, portable package, role contracts,
 provider context, and a first-shift report. DeltaDotta only changes its clearly
 marked block in `AGENTS.md` or `CLAUDE.md`. Choose the no-install option in the
 wizard if you only want the portable package.
+
+### Try the included demo workspace
+
+Use the Northstar Checkout demo to see the full flow without using private team
+files:
+
+```bash
+node dist/bin/deltadotta.js
+```
+
+When prompted for the workspace, choose:
+
+```text
+docs/demo-workspace
+```
+
+The demo workspace includes product knowledge, a runbook, CODEOWNERS, and an
+installed provider context so you can inspect the source evidence and generated
+Launchpad output side by side.
 
 ## Demo gallery
 
