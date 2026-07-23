@@ -1,285 +1,141 @@
 <p align="center">
-  <a href="https://github.com/abdullahbilalawan/deltadotta">
-    <img src="public/deltadotta-logo.svg" width="480" alt="DeltaDotta — Team Launchpad" />
-  </a>
+  <img src="public/deltadotta-logo.svg" width="420" alt="DeltaDotta" />
 </p>
 
 <h1 align="center">DeltaDotta</h1>
 
 <p align="center">
-  <strong>Turn messy team knowledge into portable AI operating roles.</strong><br />
-  DeltaDotta scans local repo evidence, maps owners and escalation paths, and exports preflighted role skills for Codex or Claude Code.<br />
-  One guided command gives your AI agents the context, boundaries, and handoffs they need before touching real work.
+  Generate evidence-backed role instructions for Codex and Claude Code.
 </p>
 
 <p align="center">
-  <a href="LICENSE">Apache-2.0</a> · <a href="CONTRIBUTING.md">Contributing</a> · <a href="SECURITY.md">Security</a> · <a href="TRADEMARK.md">Trademark guidelines</a>
+  <a href="LICENSE">Apache-2.0</a> ·
+  <a href="CONTRIBUTING.md">Contributing</a> ·
+  <a href="SECURITY.md">Security</a>
 </p>
 
-<p align="center">
-  <a href="#quick-start">Get started</a> · <a href="#demo-gallery">Demos</a> · <a href="#deploy-with-docker">Deploy</a> · <a href="#contributing">Collaborate</a>
-</p>
-
-<p align="center">
-  <a href="#human-speed-onboarding">Onboarding walkthrough</a> ·
-  <a href="docs/demos/northstar-deltadotta-package.zip">Download sample package</a> ·
-  <a href="docs/demos/CLAUDE-DEMO-STORYBOARD.md">Claude import storyboard</a>
-</p>
-
-## What is DeltaDotta?
-
-DeltaDotta is a local-first organization compiler for teams adopting AI agents.
-It turns local operating evidence into a readable hierarchy, portable role
-skills, authority boundaries, handoffs, and escalation rules.
-
-The default experience is a guided CLI wizard. It asks one plain-language
-question at a time, produces a usable team map in under ten minutes, and sets up
-one safe first-shift role for Codex or Claude Code. No command-line options are
-needed for normal use.
-
-### Included team templates
-
-| Template | Team map | First preflighted role |
-| --- | --- | --- |
-| Software | Engineering Lead, DevOps / Platform, Software Engineer, Product Designer, QA Engineer | DevOps / Platform Engineer |
-| Manufacturing | Manufacturing Director, Production Operations, Process Engineering, Quality, Maintenance | Production Operations Lead |
-
-Both templates begin with visible assumptions, preserve evidence provenance, and
-keep preflight checks read-only.
-
-### What you get
-
-| Output | Why it matters |
-| --- | --- |
-| Hierarchy map | Shows who owns decisions, where handoffs go, and when escalation is required. |
-| Role skills | Gives Codex or Claude Code focused operating instructions backed by source evidence. |
-| Provider context | Installs a marked `AGENTS.md` or `CLAUDE.md` block without taking over the repo. |
-| Preflight report | Records what was scanned, what was generated, and which first-shift role passed package checks. |
-| Confidence report | Lists source fingerprints, template assumptions, open gaps, and provider-side enforcement limits. |
-| Portable ZIP | Lets teams review, share, import, or archive the generated operating package. |
+DeltaDotta scans repository knowledge, maps ownership and escalation paths, and
+exports portable role packages for AI-assisted work. It runs locally and keeps
+the source evidence visible for human review.
 
 ## Quick start
 
-### Prerequisites
-
-- Node.js 20 or later
-- pnpm (Corepack is included with supported Node releases)
-- Optional: an authenticated Codex or Claude Code installation for first-shift
-  provider preflight
-
-### Setup in three steps
-
-1. Run the guided Launchpad:
+**Requirements:** Node.js 20+ and pnpm.
 
 ```bash
-npx deltadotta
+git clone https://github.com/abdullahbilalawan/deltadotta.git
+cd deltadotta
+corepack enable
+pnpm install --frozen-lockfile
+pnpm cli
 ```
 
-2. Answer five plain-language questions:
-
-```text
-Team type -> owner -> authority -> escalation -> handoff
-```
-
-3. Open the generated package:
+The guided Launchpad asks for a workspace, team type, owner, authority boundary,
+escalation path, and handoff. Generated files are written to:
 
 ```text
 <workspace>/.deltadotta/launchpad/
 ```
 
-The wizard scans local evidence, creates the map, installs provider context when
-you approve it, and preflights the first role in a read-only first shift.
+To try the included Northstar Checkout example, enter
+`docs/demo-workspace` when Launchpad asks for a workspace.
 
-From a local checkout:
+## Demo
 
-```bash
-corepack enable
-pnpm install --frozen-lockfile
-pnpm cli:build
-node dist/bin/deltadotta.js
-```
+<img src="docs/demos/software-launchpad.gif" width="720" alt="DeltaDotta running in a Mac terminal: scanning a software repository, confirming team decisions, and preflighting a generated role package." />
 
-That folder contains the hierarchy map, portable package, role contracts,
-provider context, and a first-shift report. DeltaDotta only changes its clearly
-marked block in `AGENTS.md` or `CLAUDE.md`. Choose the no-install option in the
-wizard if you only want the portable package.
+The demo uses only sample data from
+[`docs/demo-workspace`](docs/demo-workspace/README.md).
 
-### Try the included demo workspace
-
-Use the Northstar Checkout demo to see the full flow without using private team
-files:
-
-```bash
-node dist/bin/deltadotta.js
-```
-
-When prompted for the workspace, choose:
+## What it generates
 
 ```text
-docs/demo-workspace
+.deltadotta/launchpad/
+├── ORGANIZATION.md
+├── KNOWLEDGE-PROCESS.md
+├── GAPS.md
+├── manifest.yaml
+├── graph.json
+├── roles/
+├── contracts/
+├── policies/
+└── PROVIDER-IMPORT.md
 ```
 
-The demo workspace includes product knowledge, a runbook, CODEOWNERS, and an
-installed provider context so you can inspect the source evidence and generated
-Launchpad output side by side.
+| Output | Purpose |
+| --- | --- |
+| Organization map | Records role ownership, reporting lines, handoffs, and escalation paths. |
+| Role skills | Gives Codex or Claude Code focused instructions tied to repository evidence. |
+| Confidence report | Separates verified sources, template assumptions, and unresolved gaps. |
+| Portable package | Provides reviewable Markdown plus stable `manifest.yaml` and `graph.json` files. |
 
-## Demo gallery
+DeltaDotta can install a clearly marked block in `AGENTS.md` or `CLAUDE.md`.
+It only updates that block and can be run without installing provider context.
 
-These demos are built from local sample workspaces and generated DeltaDotta
-packages. They are safe to inspect, share, and use as a starting point for your
-own product walkthrough.
+## How it works
 
-### Guided Launchpad flows
+1. Scans bounded repository files such as READMEs, runbooks, CODEOWNERS, and
+   workflow configuration.
+2. Links evidence to owners, authority boundaries, handoffs, and escalation
+   rules.
+3. Generates provider-ready role instructions and a portable organization
+   package.
+4. Runs deterministic, read-only checks against the first role contract.
 
-Fast-forwarded captures of the real CLI running against fresh local test
-repositories. Each records the evidence scan, five confirmations, provider
-context installation, and final preflight result.
+Preflight confirms that the generated package is internally complete. It does
+not run a live model or enforce permissions inside Codex, Claude Code, or other
+providers.
 
-#### Software Launchpad
+## Commands
 
-<img src="docs/demos/software-launchpad.gif" width="720" alt="Mac terminal demo of DeltaDotta scanning a software workspace, confirming Launchpad decisions, and preflighting the generated role package." />
+| Command | Description |
+| --- | --- |
+| `pnpm cli` | Build and run the guided Launchpad from this checkout. |
+| `pnpm cli check` | Report source evidence that moved, changed, or disappeared. |
+| `pnpm cli init` | Run the open-ended organization interview. |
+| `pnpm dev` | Start the local web workspace. |
+| `pnpm verify` | Run type checks, CLI build, tests, and the production build. |
 
-Use the packaged demo workspace and storyboard to replay the Software Launchpad
-flow locally.
+Run `pnpm cli --help` to view all CLI options.
 
-#### Manufacturing Launchpad
-
-Use the packaged demo workspace and storyboard to replay the Manufacturing
-Launchpad flow locally.
-
-### Human-speed onboarding
-
-A slower, presenter-friendly recording that creates repo evidence, runs the
-Software Launchpad, installs provider context, and ends on a preflighted package.
-
-Export-ready MP4 walkthroughs and extra animated previews are generated locally
-and ignored by Git.
-
-### Product story cards
-
-These cards are useful in READMEs, launch posts, investor updates, and demo
-decks when you need to explain what the generated package contains.
-
-#### Verified role package
-
-Source: [package-card.svg](docs/demos/package-card.svg)
-
-#### Operating map
-
-Source: [hierarchy-card.svg](docs/demos/hierarchy-card.svg)
-
-### Claude skill import demo
-
-The Claude storyboard shows how to import the generated focused role skill and
-prove the value with a failed-deployment prompt.
-
-- Storyboard: [CLAUDE-DEMO-STORYBOARD.md](docs/demos/CLAUDE-DEMO-STORYBOARD.md)
-- Focused Claude skill ZIP: [northstar-devops-platform-engineer-claude-skill.zip](docs/demos/northstar-devops-platform-engineer-claude-skill.zip)
-- Full sample DeltaDotta package: [northstar-deltadotta-package.zip](docs/demos/northstar-deltadotta-package.zip)
-
-### Demo workspace
-
-The Northstar Checkout demo workspace contains the source evidence used by the
-Claude and package demos:
-
-- [README.md](docs/demo-workspace/README.md)
-- [PRODUCT-KNOWLEDGE.md](docs/demo-workspace/PRODUCT-KNOWLEDGE.md)
-- [RUNBOOK.md](docs/demo-workspace/RUNBOOK.md)
-- [AGENTS.md](docs/demo-workspace/AGENTS.md)
-- [CODEOWNERS](docs/demo-workspace/CODEOWNERS)
-
-Generated launchpad output is included under
-[`docs/demo-workspace/.deltadotta/launchpad/`](docs/demo-workspace/.deltadotta/launchpad/).
-
-### Source assets
-
-The demo source files are included for remixing or re-recording:
-
-- Terminal recording script: [human-onboarding.tape](docs/demos/human-onboarding.tape)
-- Software and Manufacturing frame stills: [docs/demos/frames/](docs/demos/frames/)
-
-### Use the web workspace
+## Web workspace
 
 ```bash
 pnpm dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000). The workspace provides
-Software and Manufacturing templates, evidence review, role editing, package
-import, and ZIP export. The CLI remains the recommended path for repository
-scanning and provider setup.
+Open [http://localhost:3000](http://localhost:3000) to edit Software or
+Manufacturing templates, import packages, and export ZIP files.
 
-## Deploy with Docker
-
-The web workspace is self-contained today; it does not require a database to
-run. Build and start the production image with:
+To run the web workspace with Docker:
 
 ```bash
 docker compose up --build
 ```
 
-Open [http://localhost:3000](http://localhost:3000). Container health is exposed
-at `/api/health`. Set `PORT` before starting Compose if port 3000 is unavailable.
-
-For a platform that accepts a Dockerfile, deploy the included image directly. It
-runs as a non-root user and uses Next.js standalone output.
-
-## Portable package contract
-
-Every export includes a stable machine-readable graph and human-readable role
-context:
-
-```text
-deltadotta-package/
-  manifest.yaml
-  graph.json
-  ORGANIZATION.md
-  GAPS.md
-  roles/<role>/SKILL.md
-  contracts/<primary-role>.md
-  policies/
-  PROVIDER-IMPORT.md
-```
-
-`manifest.yaml` and `graph.json` are the public compatibility contract.
-Markdown files are designed to be readable by people and model providers.
-DeltaDotta describes authority and escalation; it does not enforce permissions
-inside third-party providers.
-
-`GAPS.md` is the honesty layer: it records source fingerprints, template
-assumptions, lint issues, and the provider-side controls still required before a
-role receives real tool access.
-
-## Useful commands
-
-```bash
-pnpm verify                 # typecheck, CLI build, tests, and production build
-pnpm dev                    # web workspace
-pnpm cli                    # guided CLI from this checkout
-deltadotta check            # detect repository evidence that moved or disappeared
-deltadotta init             # deeper open-ended organization interview
-```
-
-`deltadotta launch` supports advanced options for automation only. The normal
-workflow is simply `deltadotta`.
+The container runs as a non-root user and exposes a health check at
+`/api/health`.
 
 ## Safety and privacy
 
-- Repository scanning is local and bounded.
-- Generated evidence is visible in the package.
-- First-shift preflight is read-only: it must not deploy, restart equipment,
-  modify infrastructure, access production credentials, or change records.
-- Do not commit real organization exports, credentials, or provider tokens.
+- Repository scanning and package generation run locally.
+- Scanned evidence and assumptions remain visible in the generated package.
+- First-shift preflight is read-only and does not deploy, access production
+  credentials, or modify operational systems.
+- Provider permissions, approvals, logging, and revocation must be configured
+  separately.
+- Real organization exports, credentials, and provider tokens should not be
+  committed.
 
-Read [SECURITY.md](SECURITY.md) before reporting a vulnerability.
+See [SECURITY.md](SECURITY.md) for vulnerability reporting.
 
 ## Contributing
 
-Contributions are welcome. Start with [CONTRIBUTING.md](CONTRIBUTING.md), follow
-the [Code of Conduct](CODE_OF_CONDUCT.md), and use the templates in `.github/`.
-The maintainer decision process is in [GOVERNANCE.md](GOVERNANCE.md).
+Read [CONTRIBUTING.md](CONTRIBUTING.md) before opening a pull request. Community
+standards and project decisions are documented in
+[CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md) and [GOVERNANCE.md](GOVERNANCE.md).
 
-## License and trademarks
+## License
 
-DeltaDotta source code is licensed under [Apache-2.0](LICENSE). The DeltaDotta
-name and visual identity are governed separately by [TRADEMARK.md](TRADEMARK.md).
+The source code is licensed under [Apache-2.0](LICENSE). Use of the DeltaDotta
+name and visual identity is covered by [TRADEMARK.md](TRADEMARK.md).
