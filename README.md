@@ -160,13 +160,9 @@ decks when you need to explain what the generated package contains.
 
 #### Verified role package
 
-<img src="docs/demos/package-card.png" width="720" alt="DeltaDotta preflighted role package card showing generated role skills, organization files, preflight report, and what the role can safely carry into chat." />
-
 Source: [package-card.svg](docs/demos/package-card.svg)
 
 #### Operating map
-
-<img src="docs/demos/hierarchy-card.png" width="720" alt="DeltaDotta operating map card showing Engineering Lead, DevOps Platform, Software Engineer, Product Designer, QA Engineer, and incident-ready role boundaries." />
 
 Source: [hierarchy-card.svg](docs/demos/hierarchy-card.svg)
 
@@ -192,13 +188,6 @@ Claude and package demos:
 
 Generated launchpad output is included under
 [`docs/demo-workspace/.deltadotta/launchpad/`](docs/demo-workspace/.deltadotta/launchpad/).
-
-### Preview assets
-
-Use these lightweight cards in READMEs, launch posts, and demo decks:
-
-- [package-card.png](docs/demos/package-card.png)
-- [hierarchy-card.png](docs/demos/hierarchy-card.png)
 
 ### Source assets
 
