@@ -25,14 +25,9 @@
 </p>
 
 <p align="center">
-  <a href="docs/demos/deltadotta-higgsfield-premium-campaign.mp4">Watch premium Higgsfield campaign</a> ·
-  <a href="docs/demos/deltadotta-long-higgsfield-campaign.mp4">Watch 40-second campaign film</a> ·
-  <a href="docs/demos/deltadotta-higgsfield-founder-cut.mp4">Founder cut</a> ·
-  <a href="docs/demos/deltadotta-higgsfield-social-reel.mp4">Social reel</a> ·
-  <a href="docs/demos/deltadotta-higgsfield-marketing-film.mp4">Watch 8-second Higgsfield cut</a> ·
-  <a href="docs/demos/deltadotta-marketing-film.mp4">Watch motion-graphics cut</a> ·
-  <a href="docs/demos/deltadotta-onboarding-loop.mp4">Watch short MP4</a> ·
-  <a href="docs/demos/deltadotta-human-onboarding.mp4">Watch full walkthrough</a> ·
+  <a href="#marketing-campaign-film">Campaign previews</a> ·
+  <a href="#higgsfield-campaign-cutdowns">Higgsfield cutdowns</a> ·
+  <a href="#human-speed-onboarding">Onboarding walkthrough</a> ·
   <a href="docs/demos/northstar-deltadotta-package.zip">Download sample package</a> ·
   <a href="docs/demos/CLAUDE-DEMO-STORYBOARD.md">Claude import storyboard</a>
 </p>
@@ -149,23 +144,19 @@ stay correct.
 
 <img src="docs/demos/deltadotta-higgsfield-premium-campaign.gif" width="720" alt="Higgsfield-backed DeltaDotta premium campaign cut with cinematic launchpad footage and corrected product messaging." />
 
-Premium video version: [deltadotta-higgsfield-premium-campaign.mp4](docs/demos/deltadotta-higgsfield-premium-campaign.mp4)
-
-Long campaign version: [deltadotta-long-higgsfield-campaign.mp4](docs/demos/deltadotta-long-higgsfield-campaign.mp4)
-
-Short Higgsfield version: [deltadotta-higgsfield-marketing-film.mp4](docs/demos/deltadotta-higgsfield-marketing-film.mp4)
-
-Motion-graphics version: [deltadotta-marketing-film.mp4](docs/demos/deltadotta-marketing-film.mp4)
+Full-resolution MP4 renders are intentionally kept out of Git. Use the preview
+GIFs and poster frames below in the README, and regenerate local MP4s with the
+demo build scripts when you need export-ready video files.
 
 ### Higgsfield campaign cutdowns
 
-Three Higgsfield-backed marketing videos are included for different launch
+Three Higgsfield-backed marketing previews are included for different launch
 surfaces. Each uses Higgsfield-generated cinematic footage with controlled
 DeltaDotta overlays so the product name, role names, and CTA stay correct.
 
-- Premium campaign: [deltadotta-higgsfield-premium-campaign.mp4](docs/demos/deltadotta-higgsfield-premium-campaign.mp4)
-- Founder cut: [deltadotta-higgsfield-founder-cut.mp4](docs/demos/deltadotta-higgsfield-founder-cut.mp4)
-- Vertical social reel: [deltadotta-higgsfield-social-reel.mp4](docs/demos/deltadotta-higgsfield-social-reel.mp4)
+- Premium campaign preview: [deltadotta-higgsfield-premium-campaign.gif](docs/demos/deltadotta-higgsfield-premium-campaign.gif)
+- Founder cut preview: [deltadotta-higgsfield-founder-cut.gif](docs/demos/deltadotta-higgsfield-founder-cut.gif)
+- Vertical social reel preview: [deltadotta-higgsfield-social-reel.gif](docs/demos/deltadotta-higgsfield-social-reel.gif)
 
 <img src="docs/demos/deltadotta-higgsfield-premium-campaign.gif" width="720" alt="Higgsfield-backed DeltaDotta premium campaign cut with cinematic launchpad footage and corrected product messaging." />
 
@@ -194,7 +185,7 @@ Software Launchpad, installs provider context, and ends on a preflighted package
 
 <img src="docs/demos/deltadotta-human-onboarding.gif" width="720" alt="Human-speed DeltaDotta onboarding demo for Northstar Checkout, ending on a preflighted Software Launchpad package." />
 
-Video version: [deltadotta-human-onboarding.mp4](docs/demos/deltadotta-human-onboarding.mp4)
+Export-ready MP4 walkthroughs are generated locally and ignored by Git.
 
 ### Product story cards
 
@@ -242,25 +233,18 @@ Use these when you need a shorter animated loop instead of the full human-speed
 walkthrough:
 
 - [deltadotta-long-higgsfield-campaign.gif](docs/demos/deltadotta-long-higgsfield-campaign.gif)
-- [deltadotta-long-higgsfield-campaign.mp4](docs/demos/deltadotta-long-higgsfield-campaign.mp4)
 - [deltadotta-long-higgsfield-campaign-poster.png](docs/demos/deltadotta-long-higgsfield-campaign-poster.png)
 - [deltadotta-higgsfield-premium-campaign.gif](docs/demos/deltadotta-higgsfield-premium-campaign.gif)
-- [deltadotta-higgsfield-premium-campaign.mp4](docs/demos/deltadotta-higgsfield-premium-campaign.mp4)
 - [deltadotta-higgsfield-premium-campaign-poster.png](docs/demos/deltadotta-higgsfield-premium-campaign-poster.png)
 - [deltadotta-higgsfield-founder-cut.gif](docs/demos/deltadotta-higgsfield-founder-cut.gif)
-- [deltadotta-higgsfield-founder-cut.mp4](docs/demos/deltadotta-higgsfield-founder-cut.mp4)
 - [deltadotta-higgsfield-founder-cut-poster.png](docs/demos/deltadotta-higgsfield-founder-cut-poster.png)
 - [deltadotta-higgsfield-social-reel.gif](docs/demos/deltadotta-higgsfield-social-reel.gif)
-- [deltadotta-higgsfield-social-reel.mp4](docs/demos/deltadotta-higgsfield-social-reel.mp4)
 - [deltadotta-higgsfield-social-reel-poster.png](docs/demos/deltadotta-higgsfield-social-reel-poster.png)
 - [deltadotta-higgsfield-marketing-film.gif](docs/demos/deltadotta-higgsfield-marketing-film.gif)
-- [deltadotta-higgsfield-marketing-film.mp4](docs/demos/deltadotta-higgsfield-marketing-film.mp4)
 - [deltadotta-higgsfield-marketing-film-poster.png](docs/demos/deltadotta-higgsfield-marketing-film-poster.png)
 - [deltadotta-marketing-film.gif](docs/demos/deltadotta-marketing-film.gif)
-- [deltadotta-marketing-film.mp4](docs/demos/deltadotta-marketing-film.mp4)
 - [deltadotta-marketing-film-poster.png](docs/demos/deltadotta-marketing-film-poster.png)
 - [deltadotta-onboarding-loop.gif](docs/demos/deltadotta-onboarding-loop.gif)
-- [deltadotta-onboarding-loop.mp4](docs/demos/deltadotta-onboarding-loop.mp4)
 
 ### Source assets
 

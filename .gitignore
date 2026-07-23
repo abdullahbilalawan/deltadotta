@@ -11,3 +11,6 @@ node_modules
 .pnpm-debug.log*
 .gstack/
 docs/demos/frames/
+docs/demos/**/*.mp4
+docs/demos/**/*.mov
+docs/demos/**/*.webm
