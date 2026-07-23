@@ -21,12 +21,6 @@
 </p>
 
 <p align="center">
-  <img src="docs/demos/deltadotta-higgsfield-premium-campaign-poster.png" width="760" alt="DeltaDotta premium Higgsfield-backed campaign poster with corrected product messaging." />
-</p>
-
-<p align="center">
-  <a href="#marketing-campaign-film">Campaign previews</a> ·
-  <a href="#higgsfield-campaign-cutdowns">Higgsfield cutdowns</a> ·
   <a href="#human-speed-onboarding">Onboarding walkthrough</a> ·
   <a href="docs/demos/northstar-deltadotta-package.zip">Download sample package</a> ·
   <a href="docs/demos/CLAUDE-DEMO-STORYBOARD.md">Claude import storyboard</a>
@@ -135,35 +129,6 @@ These demos are built from local sample workspaces and generated DeltaDotta
 packages. They are safe to inspect, share, and use as a starting point for your
 own product walkthrough.
 
-### Marketing campaign film
-
-A set of Higgsfield-backed launch films for introducing DeltaDotta in a README,
-launch post, or demo opener. They use Higgsfield-generated cinematic footage
-with controlled DeltaDotta overlays so the product name, role names, and CTA
-stay correct.
-
-<img src="docs/demos/deltadotta-higgsfield-premium-campaign-poster.png" width="720" alt="Higgsfield-backed DeltaDotta premium campaign poster with cinematic launchpad footage and corrected product messaging." />
-
-Full-resolution MP4 renders and animated GIFs are intentionally kept out of Git.
-Use the poster frames below in the README, and regenerate local video files with
-the demo build scripts when you need export-ready assets.
-
-### Higgsfield campaign cutdowns
-
-Three Higgsfield-backed marketing poster frames are included for different
-launch surfaces. Each comes from Higgsfield-generated cinematic footage with controlled
-DeltaDotta overlays so the product name, role names, and CTA stay correct.
-
-- Premium campaign poster: [deltadotta-higgsfield-premium-campaign-poster.png](docs/demos/deltadotta-higgsfield-premium-campaign-poster.png)
-- Founder cut poster: [deltadotta-higgsfield-founder-cut-poster.png](docs/demos/deltadotta-higgsfield-founder-cut-poster.png)
-- Vertical social reel poster: [deltadotta-higgsfield-social-reel-poster.png](docs/demos/deltadotta-higgsfield-social-reel-poster.png)
-
-<img src="docs/demos/deltadotta-higgsfield-premium-campaign-poster.png" width="720" alt="Higgsfield-backed DeltaDotta premium campaign poster with cinematic launchpad footage and corrected product messaging." />
-
-<img src="docs/demos/deltadotta-higgsfield-founder-cut-poster.png" width="720" alt="Higgsfield-backed DeltaDotta founder cut poster explaining the AI agent adoption gap and operating layer package." />
-
-<img src="docs/demos/deltadotta-higgsfield-social-reel-poster.png" width="360" alt="Vertical Higgsfield-backed DeltaDotta social reel poster with cinematic launchpad footage and npx deltadotta CTA." />
-
 ### Guided Launchpad flows
 
 Fast-forwarded captures of the real CLI running against fresh local test
@@ -230,15 +195,8 @@ Generated launchpad output is included under
 
 ### Preview assets
 
-Use these lightweight poster frames and cards in READMEs, launch posts, and
-demo decks:
+Use these lightweight cards in READMEs, launch posts, and demo decks:
 
-- [deltadotta-long-higgsfield-campaign-poster.png](docs/demos/deltadotta-long-higgsfield-campaign-poster.png)
-- [deltadotta-higgsfield-premium-campaign-poster.png](docs/demos/deltadotta-higgsfield-premium-campaign-poster.png)
-- [deltadotta-higgsfield-founder-cut-poster.png](docs/demos/deltadotta-higgsfield-founder-cut-poster.png)
-- [deltadotta-higgsfield-social-reel-poster.png](docs/demos/deltadotta-higgsfield-social-reel-poster.png)
-- [deltadotta-higgsfield-marketing-film-poster.png](docs/demos/deltadotta-higgsfield-marketing-film-poster.png)
-- [deltadotta-marketing-film-poster.png](docs/demos/deltadotta-marketing-film-poster.png)
 - [package-card.png](docs/demos/package-card.png)
 - [hierarchy-card.png](docs/demos/hierarchy-card.png)
 
