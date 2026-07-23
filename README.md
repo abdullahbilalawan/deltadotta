@@ -137,6 +137,8 @@ context installation, and final preflight result.
 
 #### Software Launchpad
 
+<img src="docs/demos/software-launchpad.gif" width="720" alt="Mac terminal demo of DeltaDotta scanning a software workspace, confirming Launchpad decisions, and preflighting the generated role package." />
+
 Use the packaged demo workspace and storyboard to replay the Software Launchpad
 flow locally.
 
@@ -150,8 +152,8 @@ Launchpad flow locally.
 A slower, presenter-friendly recording that creates repo evidence, runs the
 Software Launchpad, installs provider context, and ends on a preflighted package.
 
-Export-ready MP4 walkthroughs and animated previews are generated locally and
-ignored by Git.
+Export-ready MP4 walkthroughs and extra animated previews are generated locally
+and ignored by Git.
 
 ### Product story cards
 

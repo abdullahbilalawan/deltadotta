@@ -15,6 +15,7 @@ docs/demos/**/*.mp4
 docs/demos/**/*.mov
 docs/demos/**/*.webm
 docs/demos/**/*.gif
+!docs/demos/software-launchpad.gif
 docs/demos/*higgsfield*.png
 docs/demos/*campaign*.png
 docs/demos/*marketing-film*.png
