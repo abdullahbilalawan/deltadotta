@@ -8,4 +8,5 @@
   issue.
 
 DeltaDotta is community software. Maintainers will prioritize reproducible bugs,
-security concerns, and issues that block the guided Launchpad workflow.
+security concerns, and issues that block organization onboarding or package
+validation.

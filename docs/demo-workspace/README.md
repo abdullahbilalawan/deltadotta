@@ -8,6 +8,10 @@ Use this workspace to demonstrate three things:
 - DeltaDotta discovers owners, boundaries, handoffs, and escalation paths from those files.
 - The generated DevOps / Platform Engineer role can answer an incident prompt without inventing authority.
 
+The sample inputs are [product knowledge](PRODUCT-KNOWLEDGE.md) and the
+[release runbook](RUNBOOK.md). [AGENTS.md](AGENTS.md) shows the generated
+Codex entrypoint used by the legacy `launch` demo.
+
 Demo incident:
 
 > A deployment failed its health check. Give me the allowed next step, required handoff, and escalation boundary.

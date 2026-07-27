@@ -10,7 +10,7 @@ Thanks for helping make organization onboarding easier to trust and reuse.
 
 ## Local setup
 
-DeltaDotta supports Node.js 20 or later and uses pnpm.
+DeltaDotta supports Node.js 22.13 or later and uses pnpm.
 
 ```bash
 corepack enable

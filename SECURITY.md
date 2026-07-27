@@ -19,6 +19,7 @@ organization packages.
 ## Security boundaries
 
 DeltaDotta describes role authority; it does not enforce permissions in Claude,
-Codex, or any other provider. The first-shift verifier is deliberately
-read-only. Treat provider credentials, production access, and generated role
-files as sensitive operational material and review them before use.
+ChatGPT, Claude Code, Codex, or any other provider. Provider evaluation and
+first-shift verification are deliberately read-only by default. Treat provider
+credentials, production access, and generated organization packages as
+sensitive operational material and review them before use.
