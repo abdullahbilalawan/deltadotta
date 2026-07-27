@@ -3,14 +3,15 @@
 import JSZip from "jszip";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { ArrowDownToLine, ClipboardList, FileText, FolderUp, GitBranch, Plus, X } from "lucide-react";
-import { compilePackage, createTeamLaunchpad, Evidence, extractRoleSignals, LaunchTemplate, mergeOrganization, Organization, parseImportedPackage, Role, slugify, starterOrganization } from "@/lib/organization";
+import { compilePackage, createTeamLaunchpad, Evidence, extractRoleSignals, mergeOrganization, Organization, parseImportedPackage, Role, starterOrganization, TeamTemplate } from "@/lib/organization";
+import { portableIdentifier } from "@/lib/identifiers";
 
 const storageKey = "deltadotta-organization-v1";
 
 type Candidate = { id: string; title: string; purpose: string; excerpt: string; evidenceId: string; sourceName: string };
 
 function roleFromCandidate(candidate: Candidate, index: number): Role {
-  const id = slugify(candidate.title) || `role-${Date.now()}`;
+  const id = portableIdentifier(candidate.title, "role");
   return {
     id: `${id}-${index}`, title: candidate.title, department: "Unassigned", reportsTo: "ceo",
     purpose: candidate.purpose, owns: ["Review ownership from imported evidence"], inputs: ["Organization context"], outputs: ["Role-specific outcomes"],
@@ -92,7 +93,7 @@ export default function Home() {
       return { ...current, updatedAt: "Just now", roles: [...current.roles, role] };
     });
     setCandidates((current) => current.filter((item) => item.id !== candidate.id));
-    setSelectedRoleId(`${slugify(candidate.title)}-${organization.roles.length}`);
+    setSelectedRoleId(`${portableIdentifier(candidate.title, "role")}-${organization.roles.length}`);
   }
 
   function addRole() {
@@ -103,7 +104,7 @@ export default function Home() {
     setToast(`Role ${index + 1} added to the map.`);
   }
 
-  function useTemplate(template: LaunchTemplate) {
+  function useTemplate(template: TeamTemplate) {
     const manufacturing = template === "manufacturing";
     const organizationName = manufacturing ? "Manufacturing team" : "Software team";
     const primaryRoleId = manufacturing ? "production-operations-lead" : "platform-engineer";
@@ -136,7 +137,7 @@ export default function Home() {
     const blob = await zip.generateAsync({ type: "blob" });
     const url = URL.createObjectURL(blob);
     const link = document.createElement("a");
-    link.href = url; link.download = `${organization.name.toLowerCase().replace(/[^a-z0-9]+/g, "-")}-organization.zip`; link.click(); URL.revokeObjectURL(url);
+    link.href = url; link.download = `${portableIdentifier(organization.name, "organization")}-organization.zip`; link.click(); URL.revokeObjectURL(url);
     setToast("Portable package downloaded.");
   }
 

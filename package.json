@@ -5,12 +5,27 @@
   "type": "module",
   "license": "Apache-2.0",
   "packageManager": "pnpm@9.15.4",
-  "keywords": ["organization", "ai-agents", "skills", "cli", "claude-code", "codex"],
+  "keywords": [
+    "organization",
+    "ai-agents",
+    "skills",
+    "cli",
+    "claude-code",
+    "codex"
+  ],
   "bin": {
     "deltadotta": "./dist/bin/deltadotta.js"
   },
-  "files": ["dist", "README.md", "LICENSE", "NOTICE", "TRADEMARK.md"],
-  "engines": { "node": ">=20" },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE",
+    "NOTICE",
+    "TRADEMARK.md"
+  ],
+  "engines": {
+    "node": ">=22.13"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -19,21 +34,24 @@
     "test": "vitest run",
     "typecheck": "tsc --noEmit",
     "cli:build": "tsc -p tsconfig.cli.json",
-    "cli": "pnpm cli:build && node dist/bin/deltadotta.js",
-    "verify": "pnpm typecheck && pnpm cli:build && pnpm test && pnpm build",
-    "prepack": "pnpm cli:build"
+    "cli": "tsc -p tsconfig.cli.json && node dist/bin/deltadotta.js",
+    "benchmark:cli": "tsc -p tsconfig.cli.json && node scripts/benchmark-cli.mjs",
+    "verify": "tsc --noEmit && tsc -p tsconfig.cli.json && vitest run && next build",
+    "prepack": "tsc -p tsconfig.cli.json"
   },
   "dependencies": {
+    "@napi-rs/canvas": "1.0.2",
     "jszip": "^3.10.1",
-    "lucide-react": "^0.468.0",
-    "next": "^15.1.6",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "officeparser": "7.4.0"
   },
   "devDependencies": {
     "@types/node": "^22.10.2",
     "@types/react": "^19.0.2",
     "@types/react-dom": "^19.0.2",
+    "lucide-react": "^0.468.0",
+    "next": "^15.1.6",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
     "typescript": "^5.7.2",
     "vitest": "^2.1.8"
   }

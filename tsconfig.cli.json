@@ -11,6 +11,6 @@
     "declaration": false,
     "noEmit": false
   },
-  "include": ["bin/**/*.ts", "lib/organization.ts", "lib/cli-viewer.ts"],
+  "include": ["bin/**/*.ts", "lib/organization.ts", "lib/organization-review.ts", "lib/provider-evaluation.ts", "lib/readiness.ts", "lib/cli-viewer.ts", "lib/source-ingestion.ts", "lib/external-ingestion.ts", "lib/database-knowledge.ts", "lib/source-safety.ts"],
   "exclude": ["node_modules", ".next", "tests"]
 }
