@@ -62,7 +62,7 @@ The last line prints the retained temporary folder.
 Use the fictional demo workspace:
 
 ```bash
-pnpm cli -- onboard \
+pnpm cli -- \
   --repo ./docs/demo-workspace \
   --source . \
   --name "Local Test Company" \
@@ -109,13 +109,20 @@ npm pack
 npm install --global ./deltadotta-0.1.0.tgz
 ```
 
-Then leave the DeltaDotta source folder and enter the fictional customer
-workspace before starting the guided flow:
+Then copy the fictional workspace outside the DeltaDotta source folder and
+enter that customer folder before starting the one-command flow:
 
 ```bash
-cd docs/demo-workspace
+CUSTOMER_TEST_ROOT="$(mktemp -d)"
+cp -R docs/demo-workspace "$CUSTOMER_TEST_ROOT/Demo Workspace"
+cd "$CUSTOMER_TEST_ROOT/Demo Workspace"
 deltadotta
 ```
+
+The command does not ask setup questions. It uses `Demo Workspace` as the
+organization name and ChatGPT as the first provider target. Supply
+`--name "Flameco"` or `--provider claude` only when you want to override those
+defaults.
 
 Do not start the customer walkthrough from the DeltaDotta source folder. That
 folder contains DeltaDotta's own test fixtures, example credential strings,

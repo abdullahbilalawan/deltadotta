@@ -22,7 +22,7 @@ pnpm dev
 
 The clean-install smoke test packs and installs the same payload npm will
 receive. The web workspace runs at `http://localhost:3000`. To exercise the
-guided CLI:
+one-command CLI:
 
 ```bash
 pnpm cli:build

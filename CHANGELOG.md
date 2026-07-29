@@ -6,6 +6,9 @@ All notable changes to DeltaDotta are documented in this file.
 
 ### Added
 
+- Start onboarding with one command and no setup questionnaire; the current
+  folder name and ChatGPT are safe, visible defaults that flags can override.
+- Include a real terminal onboarding video and a customer-first npm quick start.
 - Build reviewable organization packages from selected documents, code,
   database schemas, bounded read-only database rows, HTTPS exports, Git
   snapshots, and supported archives.
@@ -22,6 +25,9 @@ All notable changes to DeltaDotta are documented in this file.
 
 ### Safety
 
+- Ignore incidental media during recursive folder scans and report oversized
+  discovered source files as warnings while keeping explicit source failures
+  fatal.
 - Keep parsing and package generation local unless the user explicitly selects
   a network or database connector.
 - Reject unsafe archives, writable database statements, unbounded inputs,

@@ -1,5 +1,5 @@
 import { spawnSync } from "node:child_process";
-import { access, mkdtemp, mkdir, readFile, rm } from "node:fs/promises";
+import { access, cp, mkdtemp, mkdir, readFile, rm } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -41,12 +41,6 @@ function run(command, args, options = {}) {
   }
 
   return result;
-}
-
-async function requireFile(relativePath) {
-  const location = join(temporaryRoot, relativePath);
-  await access(location);
-  return location;
 }
 
 try {
@@ -100,47 +94,50 @@ try {
     throw new Error(`unexpected CLI version output: ${version}`);
   }
 
-  const output = join(temporaryRoot, "output");
-  run(
-    process.execPath,
-    [
-      installedCli,
-      "onboard",
-      "--repo",
-      join(projectRoot, "docs", "demo-workspace"),
-      "--source",
-      ".",
-      "--name",
-      "Public Install Smoke",
-      "--provider",
-      "chatgpt",
-      "--output",
-      output,
-      "--yes",
-      "--no-open",
-    ],
+  const customerWorkspace = join(temporaryRoot, "Demo Workspace");
+  await cp(join(projectRoot, "docs", "demo-workspace"), customerWorkspace, {
+    recursive: true,
+  });
+  const onboarding = run(
+    installedBin,
+    ["--no-open"],
     {
-      cwd: consumer,
-      acceptedStatuses: [0, 2],
+      cwd: customerWorkspace,
+      shell: process.platform === "win32",
     },
   );
+  if (
+    onboarding.stdout.includes("Organization name") ||
+    onboarding.stdout.includes("Choose 1-4")
+  ) {
+    throw new Error("default onboarding unexpectedly asked setup questions");
+  }
+  if (
+    !onboarding.stdout.includes("Organization: Demo Workspace") ||
+    !onboarding.stdout.includes("First target: ChatGPT")
+  ) {
+    throw new Error("default onboarding did not report its inferred setup");
+  }
 
+  const output = join(customerWorkspace, ".deltadotta", "onboarding");
   run(process.execPath, [installedCli, "validate", "--package", output], {
-    cwd: consumer,
-    acceptedStatuses: [0, 2],
+    cwd: customerWorkspace,
+    acceptedStatuses: [2],
   });
 
   const requiredArtifacts = [
-    "output/ORGANIZATION.md",
-    "output/graph.json",
-    "output/manifest.yaml",
-    "output/providers/chatgpt/PROJECT-INSTRUCTIONS.md",
-    "output/providers/chatgpt/UPLOAD-MANIFEST.md",
-    "output/review/organization.review.json",
-    "output/validation/readiness.json",
-    "output.zip",
+    "ORGANIZATION.md",
+    "graph.json",
+    "manifest.yaml",
+    "providers/chatgpt/PROJECT-INSTRUCTIONS.md",
+    "providers/chatgpt/UPLOAD-MANIFEST.md",
+    "review/organization.review.json",
+    "validation/readiness.json",
   ];
-  await Promise.all(requiredArtifacts.map(requireFile));
+  await Promise.all(
+    requiredArtifacts.map((relativePath) => access(join(output, relativePath))),
+  );
+  await access(`${output}.zip`);
 
   const readiness = JSON.parse(
     await readFile(join(output, "validation", "readiness.json"), "utf8"),

@@ -51,6 +51,7 @@ Commands:
           --mission <text> --repo <base-folder> --output <folder> --yes --no-open
           --review <organization.review.json>
           --allow-secret-patterns (only after reviewing every flagged source)
+          Defaults: current folder, folder name, ChatGPT, and .deltadotta/onboarding.
   merge   Combine independently onboarded team packages into one organization:
           --package <base-folder> --with <team-folder> (repeatable)
           --name <organization-name> --mission <text> --output <folder> --no-open
@@ -1001,17 +1002,16 @@ async function runOnboard(args) {
     try {
         output.write("\nΔ DeltaDotta organization onboarding\n\n");
         output.write("Reading only the local paths and external locations you selected. Nothing is sent to an AI provider.\n");
-        const name = argumentValue(args, "--name")
-            ?? (hasFlag(args, "--yes") ? titleFromPath(baseDirectory) : await answerWithDefault("\nOrganization name", titleFromPath(baseDirectory), rl));
-        const provider = requestedProvider
-            ?? (hasFlag(args, "--yes") ? "chatgpt" : await chooseOption("\nWhere will this organization package be used first?", [
-                { value: "chatgpt", label: "ChatGPT", detail: "Prepare Project and custom GPT instructions plus compact knowledge." },
-                { value: "claude", label: "Claude", detail: "Prepare Project instructions, compact knowledge, and role skills." },
-                { value: "codex", label: "Codex", detail: "Prepare the portable package for a coding workspace." },
-                { value: "claude-code", label: "Claude Code", detail: "Prepare the portable package for a coding workspace." },
-            ], "chatgpt", rl));
+        const name = argumentValue(args, "--name")?.trim() || titleFromPath(baseDirectory);
+        const provider = requestedProvider ?? "chatgpt";
         if (!isProvider(provider))
             throw new Error("Choose Claude, ChatGPT, Claude Code, or Codex.");
+        output.write(`  Scanning: ${baseDirectory}\n`);
+        output.write(`  Organization: ${name}\n`);
+        output.write(`  First target: ${onboardingProviderLabel(provider)}\n`);
+        if (!argumentValue(args, "--name") || !requestedProvider) {
+            output.write("  Tip: use --name or --provider to override these defaults.\n");
+        }
         const destination = resolve(argumentValue(args, "--output") ?? `${baseDirectory}/.deltadotta/onboarding`);
         if (sameAsOrAncestorOf(destination, baseDirectory)) {
             throw new Error("onboard output cannot be the source base folder or one of its ancestors; choose a dedicated package folder.");

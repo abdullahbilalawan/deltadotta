@@ -36,16 +36,23 @@ npm pack --dry-run
 
 ## Publish npm
 
-The `deltadotta` package is public and includes npm provenance metadata.
+The first publication creates the package from an authenticated maintainer
+workstation. npm provenance is only available from a
+[supported cloud CI provider](https://docs.npmjs.com/generating-provenance-statements/),
+so disable the package's provenance default for this one local publication:
 
 ```bash
 npm login
 npm whoami
-npm publish --access public --provenance
+NPM_CONFIG_PROVENANCE=false npm publish --access public
 ```
 
 Publishing is irreversible for that exact version. Do not run it until the
 release commit and version are final.
+
+After the package exists, configure
+[npm trusted publishing](https://docs.npmjs.com/trusted-publishers/) and publish
+future releases from CI with provenance enabled.
 
 Verify from a new temporary folder:
 

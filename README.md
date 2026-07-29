@@ -44,35 +44,39 @@ stable hashed fallbacks otherwise; colliding titles never overwrite each other.
 
 ## Quick start
 
-**Requirements:** Node.js 22.13+ and Corepack.
+**Requirement:** Node.js 22.13 or later.
 
 ```bash
-git clone https://github.com/abdullahbilalawan/deltadotta.git
-cd deltadotta
-corepack enable
-pnpm install --frozen-lockfile
-pnpm test:public-install
-pnpm cli -- onboard \
-  --repo ./docs/demo-workspace \
-  --source . \
-  --name "Local Test Company" \
-  --provider chatgpt \
-  --output ./.deltadotta/quick-start \
-  --yes \
-  --no-open
+cd /path/to/your-company-folder
+npx --yes deltadotta
 ```
 
-The smoke test installs the exact npm tarball in a clean temporary consumer
-project. The onboarding command uses only fictional repository data. It should
-report `needs-review` after writing the package. That is the expected safety
-gate for an inferred organization that no accountable person has approved;
+That is the complete first run. DeltaDotta scans the current folder, uses its
+name for the organization, prepares a ChatGPT package, and opens the local
+organization map. Nothing is uploaded.
+
+Override either default when needed:
+
+```bash
+npx --yes deltadotta --name "Flameco" --provider claude
+```
+
+For repeated use, install the command once:
+
+```bash
+npm install --global deltadotta
+deltadotta
+```
+
+The first package reports `needs-review`. That is the expected safety gate for
+an inferred organization that no accountable person has approved;
 `deltadotta validate` exits with status `2` until the review is complete.
 
 Read [the local testing guide](docs/LOCAL-TESTING.md) for the generated files,
 web and Docker checks, and a sanitized live-provider test.
 
-`onboard` is optional, so options can come first. With no options, `pnpm cli`
-starts the guided organization onboarding flow and scans the current folder.
+`onboard` is optional, so options can come first. With no options,
+`deltadotta` scans the current folder using the folder name and ChatGPT defaults.
 Generated files are written to:
 
 ```text
@@ -93,14 +97,13 @@ External company knowledge can be mixed into the same command:
 export DELTADOTTA_DOC_TOKEN="your short-lived document token"
 export COMPANY_DATABASE_URL="postgresql://readonly@db.example.com/company?sslmode=require"
 
-pnpm cli -- onboard \
+deltadotta onboard \
   --git "git@github.com:acme/internal-handbook.git#main" \
   --url "https://knowledge.example.com/org-roles.docx" \
   --http-token-env DELTADOTTA_DOC_TOKEN \
   --database-url-env COMPANY_DATABASE_URL \
   --name "Acme Company" \
-  --provider claude \
-  --yes
+  --provider claude
 ```
 
 Private Git repositories use your existing Git credential manager or SSH agent.
@@ -132,11 +135,10 @@ manifest whose connection URL is named—not stored—in the file:
 ```bash
 export COMPANY_DATABASE_URL="postgresql://readonly@db.example.com/company?sslmode=require"
 
-pnpm cli -- onboard \
+deltadotta onboard \
   --database-query-manifest ./database-queries.json \
   --name "Acme Company" \
-  --provider chatgpt \
-  --yes
+  --provider chatgpt
 ```
 
 The manifest supports PostgreSQL and MySQL and requires `psql` or `mysql`,
@@ -145,10 +147,15 @@ only to reviewed onboarding views.
 
 ## Demo
 
-<img src="docs/demos/software-launchpad.gif" width="720" alt="DeltaDotta running in a Mac terminal: scanning a software repository, confirming team decisions, and preflighting a generated role package." />
+<a href="https://github.com/abdullahbilalawan/deltadotta/blob/main/docs/demos/deltadotta-human-onboarding.mp4">
+  <img src="https://raw.githubusercontent.com/abdullahbilalawan/deltadotta/main/docs/demos/deltadotta-human-onboarding.gif" width="720" alt="A real DeltaDotta one-command onboarding run in a fictional company workspace." />
+</a>
 
-The demo uses only sample data from
-[`docs/demo-workspace`](docs/demo-workspace/README.md). The
+[Watch the onboarding video as MP4](https://github.com/abdullahbilalawan/deltadotta/blob/main/docs/demos/deltadotta-human-onboarding.mp4).
+
+The recording runs the real installed CLI against only the fictional Flameco
+files created by the
+[recording script](docs/demos/human-onboarding.tape). The
 [recording storyboard](docs/demos/CLAUDE-DEMO-STORYBOARD.md) documents the
 expected flow and safety rules.
 
@@ -305,13 +312,13 @@ unbounded database fan-out.
 
 ### Completeness and secret checks
 
-If a requested local path, HTTPS export, Git repository, database schema, or
-selected query cannot be read completely within the documented bounds,
-onboarding fails before writing a package. The same rule applies when otherwise
-valid connector results exceed the combined 500-source or 4 MB budget.
-Truncation that retains bounded evidence remains visible as a warning. This
-prevents a successful-looking organization map from silently omitting a
-requested system of record.
+If an explicitly requested local file, HTTPS export, Git repository, database
+schema, or selected query cannot be read completely within the documented
+bounds, onboarding fails before writing a package. Incidental unsupported
+media and oversized files discovered while recursively scanning a selected
+folder are skipped and recorded as warnings. Combined results that exceed the
+500-source or 4 MB budget remain fatal. Truncation that retains bounded
+evidence remains visible as a warning.
 
 Every retained warning is also written to
 `validation/source-ingestion.json`, `validation/source-ingestion.md`,
@@ -348,24 +355,24 @@ ChatGPT, Codex, or connected tools.
 
 | Command                                                              | Description                                                                                       |
 | -------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
-| `pnpm cli`                                                           | Build and run guided mixed-source organization onboarding.                                        |
-| `pnpm cli -- --source ...`                                           | Run scripted onboarding with the optional `onboard` command omitted.                              |
-| `pnpm cli -- onboard ...`                                            | Run the same scripted onboarding with an explicit command.                                        |
-| `pnpm cli -- merge --package <base> --with <team> ...`               | Combine independently onboarded teams into one freshly reviewed organization.                     |
-| `pnpm cli -- refresh --package <folder>`                             | Re-ingest recorded source plans into a new package and require fresh review.                      |
-| `pnpm cli -- refine --package <folder>`                              | Apply the edited canonical review and rebuild the package.                                        |
-| `pnpm cli -- validate --package <folder>`                            | Recompute readiness from the graph and actual provider artifacts.                                 |
-| `pnpm cli -- install --provider chatgpt --package <folder>`          | Validate, open the official project surface, and print exact setup paths.                         |
-| `pnpm cli -- evaluate --package <folder> --results <responses.json>` | Score raw responses from the installed Claude or ChatGPT Project.                                 |
-| `pnpm cli -- check`                                                  | Verify bounded local fingerprints and require refresh verification for external snapshots.        |
-| `pnpm cli -- launch`                                                 | Run the software or manufacturing team Launchpad.                                                 |
-| `pnpm cli -- init`                                                   | Run the open-ended organization interview.                                                        |
+| `deltadotta`                                                         | Scan the current folder with simple organization-name and ChatGPT defaults.                       |
+| `deltadotta --source ...`                                            | Onboard selected sources with the optional `onboard` command omitted.                             |
+| `deltadotta onboard ...`                                             | Run onboarding with explicit source, organization, or provider options.                           |
+| `deltadotta merge --package <base> --with <team> ...`                | Combine independently onboarded teams into one freshly reviewed organization.                    |
+| `deltadotta refresh --package <folder>`                              | Re-ingest recorded source plans into a new package and require fresh review.                      |
+| `deltadotta refine --package <folder>`                               | Apply the edited canonical review and rebuild the package.                                       |
+| `deltadotta validate --package <folder>`                             | Recompute readiness from the graph and actual provider artifacts.                                |
+| `deltadotta install --provider chatgpt --package <folder>`           | Validate, open the official project surface, and print exact setup paths.                         |
+| `deltadotta evaluate --package <folder> --results <responses.json>`  | Score raw responses from the installed Claude or ChatGPT Project.                                |
+| `deltadotta check`                                                   | Verify bounded local fingerprints and require refresh verification for external snapshots.       |
+| `deltadotta launch`                                                  | Run the software or manufacturing team Launchpad.                                                |
+| `deltadotta init`                                                    | Run the open-ended organization interview.                                                       |
 | `pnpm benchmark:cli`                                                 | Benchmark a complete 500-source organization import and verify every selected source is retained. |
 | `pnpm test:public-install`                                           | Pack, install, and exercise the exact public CLI payload in a clean temporary project.            |
 | `pnpm dev`                                                           | Start the local web workspace.                                                                    |
 | `pnpm verify`                                                        | Run type checks, CLI build, tests, and the production build.                                      |
 
-Run `pnpm cli -- --help` to view all CLI options or `pnpm cli -- --version` to
+Run `deltadotta --help` to view all CLI options or `deltadotta --version` to
 print the installed version.
 
 ### CLI performance benchmark
@@ -382,7 +389,7 @@ established regression budget.
 Merge up to 25 independently onboarded team packages in a deterministic order:
 
 ```bash
-pnpm cli -- merge \
+deltadotta merge \
   --package .deltadotta/company-core \
   --with .deltadotta/engineering \
   --with .deltadotta/operations \
@@ -406,7 +413,7 @@ re-ingests documents, code, Git snapshots, schemas, and selected read-only query
 manifests before building a new draft:
 
 ```bash
-pnpm cli -- refresh \
+deltadotta refresh \
   --package .deltadotta/complete-organization \
   --output .deltadotta/complete-organization-refreshed \
   --no-open
@@ -461,8 +468,8 @@ the review loop before importing it into a provider:
 7. Run:
 
 ```bash
-pnpm cli -- refine --package .deltadotta/onboarding
-pnpm cli -- validate --package .deltadotta/onboarding
+deltadotta refine --package .deltadotta/onboarding
+deltadotta validate --package .deltadotta/onboarding
 ```
 
 Readiness remains blocked when evidence is missing, roles are unconfirmed,
@@ -487,7 +494,7 @@ the official surface and guides those visible actions instead of calling
 undocumented private endpoints.
 
 ```bash
-pnpm cli -- install \
+deltadotta install \
   --provider chatgpt \
   --package .deltadotta/onboarding
 ```
@@ -520,7 +527,7 @@ Run every generated case in a fresh chat inside the installed project, preservin
 the raw JSON responses:
 
 ```bash
-pnpm cli -- evaluate \
+deltadotta evaluate \
   --package .deltadotta/onboarding \
   --results .deltadotta/onboarding/providers/chatgpt/EVALUATION-RESPONSES.json
 ```

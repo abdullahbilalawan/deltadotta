@@ -4,7 +4,7 @@ Output docs/demos/deltadotta-human-onboarding.mp4
 Require node
 
 Set Shell "zsh"
-Set FontSize 21
+Set FontSize 20
 Set FontFamily "Menlo"
 Set Width 1420
 Set Height 820
@@ -18,82 +18,34 @@ Set WindowBar "Colorful"
 Set WindowBarSize 42
 Set Theme "iTerm2 Dark Background"
 Set Framerate 30
-Set TypingSpeed 90ms
-Set PlaybackSpeed 0.72
+Set TypingSpeed 70ms
+Set PlaybackSpeed 1
 
 Hide
-Type "cd '/tmp/northstar-checkout-demo'"
+Type "rm -rf /tmp/Flameco"
 Enter
-Type "export PATH=/tmp:$PATH"
+Type "mkdir -p /tmp/Flameco/docs /tmp/Flameco/database"
 Enter
-Type "rm -f PRODUCT-KNOWLEDGE.md"
+Type "printf '# Flameco operations handbook\n\nFlameco maintains commercial fire systems for regional facilities.\n\n- Operations Lead owns daily service delivery.\n- Safety Lead may stop unsafe field work.\n- Customer Success receives completed-service handoffs.\n- General Manager receives unresolved safety escalations.\n' > /tmp/Flameco/docs/OPERATIONS.md"
+Enter
+Type "printf 'title,department,reports_to,purpose,authority\nGeneral Manager,Leadership,,Set company direction,Approve operating policy\nOperations Lead,Operations,General Manager,Coordinate daily service delivery,Assign field work\nSafety Lead,Safety,General Manager,Protect field teams,Stop unsafe work\n' > /tmp/Flameco/docs/roles.csv"
+Enter
+Type "printf 'CREATE TABLE service_jobs (id text, customer_id text, assigned_role text, status text);' > /tmp/Flameco/database/schema.sql"
+Enter
+Type "cd /tmp/Flameco"
+Enter
+Type "export PATH=/tmp/deltadotta-demo-runtime/bin:$PATH"
 Enter
 Type "clear"
 Enter
 Show
 
-Type "cat > PRODUCT-KNOWLEDGE.md <<'EOF'"
-Sleep 350ms
+Type "find . -maxdepth 2 -type f | sort"
 Enter
-Type "# Product and tribal knowledge"
+Sleep 1800ms
+Type "deltadotta --no-open"
 Enter
+Sleep 5500ms
+Type "find .deltadotta/onboarding/providers/chatgpt -maxdepth 1 -type f -print | sort"
 Enter
-Type "Northstar Checkout helps merchants recover failed payments before churn."
-Enter
-Enter
-Type "- Failed deployment checks usually mean webhook delivery is degraded."
-Enter
-Type "- Maya Chen owns production-risk escalation."
-Enter
-Type "- Product Engineering receives the follow-up handoff."
-Enter
-Type "- The Platform team may stop or roll back an unsafe deployment."
-Enter
-Type "EOF"
-Sleep 500ms
-Enter
-Sleep 900ms
-Type "ls"
-Sleep 250ms
-Enter
-Sleep 800ms
-Type "sed -n '1,12p' PRODUCT-KNOWLEDGE.md"
-Sleep 400ms
-Enter
-Sleep 3200ms
-Type "clear"
-Sleep 350ms
-Enter
-Sleep 500ms
-Type "/tmp/deltadotta"
-Sleep 500ms
-Enter
-Sleep 700ms
-Enter
-Sleep 550ms
-Type "1"
-Sleep 450ms
-Enter
-Sleep 600ms
-Type "Northstar Engineering"
-Sleep 650ms
-Enter
-Sleep 850ms
-Type "Maya Chen"
-Sleep 850ms
-Enter
-Type "Platform team"
-Sleep 850ms
-Enter
-Type "Maya Chen"
-Sleep 850ms
-Enter
-Type "Product Engineering"
-Sleep 850ms
-Enter
-Type "1"
-Sleep 850ms
-Enter
-Sleep 2600ms
-Enter
-Sleep 4200ms
+Sleep 3500ms
