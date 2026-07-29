@@ -1,8 +1,8 @@
 import { execFile } from "node:child_process";
 import { createServer } from "node:http";
-import { chmod, mkdir, mkdtemp, writeFile } from "node:fs/promises";
+import { mkdir, mkdtemp, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
-import { join } from "node:path";
+import { delimiter, join } from "node:path";
 import { promisify } from "node:util";
 import JSZip from "jszip";
 import { afterEach, describe, expect, it } from "vitest";
@@ -11,10 +11,12 @@ import {
   databaseDumpInvocation,
   sanitizeExternalLocator,
 } from "../lib/external-ingestion";
+import { writeNodeCommand } from "./helpers/write-node-command";
 
 const execFileAsync = promisify(execFile);
 const environmentKeys: string[] = [];
 const originalPath = process.env.PATH;
+const itWithPosixCommandFixture = process.platform === "win32" ? it.skip : it;
 
 afterEach(() => {
   environmentKeys.splice(0).forEach((key) => { delete process.env[key]; });
@@ -161,10 +163,14 @@ describe("external knowledge connectors", () => {
     expect(result.sources).toHaveLength(1);
     expect(result.sources[0]).toMatchObject({
       sourceConnector: "git",
-      sourceLocator: repository,
       sourceRevision: revision,
       sourceType: "document",
     });
+    expect(
+      process.platform === "win32"
+        ? result.sources[0].sourceLocator?.toLowerCase()
+        : result.sources[0].sourceLocator,
+    ).toBe(process.platform === "win32" ? repository.toLowerCase() : repository);
     expect(result.sources[0].path).toContain(revision.slice(0, 12));
     expect(result.sources[0].content).toContain("Engineering Lead");
   });
@@ -225,17 +231,15 @@ describe("external knowledge connectors", () => {
       .toThrow("credentials in URL query parameters are not accepted");
   });
 
-  it("captures only schema output from the PostgreSQL connector command", async () => {
+  itWithPosixCommandFixture("captures only schema output from the PostgreSQL connector command", async () => {
     const workspace = await mkdtemp(join(tmpdir(), "deltadotta-pgdump-test-"));
     const bin = join(workspace, "bin");
     await mkdir(bin);
-    const executable = join(bin, "pg_dump");
-    await writeFile(executable, `#!/usr/bin/env node
+    await writeNodeCommand(bin, "pg_dump", `
 if (process.argv.join(" ").includes("database-password")) process.exit(9);
 process.stdout.write("CREATE TABLE departments (id bigint, owner_role text);\\n");
 `);
-    await chmod(executable, 0o755);
-    process.env.PATH = `${bin}:${originalPath ?? ""}`;
+    process.env.PATH = `${bin}${delimiter}${originalPath ?? ""}`;
 
     const result = await collectExternalSources({
       baseDirectory: ".",
