@@ -16,10 +16,13 @@ DeltaDotta supports Node.js 22.13 or later and uses pnpm.
 corepack enable
 pnpm install --frozen-lockfile
 pnpm verify
+pnpm test:public-install
 pnpm dev
 ```
 
-The web workspace runs at `http://localhost:3000`. To exercise the guided CLI:
+The clean-install smoke test packs and installs the same payload npm will
+receive. The web workspace runs at `http://localhost:3000`. To exercise the
+guided CLI:
 
 ```bash
 pnpm cli:build
@@ -30,7 +33,8 @@ node dist/bin/deltadotta.js
 
 Keep each pull request focused. Explain the problem, include tests for behavior
 changes, and update user-facing documentation when commands or exported package
-formats change. Run `pnpm verify` before requesting review.
+formats change. Run `pnpm release:check` before requesting review for a release
+candidate.
 
 Do not add credentials, private organization material, production exports, or
 generated `.deltadotta/` launch folders to the repository.

@@ -30,38 +30,49 @@ stable hashed fallbacks otherwise; colliding titles never overwrite each other.
 
 ## Start here
 
-| Goal | Read |
-| --- | --- |
-| Build a first organization package | [Quick start](#quick-start) |
-| See supported inputs and safety limits | [Supported sources and limits](#supported-sources-and-limits) |
-| Review the complete CLI surface | [Commands](#commands) |
-| Combine separately onboarded teams | [Combine onboarded teams](#combine-onboarded-teams) |
-| Keep a package current | [Refresh changing organization knowledge](#refresh-changing-organization-knowledge) |
-| Approve an inferred organization | [Human review and readiness](#human-review-and-readiness) |
-| Install and test Claude or ChatGPT context | [Provider onboarding](#provider-onboarding) |
-| Contribute or get help | [Project documentation](#project-documentation) |
+| Goal                                       | Read                                                                                |
+| ------------------------------------------ | ----------------------------------------------------------------------------------- |
+| Build a first organization package         | [Quick start](#quick-start)                                                         |
+| Test the packed CLI without real data      | [Local testing](docs/LOCAL-TESTING.md)                                              |
+| See supported inputs and safety limits     | [Supported sources and limits](#supported-sources-and-limits)                       |
+| Review the complete CLI surface            | [Commands](#commands)                                                               |
+| Combine separately onboarded teams         | [Combine onboarded teams](#combine-onboarded-teams)                                 |
+| Keep a package current                     | [Refresh changing organization knowledge](#refresh-changing-organization-knowledge) |
+| Approve an inferred organization           | [Human review and readiness](#human-review-and-readiness)                           |
+| Install and test Claude or ChatGPT context | [Provider onboarding](#provider-onboarding)                                         |
+| Contribute or get help                     | [Project documentation](#project-documentation)                                     |
 
 ## Quick start
 
-**Requirements:** Node.js 22.13+ and pnpm.
+**Requirements:** Node.js 22.13+ and Corepack.
 
 ```bash
 git clone https://github.com/abdullahbilalawan/deltadotta.git
 cd deltadotta
 corepack enable
 pnpm install --frozen-lockfile
-pnpm cli -- \
-  --source ./handbook \
-  --source ./services \
-  --database ./database/schema.sql \
-  --name "Acme Company" \
+pnpm test:public-install
+pnpm cli -- onboard \
+  --repo ./docs/demo-workspace \
+  --source . \
+  --name "Local Test Company" \
   --provider chatgpt \
-  --yes
+  --output ./.deltadotta/quick-start \
+  --yes \
+  --no-open
 ```
 
-`onboard` is optional, so options can come first as shown above. With no
-options, `pnpm cli` starts the guided organization onboarding flow and scans the
-current folder. Generated files are written to:
+The smoke test installs the exact npm tarball in a clean temporary consumer
+project. The onboarding command uses only fictional repository data. It should
+report `needs-review` and exit with status `2`; that is the expected safety gate
+for an inferred organization that no accountable person has approved.
+
+Read [the local testing guide](docs/LOCAL-TESTING.md) for the generated files,
+web and Docker checks, and a sanitized live-provider test.
+
+`onboard` is optional, so options can come first. With no options, `pnpm cli`
+starts the guided organization onboarding flow and scans the current folder.
+Generated files are written to:
 
 ```text
 <workspace>/.deltadotta/onboarding/
@@ -191,16 +202,16 @@ Large provider context is split into numbered `KNOWLEDGE-002.md`,
 provider upload bundle. Source-plan files appear when the selected inputs can be
 replayed by `refresh`.
 
-| Output | Purpose |
-| --- | --- |
-| Organization map | Records role ownership, reporting lines, handoffs, and escalation paths. |
-| Role skills | Gives Claude, ChatGPT, Codex, or Claude Code focused instructions tied to source evidence. |
-| Confidence report | Separates verified sources, template assumptions, and unresolved gaps. |
-| Provider bundles | Separates behavior instructions from compact organization knowledge for Claude and ChatGPT Projects. |
-| Canonical review | Lets an accountable reviewer remove false positives, add missing roles, and explicitly confirm authority, reporting, escalation, and evidence. |
-| Readiness report | Blocks provider onboarding until the reviewed organization and generated artifacts pass deterministic integrity checks. |
-| Behavioral evaluation | Generates organization-specific role-routing, authority, escalation, conflict, and source-grounding cases for the actual provider project. |
-| Portable package | Provides reviewable Markdown, a local operational ZIP archive, and stable `manifest.yaml` and `graph.json` files. |
+| Output                | Purpose                                                                                                                                        |
+| --------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
+| Organization map      | Records role ownership, reporting lines, handoffs, and escalation paths.                                                                       |
+| Role skills           | Gives Claude, ChatGPT, Codex, or Claude Code focused instructions tied to source evidence.                                                     |
+| Confidence report     | Separates verified sources, template assumptions, and unresolved gaps.                                                                         |
+| Provider bundles      | Separates behavior instructions from compact organization knowledge for Claude and ChatGPT Projects.                                           |
+| Canonical review      | Lets an accountable reviewer remove false positives, add missing roles, and explicitly confirm authority, reporting, escalation, and evidence. |
+| Readiness report      | Blocks provider onboarding until the reviewed organization and generated artifacts pass deterministic integrity checks.                        |
+| Behavioral evaluation | Generates organization-specific role-routing, authority, escalation, conflict, and source-grounding cases for the actual provider project.     |
+| Portable package      | Provides reviewable Markdown, a local operational ZIP archive, and stable `manifest.yaml` and `graph.json` files.                              |
 
 The older team-specific `launch` flow can also install a clearly marked block
 in `AGENTS.md` or `CLAUDE.md`. It only updates that block and can be run without
@@ -334,23 +345,24 @@ ChatGPT, Codex, or connected tools.
 
 ## Commands
 
-| Command | Description |
-| --- | --- |
-| `pnpm cli` | Build and run guided mixed-source organization onboarding. |
-| `pnpm cli -- --source ...` | Run scripted onboarding with the optional `onboard` command omitted. |
-| `pnpm cli -- onboard ...` | Run the same scripted onboarding with an explicit command. |
-| `pnpm cli -- merge --package <base> --with <team> ...` | Combine independently onboarded teams into one freshly reviewed organization. |
-| `pnpm cli -- refresh --package <folder>` | Re-ingest recorded source plans into a new package and require fresh review. |
-| `pnpm cli -- refine --package <folder>` | Apply the edited canonical review and rebuild the package. |
-| `pnpm cli -- validate --package <folder>` | Recompute readiness from the graph and actual provider artifacts. |
-| `pnpm cli -- install --provider chatgpt --package <folder>` | Validate, open the official project surface, and print exact setup paths. |
-| `pnpm cli -- evaluate --package <folder> --results <responses.json>` | Score raw responses from the installed Claude or ChatGPT Project. |
-| `pnpm cli -- check` | Verify bounded local fingerprints and require refresh verification for external snapshots. |
-| `pnpm cli -- launch` | Run the software or manufacturing team Launchpad. |
-| `pnpm cli -- init` | Run the open-ended organization interview. |
-| `pnpm benchmark:cli` | Benchmark a complete 500-source organization import and verify every selected source is retained. |
-| `pnpm dev` | Start the local web workspace. |
-| `pnpm verify` | Run type checks, CLI build, tests, and the production build. |
+| Command                                                              | Description                                                                                       |
+| -------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
+| `pnpm cli`                                                           | Build and run guided mixed-source organization onboarding.                                        |
+| `pnpm cli -- --source ...`                                           | Run scripted onboarding with the optional `onboard` command omitted.                              |
+| `pnpm cli -- onboard ...`                                            | Run the same scripted onboarding with an explicit command.                                        |
+| `pnpm cli -- merge --package <base> --with <team> ...`               | Combine independently onboarded teams into one freshly reviewed organization.                     |
+| `pnpm cli -- refresh --package <folder>`                             | Re-ingest recorded source plans into a new package and require fresh review.                      |
+| `pnpm cli -- refine --package <folder>`                              | Apply the edited canonical review and rebuild the package.                                        |
+| `pnpm cli -- validate --package <folder>`                            | Recompute readiness from the graph and actual provider artifacts.                                 |
+| `pnpm cli -- install --provider chatgpt --package <folder>`          | Validate, open the official project surface, and print exact setup paths.                         |
+| `pnpm cli -- evaluate --package <folder> --results <responses.json>` | Score raw responses from the installed Claude or ChatGPT Project.                                 |
+| `pnpm cli -- check`                                                  | Verify bounded local fingerprints and require refresh verification for external snapshots.        |
+| `pnpm cli -- launch`                                                 | Run the software or manufacturing team Launchpad.                                                 |
+| `pnpm cli -- init`                                                   | Run the open-ended organization interview.                                                        |
+| `pnpm benchmark:cli`                                                 | Benchmark a complete 500-source organization import and verify every selected source is retained. |
+| `pnpm test:public-install`                                           | Pack, install, and exercise the exact public CLI payload in a clean temporary project.            |
+| `pnpm dev`                                                           | Start the local web workspace.                                                                    |
+| `pnpm verify`                                                        | Run type checks, CLI build, tests, and the production build.                                      |
 
 Run `pnpm cli -- --help` to view all CLI options or `pnpm cli -- --version` to
 print the installed version.
@@ -593,10 +605,15 @@ See [SECURITY.md](SECURITY.md) for vulnerability reporting.
 
 ## Project documentation
 
+- [Local testing](docs/LOCAL-TESTING.md): verify the packed CLI, demo workflow,
+  web workspace, Docker image, and real provider installation.
 - [Contributing](CONTRIBUTING.md): local setup and pull-request expectations.
 - [Support](SUPPORT.md): where to ask questions and report reproducible bugs.
 - [Security](SECURITY.md): private vulnerability reporting and trust boundaries.
 - [Governance](GOVERNANCE.md): project decisions, maintainers, and releases.
+- [Releasing](docs/RELEASING.md): maintainer checks, npm publication, and
+  post-release verification.
+- [Changelog](CHANGELOG.md): user-visible changes by release.
 - [Code of Conduct](CODE_OF_CONDUCT.md): community participation standards.
 - [Trademark](TRADEMARK.md): permitted use of the DeltaDotta name and logo.
 

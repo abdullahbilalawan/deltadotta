@@ -7,9 +7,10 @@ Security fixes are made on the latest release line.
 ## Reporting a vulnerability
 
 Please do **not** open a public issue for a suspected vulnerability. Use the
-repository’s private vulnerability-reporting feature in the GitHub Security tab.
-If private reporting is not enabled on the mirror you are using, contact a listed
-maintainer privately before disclosing details.
+[private vulnerability report](https://github.com/abdullahbilalawan/deltadotta/security/advisories/new)
+on the canonical GitHub repository. GitHub sends that report privately to the
+maintainers. If you are using a mirror, report through the canonical repository
+rather than disclosing details on the mirror.
 
 Include a clear reproduction, affected version or commit, impact, and any safe
 mitigation you found. DeltaDotta is local-first: reports must never include real

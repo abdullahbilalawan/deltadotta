@@ -4,12 +4,22 @@
   "private": false,
   "type": "module",
   "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/abdullahbilalawan/deltadotta.git"
+  },
+  "homepage": "https://github.com/abdullahbilalawan/deltadotta#readme",
+  "bugs": {
+    "url": "https://github.com/abdullahbilalawan/deltadotta/issues"
+  },
   "packageManager": "pnpm@9.15.4",
   "keywords": [
     "organization",
     "ai-agents",
     "skills",
     "cli",
+    "chatgpt",
+    "claude",
     "claude-code",
     "codex"
   ],
@@ -19,10 +29,15 @@
   "files": [
     "dist",
     "README.md",
+    "CHANGELOG.md",
     "LICENSE",
     "NOTICE",
     "TRADEMARK.md"
   ],
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
   "engines": {
     "node": ">=22.13"
   },
@@ -36,8 +51,11 @@
     "cli:build": "tsc -p tsconfig.cli.json",
     "cli": "tsc -p tsconfig.cli.json && node dist/bin/deltadotta.js",
     "benchmark:cli": "tsc -p tsconfig.cli.json && node scripts/benchmark-cli.mjs",
+    "test:public-install": "node scripts/public-install-smoke.mjs",
+    "release:check": "corepack pnpm verify && corepack pnpm audit --prod && corepack pnpm test:public-install",
     "verify": "tsc --noEmit && tsc -p tsconfig.cli.json && vitest run && next build",
-    "prepack": "tsc -p tsconfig.cli.json"
+    "prepack": "tsc -p tsconfig.cli.json",
+    "prepublishOnly": "corepack pnpm release:check"
   },
   "dependencies": {
     "@napi-rs/canvas": "1.0.2",
