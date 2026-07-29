@@ -1,12 +1,13 @@
 import { execFile } from "node:child_process";
 import { createServer } from "node:http";
-import { chmod, mkdtemp, mkdir, readFile, readdir, rm, stat, symlink, writeFile } from "node:fs/promises";
+import { mkdtemp, mkdir, readFile, readdir, rm, stat, symlink, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { delimiter, join } from "node:path";
 import { createRequire } from "node:module";
 import { promisify } from "node:util";
 import JSZip from "jszip";
 import { describe, expect, it } from "vitest";
+import { writeNodeCommand } from "./helpers/write-node-command";
 
 const execFileAsync = promisify(execFile);
 
@@ -359,9 +360,8 @@ describe("deltadotta onboard", () => {
     const workspace = await mkdtemp(join(tmpdir(), "deltadotta-query-onboard-"));
     const output = join(workspace, "package");
     const executableDirectory = join(workspace, "bin");
-    const fakePsql = join(executableDirectory, "psql");
     await mkdir(executableDirectory, { recursive: true });
-    await writeFile(fakePsql, `#!/usr/bin/env node
+    await writeNodeCommand(executableDirectory, "psql", `
 if (process.argv.join(" ").includes("database-password")) {
   process.stderr.write("password leaked into command arguments");
   process.exit(3);
@@ -390,7 +390,6 @@ process.stdout.write(JSON.stringify([
   }
 ]) + "\\n");
 `);
-    await chmod(fakePsql, 0o755);
     await writeFile(join(workspace, "database-queries.json"), JSON.stringify({
       schemaVersion: "1.0",
       connections: [{

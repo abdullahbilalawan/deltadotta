@@ -1,18 +1,14 @@
 import { execFile } from "node:child_process";
 import { createServer } from "node:http";
-import { chmod, mkdir, mkdtemp, readFile, writeFile } from "node:fs/promises";
+import { mkdir, mkdtemp, readFile, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { delimiter, join } from "node:path";
 import { promisify } from "node:util";
 import JSZip from "jszip";
 import { describe, expect, it } from "vitest";
+import { writeNodeCommand } from "./helpers/write-node-command";
 
 const execFileAsync = promisify(execFile);
-
-async function writeExecutable(path: string, source: string) {
-  await writeFile(path, `#!/usr/bin/env node\n${source}`);
-  await chmod(path, 0o755);
-}
 
 describe("complete organization acceptance workflow", () => {
   it("takes one mixed-source organization through review, both provider installs, and behavioral verification", async () => {
@@ -102,12 +98,12 @@ export const deliveryOwner = "Engineering Lead";
       if (!address || typeof address === "string") throw new Error("acceptance server did not expose a port");
       const externalDocument = `http://127.0.0.1:${address.port}/finance.json?format=organization-export`;
 
-      await writeExecutable(join(executableDirectory, "pg_dump"), `
+      await writeNodeCommand(executableDirectory, "pg_dump", `
 if (process.argv.join(" ").includes("database-password")) process.exit(3);
 if (process.env.PGPASSWORD !== "database-password") process.exit(4);
 process.stdout.write("CREATE TABLE role_directory (title text, department text, reports_to text, authority text);\\n");
 `);
-      await writeExecutable(join(executableDirectory, "psql"), `
+      await writeNodeCommand(executableDirectory, "psql", `
 if (process.argv.join(" ").includes("database-password")) process.exit(3);
 if (process.env.PGPASSWORD !== "database-password") process.exit(4);
 process.stdout.write(JSON.stringify([
