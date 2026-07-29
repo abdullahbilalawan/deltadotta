@@ -8,6 +8,30 @@ import { describe, expect, it } from "vitest";
 const execFileAsync = promisify(execFile);
 
 describe("DeltaDotta CLI argument handling", () => {
+  it("onboards a folder without asking setup questions", async () => {
+    const workspace = await mkdtemp(join(tmpdir(), "flameco-"));
+    await writeFile(join(workspace, "roles.md"), [
+      "# Flameco roles",
+      "Role: Operations Lead",
+      "Responsibility: Coordinate daily operations",
+    ].join("\n"));
+
+    const result = await execFileAsync("node", [
+      "dist/bin/deltadotta.js",
+      "--repo", workspace,
+      "--no-open",
+    ]);
+    const destination = join(workspace, ".deltadotta", "onboarding");
+    const graph = JSON.parse(await readFile(join(destination, "graph.json"), "utf8"));
+
+    expect(result.stdout).toContain(`Scanning: ${workspace}`);
+    expect(result.stdout).toContain("First target: ChatGPT");
+    expect(result.stdout).not.toContain("Organization name [");
+    expect(result.stdout).not.toContain("Choose 1-4");
+    expect(graph.organization.name).toMatch(/^Flameco /);
+    expect(graph.organization.sourcePlans[0].provider).toBe("chatgpt");
+  });
+
   it("supports option-first onboarding and --option=value syntax", async () => {
     const workspace = await mkdtemp(join(tmpdir(), "deltadotta-option-first-"));
     const destination = join(workspace, "package");
