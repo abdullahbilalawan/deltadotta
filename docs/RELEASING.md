@@ -13,8 +13,9 @@ pnpm install --frozen-lockfile
 pnpm release:check
 ```
 
-`release:check` runs the complete build and test suite, audits production
-dependencies, and installs the packed CLI in a clean consumer project.
+`release:check` runs the complete build and test suite, audits runtime and
+development dependencies, and installs the packed CLI in a clean consumer
+project.
 
 Before publishing, also confirm:
 

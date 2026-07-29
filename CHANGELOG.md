@@ -29,6 +29,8 @@ All notable changes to DeltaDotta are documented in this file.
   ingestion.
 - Keep provider uploads visible and restrict them to fingerprinted upload
   manifests; the complete operational ZIP remains local.
+- Pin patched Next.js, Vitest, Vite, PostCSS, esbuild, and Sharp dependency
+  lines so the first public release does not ship with known GitHub advisories.
 
 See [docs/LOCAL-TESTING.md](docs/LOCAL-TESTING.md) for a fictional local test
 and [docs/RELEASING.md](docs/RELEASING.md) for the maintainer release gate.

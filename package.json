@@ -38,6 +38,13 @@
     "access": "public",
     "provenance": true
   },
+  "pnpm": {
+    "overrides": {
+      "postcss": "8.5.18",
+      "sharp": "0.35.0",
+      "vite": "6.4.3"
+    }
+  },
   "engines": {
     "node": ">=22.13"
   },
@@ -52,7 +59,7 @@
     "cli": "tsc -p tsconfig.cli.json && node dist/bin/deltadotta.js",
     "benchmark:cli": "tsc -p tsconfig.cli.json && node scripts/benchmark-cli.mjs",
     "test:public-install": "node scripts/public-install-smoke.mjs",
-    "release:check": "corepack pnpm verify && corepack pnpm audit --prod && corepack pnpm test:public-install",
+    "release:check": "corepack pnpm verify && corepack pnpm audit && corepack pnpm test:public-install",
     "verify": "tsc --noEmit && tsc -p tsconfig.cli.json && vitest run && next build",
     "prepack": "tsc -p tsconfig.cli.json",
     "prepublishOnly": "corepack pnpm release:check"
@@ -67,10 +74,10 @@
     "@types/react": "^19.0.2",
     "@types/react-dom": "^19.0.2",
     "lucide-react": "^0.468.0",
-    "next": "^15.1.6",
+    "next": "15.5.21",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "typescript": "^5.7.2",
-    "vitest": "^2.1.8"
+    "vitest": "3.2.6"
   }
 }
