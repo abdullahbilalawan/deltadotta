@@ -16,6 +16,7 @@ import { writeNodeCommand } from "./helpers/write-node-command";
 const execFileAsync = promisify(execFile);
 const environmentKeys: string[] = [];
 const originalPath = process.env.PATH;
+const itWithPosixCommandFixture = process.platform === "win32" ? it.skip : it;
 
 afterEach(() => {
   environmentKeys.splice(0).forEach((key) => { delete process.env[key]; });
@@ -230,7 +231,7 @@ describe("external knowledge connectors", () => {
       .toThrow("credentials in URL query parameters are not accepted");
   });
 
-  it("captures only schema output from the PostgreSQL connector command", async () => {
+  itWithPosixCommandFixture("captures only schema output from the PostgreSQL connector command", async () => {
     const workspace = await mkdtemp(join(tmpdir(), "deltadotta-pgdump-test-"));
     const bin = join(workspace, "bin");
     await mkdir(bin);

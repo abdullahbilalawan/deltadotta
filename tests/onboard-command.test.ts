@@ -10,6 +10,7 @@ import { describe, expect, it } from "vitest";
 import { writeNodeCommand } from "./helpers/write-node-command";
 
 const execFileAsync = promisify(execFile);
+const itWithPosixCommandFixture = process.platform === "win32" ? it.skip : it;
 
 describe("deltadotta onboard", () => {
   it("onboards a YAML people directory with reporting and authority intact", async () => {
@@ -356,7 +357,7 @@ describe("deltadotta onboard", () => {
     }
   });
 
-  it("onboards selected read-only database rows without persisting connection credentials", async () => {
+  itWithPosixCommandFixture("onboards selected read-only database rows without persisting connection credentials", async () => {
     const workspace = await mkdtemp(join(tmpdir(), "deltadotta-query-onboard-"));
     const output = join(workspace, "package");
     const executableDirectory = join(workspace, "bin");

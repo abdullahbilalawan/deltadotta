@@ -9,9 +9,10 @@ import { describe, expect, it } from "vitest";
 import { writeNodeCommand } from "./helpers/write-node-command";
 
 const execFileAsync = promisify(execFile);
+const itWithPosixCommandFixture = process.platform === "win32" ? it.skip : it;
 
 describe("complete organization acceptance workflow", () => {
-  it("takes one mixed-source organization through review, both provider installs, and behavioral verification", async () => {
+  itWithPosixCommandFixture("takes one mixed-source organization through review, both provider installs, and behavioral verification", async () => {
     const workspace = await mkdtemp(join(tmpdir(), "deltadotta-acceptance-"));
     const output = join(workspace, "package");
     const executableDirectory = join(workspace, "bin");
