@@ -1,49 +1,43 @@
-# DeltaDotta to Claude demo storyboard
+# DeltaDotta onboarding demo storyboard
 
-## Short loop, 10 seconds
+## One-command terminal demo, about 20 seconds
 
-Show a real DeltaDotta CLI session in a neutral sample workspace. Type each answer separately at human speed, then end on `Launch complete: preflighted` and the generated package path.
+Record a real installed CLI session in the fictional `Flameco` workspace.
+Nothing in the recording is mocked.
 
-On-screen takeaway: `Scattered repo knowledge becomes a reusable AI operating role.`
+### 0-4s: Show ordinary company knowledge
 
-## Full product demo, about 25 seconds
+- Show the workspace containing an operations handbook, a role directory, and a
+  database schema.
+- Keep the terminal path neutral and free of usernames.
 
-### 0-10s: Build the operating role
+### 4-15s: Run onboarding
 
-- Run `deltadotta`.
-- Choose Software team.
-- Enter team name, owner, deployment authority, escalation owner, and handoff target.
-- End on `Launch complete: preflighted` and the package path.
+- Run `deltadotta --no-open`.
+- Do not answer setup questions; the current folder becomes the organization
+  name and ChatGPT is the default target.
+- Show the source counts, detected roles, readiness state, and generated map.
 
-Voiceover/plain-language beat:
+### 15-20s: Show the usable output
 
-> DeltaDotta reads the same files the team already trusts, then packages one preflighted role with clear operating boundaries.
+- List the generated ChatGPT files.
+- End on `PROJECT-INSTRUCTIONS.md`, `KNOWLEDGE.md`, and
+  `UPLOAD-MANIFEST.md`.
 
-### 10-17s: Import the generated skill into Claude
+On-screen takeaway:
 
-- Use a clean demo-only Claude account with no personal history or profile details.
-- Open **Customize → Skills**.
-- Choose **+ → Create skill → Upload a skill**.
-- Upload `northstar-devops-platform-engineer-claude-skill.zip`.
-- Show the `DevOps / Platform Engineer` skill appearing and enabled.
-
-### 17-25s: Prove the value
-
-- Start a new chat.
-- Prompt: `Use the DevOps Platform Engineer skill. A deployment failed its health check. Give me the allowed next step, required handoff, and escalation boundary.`
-- Show Claude following the generated role: source-aware assessment, stop/rollback authority, Product Engineering handoff, and Maya Chen escalation.
-- End card: `From scattered evidence → a reusable AI operating role.`
+> One command turns company files into a reviewable ChatGPT organization package.
 
 ## Shot checklist
 
-- Use `Northstar Checkout` as the workspace name in visible repo context.
-- Keep `Maya Chen`, `Product Engineering`, and `DevOps / Platform Engineer` consistent across CLI, package, and prompt.
-- Show only the focused role-skill upload, not the full organization ZIP.
-- Finish on a clear answer that says what the AI may do, where the handoff goes, and when to escalate.
+- Use only fictional Flameco names and operations details.
+- Show the real command, real source scan, and real generated filenames.
+- Keep the complete ZIP local and do not imply that DeltaDotta uploads files.
+- Leave `needs-review` visible so the safety gate is honest.
 
 ## Recording rules
 
-- Record only real CLI output and the real Claude UI.
+- Record only real CLI output from the packaged command.
 - Never show a personal account, chat history, email address, or local username.
-- Do not upload the full organization package as a single Claude skill. Upload one focused role-skill ZIP whose root is the matching skill folder.
-- Keep the cursor visible and use normal human pauses; no jump cuts during typed answers.
+- Keep the cursor visible and use normal human pauses.
+- The README GIF and MP4 must come from the same recording.
