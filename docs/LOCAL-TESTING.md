@@ -78,8 +78,9 @@ The command should:
 2. Create `.deltadotta/manual-test` and
    `.deltadotta/manual-test.zip`.
 3. Report `needs-review`.
-4. Exit with status `2`. That status is expected: it proves an inferred
-   organization cannot be treated as approved.
+4. Exit successfully after writing the reviewable package. The separate
+   `validate` command below returns status `2` until an accountable person
+   completes the review.
 
 Inspect these files first:
 
@@ -97,6 +98,28 @@ pnpm cli -- validate --package ./.deltadotta/manual-test
 
 It should also report `needs-review` and exit with status `2` until an
 accountable person completes the canonical review.
+
+## Test the installed CLI as a customer
+
+Build and install the same tarball npm will receive:
+
+```bash
+cd deltadotta
+npm pack
+npm install --global ./deltadotta-0.1.0.tgz
+```
+
+Then leave the DeltaDotta source folder and enter the fictional customer
+workspace before starting the guided flow:
+
+```bash
+cd docs/demo-workspace
+deltadotta
+```
+
+Do not start the customer walkthrough from the DeltaDotta source folder. That
+folder contains DeltaDotta's own test fixtures, example credential strings,
+screenshots, and demo videos rather than one customer's organization knowledge.
 
 ## Test the web workspace
 

@@ -102,6 +102,52 @@ describe("mixed organization knowledge ingestion", () => {
     expect(scan.skipped.filter((item) => item.severity === "error")).toEqual([]);
   });
 
+  it("skips incidental media and warns about oversized files discovered inside a selected folder", async () => {
+    const workspace = await mkdtemp(join(tmpdir(), "deltadotta-folder-media-"));
+    await mkdir(join(workspace, "docs"), { recursive: true });
+    await mkdir(join(workspace, "src"), { recursive: true });
+    await writeFile(join(workspace, "docs", ".DS_Store"), Buffer.from([0, 1, 2, 3]));
+    await writeFile(join(workspace, "docs", "roles.md"), "Role: Operations Lead");
+    await writeFile(join(workspace, "docs", "walkthrough.png"), Buffer.alloc(64, 1));
+    await writeFile(join(workspace, "docs", "walkthrough.mp4"), Buffer.alloc(256, 2));
+    await writeFile(join(workspace, "src", "large.ts"), `export const owner = "${"x".repeat(128)}";`);
+
+    const scan = await collectKnowledgeSources({
+      baseDirectory: workspace,
+      sources: ["."],
+      maxBytesPerFile: 64,
+    });
+
+    expect(scan.sources.map((source) => source.path)).toEqual(["docs/roles.md"]);
+    expect(scan.skipped.filter((item) => item.severity === "error")).toEqual([]);
+    expect(scan.skipped).toContainEqual(expect.objectContaining({
+      path: "src/large.ts",
+      severity: "warning",
+      reason: expect.stringContaining("64-byte per-file limit"),
+    }));
+    expect(scan.skipped.some((item) => /\.(?:DS_Store|png|mp4)$/.test(item.path))).toBe(false);
+  });
+
+  it("still fails when an explicitly selected source file cannot be imported", async () => {
+    const workspace = await mkdtemp(join(tmpdir(), "deltadotta-required-file-"));
+    await writeFile(join(workspace, "required.md"), "Role: Operations Lead");
+
+    const scan = await collectKnowledgeSources({
+      baseDirectory: workspace,
+      sources: ["required.md"],
+      maxBytesPerFile: 8,
+    });
+
+    expect(scan.sources).toEqual([]);
+    expect(scan.skipped).toEqual([
+      expect.objectContaining({
+        path: "required.md",
+        severity: "error",
+        reason: expect.stringContaining("8-byte per-file limit"),
+      }),
+    ]);
+  });
+
   it("classifies documents, codebase files, and database schema exports with bounded skips", async () => {
     const workspace = await mkdtemp(join(tmpdir(), "deltadotta-sources-"));
     await mkdir(join(workspace, "handbook"), { recursive: true });

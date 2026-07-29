@@ -16,6 +16,7 @@ const ignoredDirectories = new Set([
   "coverage",
   "vendor",
 ]);
+const ignoredFiles = new Set([".DS_Store", "Thumbs.db", "desktop.ini"]);
 
 const documentExtensions = new Set([
   ".csv", ".html", ".htm", ".json", ".jsonl", ".md", ".mdx", ".rst",
@@ -121,7 +122,7 @@ function sourceType(path: string, databaseHint: boolean): SourceType | null {
   if (databaseHint || databaseExtensions.has(extension) || sqliteDatabaseExtensions.has(extension) || /(?:^|\/)(?:database|db|migrations?|schema)(?:\/|$)/i.test(normalized)) return "database";
   if (officeDocumentExtensions.has(extension) || archiveExtensions.has(extension)) return "document";
   if (codeExtensions.has(extension) || specialTextFiles.test(normalized) || /(?:^|\/)\.github\/workflows\//i.test(normalized)) return "codebase";
-  if (documentExtensions.has(extension) || /(?:^|\/)(?:docs?|handbook|policies|runbooks?|knowledge)(?:\/|$)/i.test(normalized)) return "document";
+  if (documentExtensions.has(extension) || (!extension && /(?:^|\/)(?:docs?|handbook|policies|runbooks?|knowledge)(?:\/|$)/i.test(normalized))) return "document";
   return null;
 }
 
@@ -218,7 +219,11 @@ export async function collectKnowledgeSources(options: SourceScanOptions): Promi
   let fileLimitExceeded = false;
   let totalLimitExceeded = false;
 
-  async function visit(inputPath: string, databaseHint: boolean): Promise<void> {
+  function recordFailure(path: string, reason: string, required: boolean) {
+    skipped.push({ path, reason, severity: required ? "error" : "warning" });
+  }
+
+  async function visit(inputPath: string, databaseHint: boolean, required: boolean): Promise<void> {
     if (found.length >= maxFiles) {
       fileLimitExceeded = true;
       return;
@@ -239,7 +244,7 @@ export async function collectKnowledgeSources(options: SourceScanOptions): Promi
     try {
       details = await lstat(absolutePath);
     } catch {
-      skipped.push({ path: inputPath, reason: "path does not exist or cannot be read", severity: "error" });
+      recordFailure(inputPath, "path does not exist or cannot be read", required);
       return;
     }
 
@@ -253,7 +258,7 @@ export async function collectKnowledgeSources(options: SourceScanOptions): Promi
       try {
         entries = await readdir(absolutePath, { withFileTypes: true });
       } catch {
-        skipped.push({ path: displayPath(baseDirectory, absolutePath), reason: "directory cannot be read", severity: "error" });
+        recordFailure(displayPath(baseDirectory, absolutePath), "directory cannot be read", required);
         return;
       }
       for (const entry of entries.sort((left, right) => left.name.localeCompare(right.name))) {
@@ -270,17 +275,23 @@ export async function collectKnowledgeSources(options: SourceScanOptions): Promi
           continue;
         }
         if (entry.isDirectory() && ignoredDirectories.has(entry.name)) continue;
-        await visit(resolve(absolutePath, entry.name), databaseHint);
+        if (!entry.isDirectory() && ignoredFiles.has(entry.name)) continue;
+        await visit(resolve(absolutePath, entry.name), databaseHint, false);
       }
       return;
     }
 
     if (!details.isFile()) return;
+    if (ignoredFiles.has(basename(absolutePath))) return;
     const type = sourceType(absolutePath, databaseHint);
     if (!type) {
       const extension = extname(absolutePath).toLowerCase();
-      if (unsupportedBinaryDocumentExtensions.has(extension) || databaseHint) {
-        skipped.push({ path: displayPath(baseDirectory, absolutePath), reason: unsupportedReason(absolutePath, databaseHint), severity: "error" });
+      if (required || unsupportedBinaryDocumentExtensions.has(extension) || databaseHint) {
+        recordFailure(
+          displayPath(baseDirectory, absolutePath),
+          unsupportedReason(absolutePath, databaseHint),
+          required,
+        );
       }
       return;
     }
@@ -291,11 +302,19 @@ export async function collectKnowledgeSources(options: SourceScanOptions): Promi
     const binaryContainer = officeDocument || archive;
     const inputLimit = binaryContainer ? maxBinaryBytesPerFile : maxBytesPerFile;
     if (!sqliteDatabase && details.size > inputLimit) {
-      skipped.push({ path: displayPath(baseDirectory, absolutePath), reason: `larger than the ${inputLimit}-byte per-file limit`, severity: "error" });
+      recordFailure(
+        displayPath(baseDirectory, absolutePath),
+        `larger than the ${inputLimit}-byte per-file limit`,
+        required,
+      );
       return;
     }
     if (!binaryContainer && !sqliteDatabase && totalBytes + details.size > maxTotalBytes) {
-      skipped.push({ path: displayPath(baseDirectory, absolutePath), reason: `would exceed the ${maxTotalBytes}-byte scan limit`, severity: "error" });
+      recordFailure(
+        displayPath(baseDirectory, absolutePath),
+        `would exceed the ${maxTotalBytes}-byte scan limit`,
+        required,
+      );
       return;
     }
 
@@ -304,12 +323,16 @@ export async function collectKnowledgeSources(options: SourceScanOptions): Promi
       try {
         bytes = await readFile(absolutePath);
       } catch {
-        skipped.push({ path: displayPath(baseDirectory, absolutePath), reason: "file cannot be read", severity: "error" });
+        recordFailure(displayPath(baseDirectory, absolutePath), "file cannot be read", required);
         return;
       }
     }
     if (bytes && !binaryContainer && isProbablyBinary(bytes)) {
-      skipped.push({ path: displayPath(baseDirectory, absolutePath), reason: unsupportedReason(absolutePath, databaseHint), severity: "error" });
+      recordFailure(
+        displayPath(baseDirectory, absolutePath),
+        unsupportedReason(absolutePath, databaseHint),
+        required,
+      );
       return;
     }
     if (archive) {
@@ -322,7 +345,7 @@ export async function collectKnowledgeSources(options: SourceScanOptions): Promi
         skipped.push({
           path: archivePath,
           reason: `ZIP export could not be opened: ${error instanceof Error ? error.message : "invalid archive"}`,
-          severity: "error",
+          severity: required ? "error" : "warning",
         });
         return;
       }
@@ -331,7 +354,7 @@ export async function collectKnowledgeSources(options: SourceScanOptions): Promi
         skipped.push({
           path: archivePath,
           reason: `ZIP export contains ${entries.length} files, above the ${maxArchiveEntries}-entry limit`,
-          severity: "error",
+          severity: required ? "error" : "warning",
         });
         return;
       }
@@ -368,7 +391,7 @@ export async function collectKnowledgeSources(options: SourceScanOptions): Promi
             skipped.push({
               path: `${archivePath}!/${path}`,
               reason: "nested ZIP archives are not imported; extract the nested archive and select it separately",
-              severity: "error",
+              severity: required ? "error" : "warning",
             });
             continue;
           }
@@ -376,7 +399,7 @@ export async function collectKnowledgeSources(options: SourceScanOptions): Promi
             skipped.push({
               path: `${archivePath}!/${path}`,
               reason: unsupportedReason(path, false),
-              severity: "error",
+              severity: required ? "error" : "warning",
             });
             continue;
           }
@@ -386,7 +409,7 @@ export async function collectKnowledgeSources(options: SourceScanOptions): Promi
         skipped.push({
           path: archivePath,
           reason: `ZIP export rejected: ${error instanceof Error ? error.message : "unsafe archive metadata"}`,
-          severity: "error",
+          severity: required ? "error" : "warning",
         });
         return;
       }
@@ -396,13 +419,13 @@ export async function collectKnowledgeSources(options: SourceScanOptions): Promi
         skipped.push({
           path: archivePath,
           reason: `ZIP export integrity check failed: ${error instanceof Error ? error.message : "checksum mismatch"}`,
-          severity: "error",
+          severity: required ? "error" : "warning",
         });
         return;
       }
       if (!selected.length) {
-        if (!skipped.some((item) => item.path.startsWith(`${archivePath}!/`) && item.severity === "error")) {
-          skipped.push({ path: archivePath, reason: "ZIP export contains no supported knowledge files", severity: "error" });
+        if (!skipped.some((item) => item.path.startsWith(`${archivePath}!/`) && item.severity === (required ? "error" : "warning"))) {
+          recordFailure(archivePath, "ZIP export contains no supported knowledge files", required);
         }
         return;
       }
@@ -443,7 +466,7 @@ export async function collectKnowledgeSources(options: SourceScanOptions): Promi
         skipped.push({
           path: archivePath,
           reason: `ZIP export extraction failed: ${error instanceof Error ? error.message : "unknown archive error"}`,
-          severity: "error",
+          severity: required ? "error" : "warning",
         });
       } finally {
         await rm(temporaryDirectory, { force: true, recursive: true });
@@ -458,7 +481,7 @@ export async function collectKnowledgeSources(options: SourceScanOptions): Promi
         skipped.push({
           path: displayPath(baseDirectory, absolutePath),
           reason: `SQLite schema extraction failed: ${error instanceof Error ? error.message : "unknown database error"}`,
-          severity: "error",
+          severity: required ? "error" : "warning",
         });
         return;
       }
@@ -496,7 +519,7 @@ export async function collectKnowledgeSources(options: SourceScanOptions): Promi
         skipped.push({
           path: displayPath(baseDirectory, absolutePath),
           reason: `document text extraction failed: ${error instanceof Error ? error.message : "unknown parser error"}`,
-          severity: "error",
+          severity: required ? "error" : "warning",
         });
         return;
       }
@@ -511,7 +534,11 @@ export async function collectKnowledgeSources(options: SourceScanOptions): Promi
       skipped.push({ path: displayPath(baseDirectory, absolutePath), reason: `extracted text truncated at the ${maxBytesPerFile}-byte per-file limit` });
     }
     if (totalBytes + extractedBytes > maxTotalBytes) {
-      skipped.push({ path: displayPath(baseDirectory, absolutePath), reason: `would exceed the ${maxTotalBytes}-byte scan limit`, severity: "error" });
+      recordFailure(
+        displayPath(baseDirectory, absolutePath),
+        `would exceed the ${maxTotalBytes}-byte scan limit`,
+        required,
+      );
       return;
     }
     totalBytes += extractedBytes;
@@ -525,7 +552,7 @@ export async function collectKnowledgeSources(options: SourceScanOptions): Promi
   }
 
   for (const item of requested) {
-    await visit(item.path, item.databaseHint);
+    await visit(item.path, item.databaseHint, true);
   }
 
   const counts: Record<SourceType, number> = { codebase: 0, document: 0, database: 0 };

@@ -64,8 +64,9 @@ pnpm cli -- onboard \
 
 The smoke test installs the exact npm tarball in a clean temporary consumer
 project. The onboarding command uses only fictional repository data. It should
-report `needs-review` and exit with status `2`; that is the expected safety gate
-for an inferred organization that no accountable person has approved.
+report `needs-review` after writing the package. That is the expected safety
+gate for an inferred organization that no accountable person has approved;
+`deltadotta validate` exits with status `2` until the review is complete.
 
 Read [the local testing guide](docs/LOCAL-TESTING.md) for the generated files,
 web and Docker checks, and a sanitized live-provider test.
