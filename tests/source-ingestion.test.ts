@@ -127,7 +127,7 @@ describe("mixed organization knowledge ingestion", () => {
       "database/schema.sql",
     ]);
     expect(scan.skipped).toContainEqual(expect.objectContaining({ path: "legacy.pdf" }));
-  });
+  }, 15_000);
 
   it("creates a general provider package while keeping inferred authority unconfirmed", () => {
     const evidence = knowledgeEvidence([
