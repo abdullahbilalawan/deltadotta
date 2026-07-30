@@ -39,12 +39,12 @@ npm pack --dry-run
 The first publication creates the package from an authenticated maintainer
 workstation. npm provenance is only available from a
 [supported cloud CI provider](https://docs.npmjs.com/generating-provenance-statements/),
-so disable the package's provenance default for this one local publication:
+so the first local publication does not request provenance:
 
 ```bash
 npm login
 npm whoami
-NPM_CONFIG_PROVENANCE=false npm publish --access public
+npm publish --access public
 ```
 
 Publishing is irreversible for that exact version. Do not run it until the

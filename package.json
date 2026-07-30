@@ -24,7 +24,7 @@
     "codex"
   ],
   "bin": {
-    "deltadotta": "./dist/bin/deltadotta.js"
+    "deltadotta": "dist/bin/deltadotta.js"
   },
   "files": [
     "dist",
@@ -45,8 +45,7 @@
     "TRADEMARK.md"
   ],
   "publishConfig": {
-    "access": "public",
-    "provenance": true
+    "access": "public"
   },
   "pnpm": {
     "overrides": {
