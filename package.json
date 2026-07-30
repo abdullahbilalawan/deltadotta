@@ -1,6 +1,7 @@
 {
   "name": "deltadotta",
-  "version": "0.1.0",
+  "version": "0.1.1",
+  "description": "Turn local organization knowledge into reviewable, provider-ready context for ChatGPT, Claude, Codex, and Claude Code.",
   "private": false,
   "type": "module",
   "license": "Apache-2.0",
