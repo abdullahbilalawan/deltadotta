@@ -2,6 +2,13 @@
 
 All notable changes to DeltaDotta are documented in this file.
 
+## 0.1.1 - 2026-07-29
+
+### Fixed
+
+- Add explicit npm package metadata so the public listing describes
+  DeltaDotta instead of inferring a description from README markup.
+
 ## 0.1.0 - 2026-07-28
 
 ### Added

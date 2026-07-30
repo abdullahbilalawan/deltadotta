@@ -106,7 +106,7 @@ Build and install the same tarball npm will receive:
 ```bash
 cd deltadotta
 npm pack
-npm install --global ./deltadotta-0.1.0.tgz
+npm install --global ./deltadotta-0.1.1.tgz
 ```
 
 Then copy the fictional workspace outside the DeltaDotta source folder and
