@@ -38,23 +38,18 @@ Nothing is uploaded automatically.
 
 ## Demo
 
-[Watch the 35-second end-to-end usage demo](docs/demos/deltadotta-usage-demo.mp4).
+<a href="https://github.com/abdullahbilalawan/deltadotta/blob/main/docs/demos/deltadotta-usage-demo.mp4">
+  <img src="https://raw.githubusercontent.com/abdullahbilalawan/deltadotta/main/docs/demos/deltadotta-usage-demo.gif" width="800" alt="DeltaDotta end-to-end CLI usage demo" />
+</a>
+
+[Watch the full 35-second MP4](docs/demos/deltadotta-usage-demo.mp4).
 
 It shows onboarding, human-review refinement, validation, and ChatGPT project
 setup using the real CLI.
 
 ### Example organization map
 
-```mermaid
-flowchart TB
-    GM["General Manager<br/>Company priorities and final escalations"]
-    DC["Dispatch Coordinator<br/>Daily dispatch and delivery exceptions"]
-    SO["Safety Officer<br/>Field safety and stop-work authority"]
-
-    GM --> DC
-    GM --> SO
-    DC -. "Safety handoff" .-> SO
-```
+<img src="https://raw.githubusercontent.com/abdullahbilalawan/deltadotta/main/docs/demos/harbor-lane-organization-map.png" width="900" alt="Harbor Lane Delivery organization map with reporting lines and safety handoff" />
 
 ## How it works
 
