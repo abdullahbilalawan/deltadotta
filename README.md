@@ -5,7 +5,7 @@
 <h1 align="center">DeltaDotta</h1>
 
 <p align="center">
-  Onboard an organization’s documents, code, and database knowledge into Claude and ChatGPT.
+  Companies use Claude and ChatGPT in isolated sessions, forcing every employee to rebuild company context from scratch. DeltaDotta turns scattered organizational knowledge into a shared, reviewed AI context package, so teams can get consistent, company-aware answers without weeks of manual setup.
 </p>
 
 <p align="center">
@@ -14,8 +14,8 @@
   <a href="SECURITY.md">Security</a>
 </p>
 
-DeltaDotta is a local-first CLI for turning scattered company knowledge into a
-reviewable organization map and provider-ready operating context. It scans
+DeltaDotta is a local-first CLI that creates this shared context from company
+knowledge. It scans
 documents, codebases, database schemas, and explicitly selected read-only
 database rows; detects role signals; preserves source evidence; and prepares
 compact onboarding bundles for Claude Projects and ChatGPT Projects or custom
