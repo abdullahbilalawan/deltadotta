@@ -36,6 +36,13 @@ DeltaDotta scans the current folder locally and writes the package to:
 
 Nothing is uploaded automatically.
 
+## Demo
+
+[Watch the 35-second end-to-end usage demo](docs/demos/deltadotta-usage-demo.mp4).
+
+It shows onboarding, human-review refinement, validation, and ChatGPT project
+setup using the real CLI.
+
 ## How it works
 
 1. **Scan**
