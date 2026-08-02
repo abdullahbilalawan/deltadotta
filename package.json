@@ -1,6 +1,6 @@
 {
   "name": "deltadotta",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Turn scattered organizational knowledge into shared, reviewed AI context, so teams get consistent, company-aware answers from Claude and ChatGPT without weeks of manual setup.",
   "private": false,
   "type": "module",

@@ -2,6 +2,15 @@
 
 All notable changes to DeltaDotta are documented in this file.
 
+## 0.1.2 - 2026-08-01
+
+### Changed
+
+- Publish the same concise quick start, demo, organization-map example, and
+  safety guidance on npm and GitHub.
+- Make generated organization maps easier to scan with a connected reporting
+  structure, organization summary, role search, and detailed role inspector.
+
 ## 0.1.1 - 2026-07-29
 
 ### Fixed

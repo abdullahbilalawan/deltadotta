@@ -57,7 +57,7 @@ future releases from CI with provenance enabled.
 Verify from a new temporary folder:
 
 ```bash
-npx --yes deltadotta@0.1.1 --version
+npx --yes deltadotta@0.1.2 --version
 ```
 
 ## Tag and create the GitHub release
@@ -65,10 +65,10 @@ npx --yes deltadotta@0.1.1 --version
 After npm publication:
 
 ```bash
-git tag -s v0.1.1 -m "DeltaDotta v0.1.1"
-git push origin v0.1.1
-gh release create v0.1.1 \
-  --title "DeltaDotta v0.1.1" \
+git tag -s v0.1.2 -m "DeltaDotta v0.1.2"
+git push origin v0.1.2
+gh release create v0.1.2 \
+  --title "DeltaDotta v0.1.2" \
   --notes-file CHANGELOG.md \
   --verify-tag
 ```
@@ -79,8 +79,8 @@ than silently replacing the signed-tag step with an unsigned tag.
 ## Post-release verification
 
 ```bash
-npm view deltadotta@0.1.1 version dist.integrity
-npx --yes deltadotta@0.1.1 --version
+npm view deltadotta@0.1.2 version dist.integrity
+npx --yes deltadotta@0.1.2 --version
 ```
 
 Then run one fictional onboarding command from
