@@ -58,7 +58,7 @@ organization map. Nothing is uploaded.
 Override either default when needed:
 
 ```bash
-npx --yes deltadotta --name "Flameco" --provider claude
+npx --yes deltadotta --name "Northstar" --provider claude
 ```
 
 For repeated use, install the command once:
@@ -153,7 +153,7 @@ only to reviewed onboarding views.
 
 [Watch the onboarding video as MP4](https://github.com/abdullahbilalawan/deltadotta/blob/main/docs/demos/deltadotta-human-onboarding.mp4).
 
-The recording runs the real installed CLI against only the fictional Flameco
+The recording runs the real installed CLI against only the fictional Northstar
 files created by the
 [recording script](docs/demos/human-onboarding.tape). The
 [recording storyboard](docs/demos/CLAUDE-DEMO-STORYBOARD.md) documents the

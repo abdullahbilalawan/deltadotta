@@ -22,17 +22,17 @@ Set TypingSpeed 70ms
 Set PlaybackSpeed 1
 
 Hide
-Type "rm -rf /tmp/Flameco"
+Type "rm -rf /tmp/Northstar"
 Enter
-Type "mkdir -p /tmp/Flameco/docs /tmp/Flameco/database"
+Type "mkdir -p /tmp/Northstar/docs /tmp/Northstar/database"
 Enter
-Type "printf '# Flameco operations handbook\n\nFlameco maintains commercial fire systems for regional facilities.\n\n- Operations Lead owns daily service delivery.\n- Safety Lead may stop unsafe field work.\n- Customer Success receives completed-service handoffs.\n- General Manager receives unresolved safety escalations.\n' > /tmp/Flameco/docs/OPERATIONS.md"
+Type "printf '# Northstar operations handbook\n\nNorthstar maintains commercial fire systems for regional facilities.\n\n- Operations Lead owns daily service delivery.\n- Safety Lead may stop unsafe field work.\n- Customer Success receives completed-service handoffs.\n- General Manager receives unresolved safety escalations.\n' > /tmp/Northstar/docs/OPERATIONS.md"
 Enter
-Type "printf 'title,department,reports_to,purpose,authority\nGeneral Manager,Leadership,,Set company direction,Approve operating policy\nOperations Lead,Operations,General Manager,Coordinate daily service delivery,Assign field work\nSafety Lead,Safety,General Manager,Protect field teams,Stop unsafe work\n' > /tmp/Flameco/docs/roles.csv"
+Type "printf 'title,department,reports_to,purpose,authority\nGeneral Manager,Leadership,,Set company direction,Approve operating policy\nOperations Lead,Operations,General Manager,Coordinate daily service delivery,Assign field work\nSafety Lead,Safety,General Manager,Protect field teams,Stop unsafe work\n' > /tmp/Northstar/docs/roles.csv"
 Enter
-Type "printf 'CREATE TABLE service_jobs (id text, customer_id text, assigned_role text, status text);' > /tmp/Flameco/database/schema.sql"
+Type "printf 'CREATE TABLE service_jobs (id text, customer_id text, assigned_role text, status text);' > /tmp/Northstar/database/schema.sql"
 Enter
-Type "cd /tmp/Flameco"
+Type "cd /tmp/Northstar"
 Enter
 Type "export PATH=/tmp/deltadotta-demo-runtime/bin:$PATH"
 Enter

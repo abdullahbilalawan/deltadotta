@@ -2,7 +2,7 @@
 
 ## One-command terminal demo, about 20 seconds
 
-Record a real installed CLI session in the fictional `Flameco` workspace.
+Record a real installed CLI session in the fictional `Northstar` workspace.
 Nothing in the recording is mocked.
 
 ### 0-4s: Show ordinary company knowledge
@@ -30,7 +30,7 @@ On-screen takeaway:
 
 ## Shot checklist
 
-- Use only fictional Flameco names and operations details.
+- Use only fictional Northstar names and operations details.
 - Show the real command, real source scan, and real generated filenames.
 - Keep the complete ZIP local and do not imply that DeltaDotta uploads files.
 - Leave `needs-review` visible so the safety gate is honest.

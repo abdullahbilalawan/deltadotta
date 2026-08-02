@@ -9,9 +9,9 @@ const execFileAsync = promisify(execFile);
 
 describe("DeltaDotta CLI argument handling", () => {
   it("onboards a folder without asking setup questions", async () => {
-    const workspace = await mkdtemp(join(tmpdir(), "flameco-"));
+    const workspace = await mkdtemp(join(tmpdir(), "northstar-"));
     await writeFile(join(workspace, "roles.md"), [
-      "# Flameco roles",
+      "# Northstar roles",
       "Role: Operations Lead",
       "Responsibility: Coordinate daily operations",
     ].join("\n"));
@@ -28,7 +28,7 @@ describe("DeltaDotta CLI argument handling", () => {
     expect(result.stdout).toContain("First target: ChatGPT");
     expect(result.stdout).not.toContain("Organization name [");
     expect(result.stdout).not.toContain("Choose 1-4");
-    expect(graph.organization.name).toMatch(/^Flameco /);
+    expect(graph.organization.name).toMatch(/^Northstar /);
     expect(graph.organization.sourcePlans[0].provider).toBe("chatgpt");
   });
 

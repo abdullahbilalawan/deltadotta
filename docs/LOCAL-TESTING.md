@@ -121,7 +121,7 @@ deltadotta
 
 The command does not ask setup questions. It uses `Demo Workspace` as the
 organization name and ChatGPT as the first provider target. Supply
-`--name "Flameco"` or `--provider claude` only when you want to override those
+`--name "Northstar"` or `--provider claude` only when you want to override those
 defaults.
 
 Do not start the customer walkthrough from the DeltaDotta source folder. That
