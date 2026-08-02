@@ -43,6 +43,19 @@ Nothing is uploaded automatically.
 It shows onboarding, human-review refinement, validation, and ChatGPT project
 setup using the real CLI.
 
+### Example organization map
+
+```mermaid
+flowchart TB
+    GM["General Manager<br/>Company priorities and final escalations"]
+    DC["Dispatch Coordinator<br/>Daily dispatch and delivery exceptions"]
+    SO["Safety Officer<br/>Field safety and stop-work authority"]
+
+    GM --> DC
+    GM --> SO
+    DC -. "Safety handoff" .-> SO
+```
+
 ## How it works
 
 1. **Scan**
