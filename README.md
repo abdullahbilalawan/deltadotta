@@ -39,13 +39,14 @@ Nothing is uploaded automatically.
 ## Demo
 
 <a href="https://github.com/abdullahbilalawan/deltadotta/blob/main/docs/demos/deltadotta-usage-demo.mp4">
-  <img src="https://raw.githubusercontent.com/abdullahbilalawan/deltadotta/main/docs/demos/deltadotta-usage-demo.gif" width="800" alt="DeltaDotta end-to-end CLI usage demo" />
+  <img src="https://raw.githubusercontent.com/abdullahbilalawan/deltadotta/main/docs/demos/deltadotta-usage-demo.gif" width="800" alt="DeltaDotta company context onboarding, review, role skills, and provider setup demo" />
 </a>
 
-[Watch the full 35-second MP4](docs/demos/deltadotta-usage-demo.mp4).
+[Watch the full 79-second MP4](docs/demos/deltadotta-usage-demo.mp4).
 
-It shows onboarding, human-review refinement, validation, and ChatGPT project
-setup using the real CLI.
+It shows how documents, code, database evidence, and tribal knowledge become
+reviewed roles, skills, authority boundaries, and Claude or ChatGPT Project
+files. It ends with the exact instructions and knowledge files to upload.
 
 ### Generated organization map
 
