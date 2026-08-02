@@ -1,0 +1,37 @@
+{
+  "roles": [
+    {
+      "title": "General Manager",
+      "department": "Leadership",
+      "purpose": "Set company priorities and resolve cross-team decisions.",
+      "owns": ["Company priorities", "Cross-team decisions"],
+      "permissions": ["Approve company operating policy"],
+      "inputs": ["Operating metrics", "Customer and safety escalations"],
+      "outputs": ["Company priorities", "Final escalation decisions"],
+      "collaborators": ["Dispatch Coordinator", "Safety Officer"]
+    },
+    {
+      "title": "Dispatch Coordinator",
+      "department": "Operations",
+      "reportsTo": "General Manager",
+      "purpose": "Coordinate reliable daily delivery operations.",
+      "owns": ["Daily dispatch plan", "Delivery exception routing"],
+      "permissions": ["Reassign delivery work during service disruption"],
+      "inputs": ["Orders", "Driver availability", "Service alerts"],
+      "outputs": ["Dispatch plan", "Delivery exception handoff"],
+      "collaborators": ["Safety Officer"]
+    },
+    {
+      "title": "Safety Officer",
+      "department": "Safety",
+      "reportsTo": "General Manager",
+      "purpose": "Protect drivers and customers during delivery operations.",
+      "owns": ["Field safety policy", "Safety incident response"],
+      "permissions": ["Stop delivery work when a safety risk is unresolved"],
+      "inputs": ["Driver reports", "Weather alerts", "Incident reports"],
+      "outputs": ["Safety decisions", "Controlled restart requirements"],
+      "collaborators": ["Dispatch Coordinator"]
+    }
+  ]
+}
+
