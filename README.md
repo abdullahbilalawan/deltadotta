@@ -145,19 +145,34 @@ The manifest supports PostgreSQL and MySQL and requires `psql` or `mysql`,
 respectively. Prefer a dedicated, least-privilege account with `SELECT` access
 only to reviewed onboarding views.
 
-## Demo
+## Demo: Aster Ridge Logistics
+
+Aster Ridge Logistics is a fictional delivery company with handbooks, code,
+database schemas, runbooks, and tribal knowledge spread across one workspace.
+
+1. Put the company files in one folder.
+2. Run `deltadotta --no-open`.
+3. Review the roles and conflicts DeltaDotta finds.
+4. Upload the reviewed ChatGPT package.
+
+Real output from this example:
+
+- 22 source files read locally
+- 19 draft role candidates linked to evidence
+- 2 source conflicts surfaced for human review
+- 51 review, validation, role, and provider files generated
+- `needs-review` at 78/100, so nothing is treated as approved too early
 
 <a href="https://github.com/abdullahbilalawan/deltadotta/blob/main/docs/demos/deltadotta-human-onboarding.mp4">
-  <img src="https://raw.githubusercontent.com/abdullahbilalawan/deltadotta/main/docs/demos/deltadotta-human-onboarding.gif" width="720" alt="A real DeltaDotta one-command onboarding run in a fictional company workspace." />
+  <img src="https://raw.githubusercontent.com/abdullahbilalawan/deltadotta/main/docs/demos/deltadotta-human-onboarding.gif" width="720" alt="DeltaDotta onboarding the fictional Aster Ridge Logistics workspace." />
 </a>
 
 [Watch the onboarding video as MP4](https://github.com/abdullahbilalawan/deltadotta/blob/main/docs/demos/deltadotta-human-onboarding.mp4).
 
-The recording runs the real installed CLI against only the fictional Northstar
-files created by the
-[recording script](docs/demos/human-onboarding.tape). The
-[recording storyboard](docs/demos/CLAUDE-DEMO-STORYBOARD.md) documents the
-expected flow and safety rules.
+Try the same story with the
+[fictional source workspace](docs/demos/aster-ridge-company.zip). The video uses
+the real installed CLI and the checked-in
+[recording script](docs/demos/human-onboarding.tape).
 
 ## What it generates
 

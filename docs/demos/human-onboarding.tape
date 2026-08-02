@@ -18,21 +18,17 @@ Set WindowBar "Colorful"
 Set WindowBarSize 42
 Set Theme "iTerm2 Dark Background"
 Set Framerate 30
-Set TypingSpeed 70ms
+Set TypingSpeed 85ms
 Set PlaybackSpeed 1
 
 Hide
-Type "rm -rf /tmp/Northstar"
+Type "rm -rf /tmp/Aster-Ridge-Logistics"
 Enter
-Type "mkdir -p /tmp/Northstar/docs /tmp/Northstar/database"
+Type "mkdir -p /tmp/Aster-Ridge-Logistics"
 Enter
-Type "printf '# Northstar operations handbook\n\nNorthstar maintains commercial fire systems for regional facilities.\n\n- Operations Lead owns daily service delivery.\n- Safety Lead may stop unsafe field work.\n- Customer Success receives completed-service handoffs.\n- General Manager receives unresolved safety escalations.\n' > /tmp/Northstar/docs/OPERATIONS.md"
+Type "unzip -q docs/demos/aster-ridge-company.zip -d /tmp/Aster-Ridge-Logistics"
 Enter
-Type "printf 'title,department,reports_to,purpose,authority\nGeneral Manager,Leadership,,Set company direction,Approve operating policy\nOperations Lead,Operations,General Manager,Coordinate daily service delivery,Assign field work\nSafety Lead,Safety,General Manager,Protect field teams,Stop unsafe work\n' > /tmp/Northstar/docs/roles.csv"
-Enter
-Type "printf 'CREATE TABLE service_jobs (id text, customer_id text, assigned_role text, status text);' > /tmp/Northstar/database/schema.sql"
-Enter
-Type "cd /tmp/Northstar"
+Type "cd /tmp/Aster-Ridge-Logistics"
 Enter
 Type "export PATH=/tmp/deltadotta-demo-runtime/bin:$PATH"
 Enter
@@ -40,12 +36,6 @@ Type "clear"
 Enter
 Show
 
-Type "find . -maxdepth 2 -type f | sort"
-Enter
-Sleep 1800ms
 Type "deltadotta --no-open"
 Enter
-Sleep 5500ms
-Type "find .deltadotta/onboarding/providers/chatgpt -maxdepth 1 -type f -print | sort"
-Enter
-Sleep 3500ms
+Sleep 12000ms

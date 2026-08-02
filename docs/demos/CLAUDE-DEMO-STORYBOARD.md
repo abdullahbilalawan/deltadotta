@@ -1,28 +1,26 @@
 # DeltaDotta onboarding demo storyboard
 
-## One-command terminal demo, about 20 seconds
+## One-command terminal demo, about 15 seconds
 
-Record a real installed CLI session in the fictional `Northstar` workspace.
+Record a real installed CLI session in the fictional `Aster Ridge Logistics`
+workspace.
 Nothing in the recording is mocked.
 
-### 0-4s: Show ordinary company knowledge
+### 0-3s: Run onboarding
 
-- Show the workspace containing an operations handbook, a role directory, and a
-  database schema.
+- Type only `deltadotta --no-open`.
 - Keep the terminal path neutral and free of usernames.
 
-### 4-15s: Run onboarding
+### 3-12s: Show the real result
 
-- Run `deltadotta --no-open`.
 - Do not answer setup questions; the current folder becomes the organization
   name and ChatGPT is the default target.
 - Show the source counts, detected roles, readiness state, and generated map.
 
-### 15-20s: Show the usable output
+### 12-15s: Hold on the completed onboarding
 
-- List the generated ChatGPT files.
-- End on `PROJECT-INSTRUCTIONS.md`, `KNOWLEDGE.md`, and
-  `UPLOAD-MANIFEST.md`.
+- Leave the complete CLI summary visible long enough to read.
+- Do not type file-listing, search, inspection, or follow-up shell commands.
 
 On-screen takeaway:
 
@@ -30,7 +28,7 @@ On-screen takeaway:
 
 ## Shot checklist
 
-- Use only fictional Northstar names and operations details.
+- Use only fictional Aster Ridge Logistics names and operations details.
 - Show the real command, real source scan, and real generated filenames.
 - Keep the complete ZIP local and do not imply that DeltaDotta uploads files.
 - Leave `needs-review` visible so the safety gate is honest.
