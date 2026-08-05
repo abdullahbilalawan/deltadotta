@@ -73,9 +73,9 @@
     "prepublishOnly": "corepack pnpm release:check"
   },
   "dependencies": {
-    "@napi-rs/canvas": "1.0.2",
+    "@napi-rs/canvas": "1.0.3",
     "jszip": "^3.10.1",
-    "officeparser": "7.4.0"
+    "officeparser": "7.5.1"
   },
   "devDependencies": {
     "@types/node": "^22.10.2",
